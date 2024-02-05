@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <button class="btno"><img src="/images/moon.svg" alt=""></button>
+    <img src="/images/Screenshot (2).png" alt="" class="logo">
+    <div class="container login-container">
+        <img src="/images/SRS Screen Shorts/7768657_3763028.jpg" alt="" class="hero-image">
+
+    </div>
+    <div class="container login-card">
+        <a asp-controller="Home" asp-action="login" class="back-link">
+            <img src="/images/chevron-compact-left.svg" alt="">Back
+        </a>
+        <div class="h3 login-head">Reset Your Password</div>
+        <div class="form-floating username">
+            <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
+            <img src="/images/person-circle.svg" alt="" class="user-icon"><label for="floatingUsername">Username</label>
+        </div>
+
+        <button class="login-button">Reset Password</button>
+        <a class="login-link" asp-controller="Home" asp-action="login"><img src="/images/chevron-compact-left.svg" alt="">Back to Login</a>
+    </div>
+    <ul class="nav s-footer-nav">
+        <li class="nav-item">
+            <a class="nav-link footer-link" href="#">Terms of conditions</a>
+        </li>
+
+        <li class="nav-item">
+
+            <a class="nav-link footer-link" href="#">Privacy Policy</a>
+        </li>
+    </ul>
+    <div class="divider">|</div>
+
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

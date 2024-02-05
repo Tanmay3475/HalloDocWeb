@@ -1,0 +1,343 @@
+﻿body
+{
+    background-color: #F9F9F9;
+}
+.login-container
+{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    left: 700px;
+    background-color: #F9F9F9;
+}
+.hero-image
+{
+    width: 50%;
+    height: 100%;
+    opacity: 0.1;
+    z-index: -1;
+}
+.btno {
+    position: absolute;
+    right:10px;
+    top:10px;
+    background-color: lightblue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: rgb(16, 139, 240);
+  }
+  .logo
+  {
+    z-index: 100;
+    position:absolute;
+    top: 10px;
+    left:825px;
+  }
+  .login-card
+  {
+    z-index: 100;
+    position: absolute;
+    top: 200px;
+    left: 800px;
+  }
+  .back-link
+  {
+    
+    color:black;
+    text-decoration: none;
+  }
+.login-head
+{
+    margin-top: 10px;
+}
+.username
+{
+    width: 300px;
+    margin-top: 20px;
+}
+.user-icon
+{
+    position:absolute;
+    top:25px;
+    left: 275px;
+}
+.login-button
+{
+    height: 30px;
+    width: 300px;
+    background-color: aqua;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+}
+.forgot-link
+{
+    text-decoration: none;
+    position: absolute;
+    top: 300px;
+    left: 110px;
+}
+.footer-nav
+{
+    position: absolute;
+    bottom: 30px;
+    left: 800px;
+}
+.divider 
+{
+    position: absolute;
+    bottom: 40px;
+    left:970px;
+}
+.footer-link
+{
+    color: black;
+}
+.login-link
+{
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    top: 225px;
+    left: 110px;
+}
+.login-link:hover
+{
+    text-decoration: underline;
+}
+.s-header
+{
+    position: absolute;
+    background-color:white;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    
+    height:75px;
+    box-shadow: 0 0 0 3px lightgray;
+}
+.h-logo
+{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: 10px;
+    left: 50px;
+}
+.s-content
+{
+    position: absolute;
+    left: 900px;
+    top: 100px;
+    width: 500px;
+}
+.btn-1
+{
+    padding-left: 12px;
+    text-align: left;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    color: #5668A6;
+    border: 1px solid #D9DBE9;
+    background-color: #D9DBE9;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.btn-2
+{
+    padding-left: 12px;
+    font-weight: bold;
+    text-align: left;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    color: #409CC1;
+    border: 1px solid #D5F0FB;
+    background-color: #D5F0FB;
+    border-radius: 5px;
+}
+.btn-3
+{
+    padding-left: 12px;
+    font-weight: bold;
+    text-align: left;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    color: #427549;
+    border: 1px solid #E9F1E4;
+    background-color:#E9F1E4;
+    border-radius: 5px;
+}
+.btn-4
+{
+    padding-left: 12px;
+    font-weight: bold;
+    text-align: left;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    color: #943F6E;
+    border: 1px solid #F7E6EE;
+    background-color: #F7E6EE;
+    border-radius: 5px;
+}
+.btnn:hover
+{
+    background-color: burlywood;
+}
+.s-back-link
+{
+    color: black;
+    text-decoration: none;
+    width: 70px;
+    height: 30px;
+    position: absolute;
+    top: 115px;
+    left: 1125px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.s-footer
+{
+    color: white;
+    align-items: right;
+    justify-content: right;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background-color: black;
+}
+.s-footer-nav
+{
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+}
+.s-footer-link
+{
+    color: white;
+}
+.s-divider 
+{
+    color:white;
+    position: absolute;
+    bottom: 30px;
+    right:152px;
+}
+.pc-button
+{
+    position: absolute;
+    top: 20px;
+    left: 1200px;
+}
+.pc-container
+{
+    background-color: white;
+    position: absolute;
+    top: 80px;
+    left:580px;
+    width: 700px;
+    height: 875px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px 3px #F2F2F2;
+}
+.pc-head
+{
+font-size: 20px;
+font-weight: bold;
+margin: 10px;
+}
+.pc-text
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+   padding-left:8px ;
+    }
+    .pc-num
+    {
+        padding-top:10px ;
+        height: 60px;
+        width: 350px;
+    }
+    .u-icon
+    {
+        padding: 5px;
+    }
+    .select
+    {
+     padding: 10px;   
+        position: absolute;
+        bottom: 75px;
+        left: 590px;
+        width: 565px;
+        height: 50px;
+        background-color: #F5F5F5;
+    }
+    .ff-container
+    {
+        background-color: white;
+        position: absolute;
+        top: 80px;
+        left:580px;
+        width: 700px;
+        height:1175px;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px 3px #F2F2F2;
+        bottom: 30px;
+    }   
+    .cv-container
+    {
+        background-color: white;
+        position: absolute;
+        top: 80px;
+        left:580px;
+        width: 700px;
+        height:1100px;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px 3px #F2F2F2;
+        bottom: 30px;
+    }
+    .br-container
+    {
+        background-color: white;
+        position: absolute;
+        top: 80px;
+        left:580px;
+        width: 700px;
+        height:1075px;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px 3px #F2F2F2;
+        bottom: 30px;
+    }
+    .m-h
+    {
+        justify-content: center;
+        text-align: center;
+        display: block;
+    }
+    .m-h-img
+    {
+        width: 100px;
+        height: 100px;
+    }
+    .m-h-b
+    {
+        text-align: center;
+        color: #6B6D6D;
+    }
+    .m-h-f
+    {
+        justify-content: center;
+    }
