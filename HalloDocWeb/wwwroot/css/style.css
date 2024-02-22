@@ -275,16 +275,7 @@ margin: 10px;
     {
         padding: 5px;
     }
-    .select
-    {
-     padding: 10px;   
-        position: absolute;
-        bottom: 75px;
-        left: 590px;
-        width: 565px;
-        height: 50px;
-        background-color: #F5F5F5;
-    }
+
     .ff-container
     {
         background-color: white;
@@ -341,3 +332,15 @@ margin: 10px;
     {
         justify-content: center;
     }
+.dash-nav {
+    color: black;
+}
+
+    .dash-nav:focus {
+        color: #64A6B4;
+        border-bottom: 1px solid #64A6B4;
+    }
+.active {
+    color: #64A6B4;
+    border-bottom: 1px solid #64A6B4;
+}

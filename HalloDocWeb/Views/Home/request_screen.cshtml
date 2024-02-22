@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="container login-container">
+        <div class="row mb-5">
+            <div class="col-6 mt-5">
+                <img src="/images/Screenshot (2).png" alt="">
+            </div>
+            <div class="col-2 mt-5">
+                <button class="btno1"><img src="/images/moon.svg" alt=""></button>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <a class="btn btn-primary col-6" style="background-color: #01BCE9; color: white;" asp-controller="Home" asp-action="Submit_request">Submit A Request</a>
+        </div>
+        <div class="row mb-5">
+            <a class="btn btn-primary col-6" style="background-color: #0D1556; color: white;" asp-controller="Home"  asp-action="Login">Registered Patients</a>
+        </div>
+    </div>
+    <ul class="nav footer-nav">
+        <li class="nav-item">
+            <a class="nav-link footer-link" href="#">Terms of conditions</a>
+        </li>
+
+        <li class="nav-item">
+
+            <a class="nav-link footer-link" href="#">Privacy Policy</a>
+        </li>
+    </ul>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

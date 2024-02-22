@@ -1,0 +1,191 @@
+﻿@model IEnumerable<HalloDocWeb.DataModels.Requestclient>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phonenumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notimobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notiemail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Strmonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Intyear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Intdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ismobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Street)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zipcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Communicationtype)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remindreservationcount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remindhousecallcount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issetfollowupsent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Isreservationremindersent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Region)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phonenumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notimobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notiemail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Strmonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Intyear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Intdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ismobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zipcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Communicationtype)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remindreservationcount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remindhousecallcount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Issetfollowupsent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isreservationremindersent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region.Regionid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Request.Requestid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Requestclientid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Requestclientid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Requestclientid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

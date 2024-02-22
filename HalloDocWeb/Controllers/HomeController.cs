@@ -12,17 +12,26 @@ namespace HalloDocWeb.Controllers
         {
             _logger = logger;
         }
-      
-        public IActionResult login()
+        
+        public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult forgot()
+        public IActionResult Forgot()
         {
             return View();
         }
-        public IActionResult submit_request()
+        public IActionResult Submit_request()
+        {
+            return View();
+        }
+      
+        public IActionResult Business_request()
+        {
+            return View();
+        }
+        public IActionResult Request_screen()
         {
             return View();
         }

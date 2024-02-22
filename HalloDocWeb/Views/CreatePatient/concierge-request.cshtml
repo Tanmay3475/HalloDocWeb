@@ -1,0 +1,125 @@
+﻿@model HalloDocWeb.ViewModels.ConciergeViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <button class="btn btn-outline-primary pc-button"><  Back</button>
+    <div class="container cv-container">
+        <form asp-action="concierge-request">
+        <div class="row"><div class="col-12 pc-head">Concierge Information</div></div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingFirstname" placeholder="Password" asp-for="firstName">
+                    <span asp-validation-for="firstName" class="text-danger"></span>  <label for="floatingFirstname" asp-for="firstName">Your First Name</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatinglastname" placeholder="Password" asp-for="lastName">
+                    <span asp-validation-for="lastName" class="text-danger"></span><label for="floatinglastname" asp-for="lastName">Your Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 input-group pc-num">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/flag-fill.svg" alt=""></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+                <input type="number" class="form-control" aria-label="Text input with dropdown button" placeholder="(201) 555-0123" asp-for="phoneNumber">
+                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                </div>
+
+            <div class="col-6 form-floating pc-text">
+                <input type="email" class="form-control" id="floatingemail" placeholder="Password" asp-for="email">
+                    <span asp-validation-for="email" class="text-danger"></span>   <label for="floatingemail" asp-for="email">Your Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingrelation" placeholder="Password" asp-for="Conciergename">
+                    <span asp-validation-for="Conciergename" class="text-danger"></span><label for="floatingrelation" asp-for="Conciergename">Hotel/Property Name</label>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Concierge Location</div></div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="street" placeholder="Password" asp-for="Street">
+                    <span asp-validation-for="Street" class="text-danger"></span> <label for="street" asp-for="Street">Street</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingcity" placeholder="Password" asp-for="City">
+                    <span asp-validation-for="City" class="text-danger"></span> <label for="floatingcity" asp-for="City">City</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="country" placeholder="Password" asp-for="State">
+                    <span asp-validation-for="State" class="text-danger"></span> <label for="country" asp-for="State">Country</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="number" class="form-control" id="floatingzip" placeholder="Password" asp-for="ZipCode">
+                    <span asp-validation-for="ZipCode" class="text-danger"></span><label for="floatingzip" asp-for="ZipCode">Zip Code</label>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Patient Information</div></div>
+        <div class="row">
+            <div class="col-12 form-floating pc-text">
+                <textarea class="form-control" id="symptoms" name="text" placeholder="Comment goes here" asp-for="Symptoms"></textarea>
+                    <span asp-validation-for="Symptoms" class="text-danger"></span> <label for="symptoms" asp-for="Symptoms">Enter brief details Of Symptoms(Optional)</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingFirstname" placeholder="Password" asp-for="FirstName">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>  <label for="floatingFirstname" asp-for="FirstName">First Name</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatinglastname" placeholder="Password" asp-for="LastName">
+                    <span asp-validation-for="LastName" class="text-danger"></span> <label for="floatinglastname" asp-for="LastName">Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="date" class="form-control" id="floatingdate" placeholder="Password" asp-for="DateOfBirth">
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>  <label for="floatingdate" asp-for="DateOfBirth">Date of Birth</label>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Patient Contact Information</div></div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="email" class="form-control" id="floatingemail" placeholder="Password" asp-for="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span> <label for="floatingemail" asp-for="Email">Email</label>
+            </div>
+            <div class="col-6 input-group pc-num">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/flag-fill.svg" alt=""></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+                    <input type="number" class="form-control" aria-label="Text input with dropdown button" placeholder="(201) 555-0123" asp-for="PhoneNumber"> <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Patient Location</div></div>
+
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingroom" placeholder="Password" asp-for="Room">
+                    <span asp-validation-for="Room" class="text-danger"></span><label for="floatingroom" asp-for="Room">Room# / Suite(Optional)</label>
+            </div>
+        </div>
+
+        <div class="row"><div class="col-8"></div><div class="col-2 pc-text"><button type="submit" class="btn btn-outline-primary">Submit</button></div><div class="col-2 pc-text"><button type="button" class="btn btn-outline-primary" asp-controller="Home" asp-action="Submit_request">Cancel</button></div></div>
+        </form>
+    </div>
+
+
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

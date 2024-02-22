@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <button class="btn btn-outline-primary pc-button"><  Back</button>
+    <div class="container cv-container">
+        <div class="row"><div class="col-12 pc-head">Patient Information</div></div>
+        <div class="row">
+            <div class="col-12 form-floating pc-text">
+                <textarea class="form-control" id="symptoms" name="text" placeholder="Comment goes here"></textarea>
+                <label for="symptoms">Enter brief details Of Symptoms(Optional)</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingFirstname" placeholder="Password">
+                <label for="floatingFirstname">First Name</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatinglastname" placeholder="Password">
+                <label for="floatinglastname">Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="date" class="form-control" id="floatingdate" placeholder="Password">
+                <label for="floatingdate">Date of Birth</label>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Patient Contact Information</div></div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="email" class="form-control" id="floatingemail" placeholder="Password">
+                <label for="floatingemail">Email</label>
+            </div>
+            <div class="col-6 input-group pc-num">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/flag-fill.svg" alt=""></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+                <input type="number" class="form-control" aria-label="Text input with dropdown button" placeholder="(201) 555-0123">
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Patient Location</div></div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="street" placeholder="Password">
+                <label for="street">Street</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingcity" placeholder="Password">
+                <label for="floatingcity">City</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="country" placeholder="Password">
+                <label for="country">Country</label>
+            </div>
+            <div class="col-6 form-floating pc-text">
+                <input type="number" class="form-control" id="floatingzip" placeholder="Password">
+                <label for="floatingzip">Zip Code</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="floatingroom" placeholder="Password">
+                <label for="floatingroom">Room# / Suite(Optional)</label>
+            </div>
+            <div class="col-2"><button class="btn btn-outline-primary mt-3"><img src="/images/geo-alt.svg" alt="">Map</button></div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">Relation</div></div>
+        <div class="row">
+            <div class="col-6 form-floating pc-text">
+                <input type="text" class="form-control" id="country" placeholder="Password">
+                <label for="country">Relation With Patient(Optional)</label>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 pc-head">(Optional) Upload photo or Document</div></div>
+        <div class="row">
+            <div class="col-12 input-group pc-text">
+                <input type="file" class="form-control" id="inputGroupFile02">
+                <label class="input-group-text" for="inputGroupFile02"><img src="/images/cloud-arrow-up.svg" alt="" class="u-icon">Upload</label>
+            </div>
+        </div>
+        <div class="row"><div class="col-8"></div><div class="col-2 pc-text"><button type="button" class="btn btn-outline-primary">Submit</button></div><div class="col-2 pc-text"><button type="button" class="btn btn-outline-primary">Cancel</button></div></div>
+    </div>
+
+    <!-- <div class="select">Select Here</div> -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

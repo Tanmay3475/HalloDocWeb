@@ -1,0 +1,132 @@
+﻿@using System.Collections
+@model HalloDocWeb.ViewModels.DashboardViewModel
+<!DOCTYPE html>
+@* @{
+    Dictionary<int, string> dictionary = new Dictionary<int, string>();
+    dictionary.Add(1,"Unassigned");
+    dictionary.Add(2,"Accepted");
+    dictionary.Add(3, "Cancelled");
+    dictionary.Add(4, "Reserving");
+    dictionary.Add(5, "MDEnRoute");
+    dictionary.Add(6, "MDOnSite");
+    dictionary.Add(7, "FollowUp");
+    dictionary.Add(8, "Closed");
+    dictionary.Add(9, "Locked");
+    dictionary.Add(10, "Declined");
+    dictionary.Add(11, "Consult");
+    dictionary.Add(12, "Clear");
+    dictionary.Add(13, "CancelledByProvider");
+    dictionary.Add(14, "CCUploadedByClient");
+    dictionary.Add(15, "CCApprovedByAdmin");
+
+} *@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="py-3  border-bottom bg-white">
+        <div class="xl-container d-flex flex-wrap">
+            <a href="/" class="d-flex  mb-3 mb-lg-0 align-items-left me-lg-auto text-dark text-decoration-none">
+
+                <img src="/images/Screenshot (2).png" alt="" width="50%">
+            </a>
+            <div class="mt-1 me-2">Welcome</div>
+            <h3 class="ms-2 me-3">@Model.User.Firstname</h3>
+            <button class="btno "><img src="/images/moon.svg" alt=""></button>
+            <ul class="nav">
+                <li class="nav-item"><a asp-controller="Home" asp-action="request_screen" class=" btn btn-outline-primary " style="margin-right: 100px;">Logout</a></li>
+            </ul>
+
+        </div>
+    </header>
+    <nav class="py-2 m-0 bg-white">
+        <div class="xl-container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item "><a href="#" class="nav-link active  px-2  dash-nav">DashBoard</a></li>
+                <li class="nav-item"><a asp-controller="Aspnetusers" asp-action="user_profile" class="nav-link   dash-nav" asp-route-id="@Model.User.Userid">Profiles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <h2 class="mt-2">Medical History</h2>
+        <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom bg-white">
+
+            <div class="btn-toolbar mb-2 mb-md-0 ">
+                <div class="btn-group me-2 ">
+                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#myModal">Create new request</button>
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header m-h" style="background-color: #01BCE9">
+
+                                    <h4 class="modal-title ">Create New Request<button type="button" class="ms-1 btn-close mt-1" data-bs-dismiss="modal" aria-label="Close"></button></h4>
+
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body m-h-b mt-1">
+                                    <div>Here, I want to create new request for...</div>
+                                    <div class="mt-5">
+                                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+                                        <label class="btn btn-secondary" for="option1">Me</label>
+
+                                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+                                        <label class="btn btn-secondary" for="option2">Someone Else</label>
+                                    </div>
+                                    <div class="mt-5" style="float: right;">
+                                        <button type="button" class="btn btn-outline-primary">Continue</button>
+                                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer
+                                     <div class="modal-footer m-h-f">
+                                       <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                                     </div>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="background-color: #8D8C8C;">Created Date <img src="/images/arrow-down.svg" alt="" srcset=""></th>
+                        <th scope="col" style="background-color: #8D8C8C;">Current Status</th>
+                        <th scope="col" style="background-color:#8D8C8C;">Document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach(var item in Model.Requests){
+                    <tr>
+                        <td>@item.Createddate</td>
+                        <td>@Model.findStatus(item.Status)</td>
+                        <td>
+                            <a asp-controller="Aspnetusers" asp-action="view_documents" asp-route-id="@item.Requestid" class="btn btn-primary">(@item.Requestwisefiles.Count()) Documents</a>
+                        </td>
+                    </tr>
+                    }
+                   
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

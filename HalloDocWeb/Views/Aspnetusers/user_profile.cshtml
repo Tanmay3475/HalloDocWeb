@@ -1,0 +1,163 @@
+﻿@using System.Globalization
+@model HalloDocWeb.DataModels.User
+<!DOCTYPE html>
+@{
+    DateTime date = new DateTime(Convert.ToInt32(Model.Intyear),Convert.ToInt32(Model.Strmonth), Convert.ToInt32(Model.Intdate));
+  }                                                                                         
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="py-3  border-bottom bg-white">
+        <div class="xl-container d-flex flex-wrap">
+            <a href="/" class="d-flex  mb-3 mb-lg-0 align-items-left me-lg-auto text-dark text-decoration-none">
+
+                <img src="/images/Screenshot (2).png" alt="" width="50%">
+            </a>
+            <div class="mt-1 me-2">Welcome</div>
+            <h3 class="ms-2 me-3">@Model.Firstname</h3>
+            <button class="btno "><img src="/images/moon.svg" alt=""></button>
+            <ul class="nav">
+                <li class="nav-item"><a asp-controller="Home" asp-action="request_screen" class=" btn btn-outline-primary " style="margin-right: 100px;">Logout</a></li>
+            </ul>
+
+        </div>
+    </header>
+    <nav class="py-2 m-0 bg-white">
+        <div class="xl-container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a asp-controller="Aspnetusers" asp-action="dashboard" asp-route-id="@Model.Userid" class="nav-link  px-2 dash-nav">DashBoard</a></li>
+                <li class="nav-item "><a href="#" class="nav-link active  dash-nav">Profiles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;">
+            <h2 class="mt-2 float-start ">User Profile</h2>
+            <a asp-controller="Aspnetusers" asp-action="Dashboard" asp-route-id="@Model.Userid" class="btn btn-outline-primary float-end mt-2 me-5 ">
+                < Back
+            </a>
+
+        </div>
+        <div class="container themed-container ms-0 bg-white">
+            <p class="h3 p-2">General Information</p>
+            <fieldset disabled>
+                <!-- <div class="row mb-3">
+                    <div class="col-6 themed-grid-col"><div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">First Name</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Test">
+                      </div></div>
+
+                    <div class="col-6 themed-grid-col"><div class="col-6 themed-grid-col"><div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">First Name</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Test">
+                      </div></div></div>
+                  </div> -->
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">First Name</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Firstname">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Last Name</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Lastname">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Date Of Birth</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@date">
+                        </div>
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+                <p class="h3 p-2">Contact Information</p>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="row">
+
+                                <div class="col-4">
+                                    <label for="disabledTextInput" class="form-label">Type</label>
+                                    <select class="form-select" aria-label="Disabled select example" disabled>
+                                        <option selected>Mobile</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-8">
+                                    <label for="disabledTextInput" class="form-label mt-3"></label><select class="form-select" aria-label="Disabled select example" disabled>
+                                        <option selected>@Model.Mobile</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Email</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Email">
+                        </div>
+                    </div>
+                </div>
+                <p class="h3 p-2">Location Information</p>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Street</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Street">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">City</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.City">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">State</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.State">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <label for="disabledTextInput" class="form-label">Zip Code</label>
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Zipcode">
+                                </div> <div class="col-2">
+                                    <button type="button" class="btn btn-outline-primary mt-4"><img src="/images/geo-alt.svg" alt="" srcset="" class="pe-1">Map</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </fieldset>
+            <button type="button" class="btn btn-outline-primary float-end">Edit</button>
+        </div>
+
+       
+    </main>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
