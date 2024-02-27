@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HalloDocWeb.DataContext;
-using HalloDocWeb.DataModels;
-using HalloDocWeb.ViewModels;
+using HalloDoc.Models.DataContext;
 using System.Collections;
 using Microsoft.Extensions.Hosting;
+using HalloDoc.Models;
 
 
 namespace HalloDocWeb.Controllers
@@ -42,7 +41,7 @@ namespace HalloDocWeb.Controllers
             _context.SaveChanges();
             foreach (var item in s.Filepath)
             {
-                string fname = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadDocument", item.Name);
+                string fname = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Documents", r1.Requestid.ToString()+ item.FileName);
                 Requestwisefile r2 = new Requestwisefile { Requestid = r.Requestid, Filename = fname, Createddate = DateTime.Now };
                 _context.Add(r2);
                 _context.SaveChanges();
@@ -59,7 +58,7 @@ namespace HalloDocWeb.Controllers
             foreach (var item in file)
             {
                 
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Documents", id.ToString());
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Documents", id.ToString()+item.FileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     item.CopyTo(fileStream);
@@ -92,7 +91,7 @@ namespace HalloDocWeb.Controllers
             _context.SaveChanges();
             foreach (var item in s.Filepath)
             {
-                string fname = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadDocument", item.Name);
+                string fname = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Documents", r.Requestid.ToString(),item.FileName);
                 Requestwisefile r2 = new Requestwisefile { Requestid = r.Requestid, Filename = fname, Createddate = DateTime.Now };
                 _context.Add(r2);
                 _context.SaveChanges();

@@ -344,3 +344,33 @@ margin: 10px;
     color: #64A6B4;
     border-bottom: 1px solid #64A6B4;
 }
+.login-card-a {
+    position: absolute;
+    top: 300px;
+    left: 1300px;
+}
+
+.alogo {
+    position: absolute;
+    top: 50px;
+    left: 1350px;
+}
+
+.footer-nav-a {
+    position: absolute;
+    bottom: 30px;
+    left: 1315px;
+}
+
+.divider-a {
+    position: absolute;
+    bottom: 40px;
+    left: 1480px;
+}
+
+.forgot-link-a {
+    text-decoration: none;
+    position: absolute;
+    top: 200px;
+    left: 110px;
+}

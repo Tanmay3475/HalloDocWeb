@@ -1,5 +1,5 @@
 ﻿@using System.Collections
-@model HalloDocWeb.ViewModels.DashboardViewModel
+@model DashboardViewModel
 <!DOCTYPE html>
 @* @{
     Dictionary<int, string> dictionary = new Dictionary<int, string>();
@@ -73,19 +73,22 @@
                                 <!-- Modal body -->
                                 <div class="modal-body m-h-b mt-1">
                                     <div>Here, I want to create new request for...</div>
+                                    <form asp-action="submit" enctype="multipart/form-data">
                                     <div class="mt-5">
-                                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+                                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" value="me" checked>
                                         <label class="btn btn-secondary" for="option1">Me</label>
 
-                                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+                                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" value="else">
                                         <label class="btn btn-secondary" for="option2">Someone Else</label>
                                     </div>
+
                                     <div class="mt-5" style="float: right;">
-                                        <button type="button" class="btn btn-outline-primary">Continue</button>
+                                        <button type="submit" class="btn btn-outline-primary">Continue</button>
                                         <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
                                     </div>
+                                    </form>
                                 </div>
-
+                                
                                 <!-- Modal footer
                                      <div class="modal-footer m-h-f">
                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>

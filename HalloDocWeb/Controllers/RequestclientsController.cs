@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HalloDocWeb.DataContext;
-using HalloDocWeb.DataModels;
+using HalloDoc.Models.DataContext;
+using HalloDoc.Models;
 
 namespace HalloDocWeb.Controllers
 {

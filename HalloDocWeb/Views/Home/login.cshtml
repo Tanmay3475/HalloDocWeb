@@ -1,4 +1,4 @@
-﻿@model HalloDocWeb.DataModels.Aspnetuser
+﻿@model Aspnetuser
 @{
     ViewData["title"]="Login";
 }
@@ -20,7 +20,7 @@
     </div>
     
     <div class="container login-card">
-        <form asp-controller="Aspnetusers" asp-action="Dashboard">
+        <form asp-action="Login" enctype="multipart/form-data">
         <a asp-controller="Home" asp-action="request_screen" class="back-link">
             <img src="/images/chevron-compact-left.svg" alt="">Back
         </a>

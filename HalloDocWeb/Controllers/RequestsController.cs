@@ -5,39 +5,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HalloDocWeb.DataContext;
-using HalloDocWeb.DataModels;
-using HalloDocWeb.ViewModels;
+using HalloDoc.Models.DataContext;
+using HalloDoc.Models;
+using HalloDoc.Repository;
+using HalloDoc.Repository.IRepository;
 
 namespace HalloDocWeb.Controllers
 {
     public class RequestsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRequestRepository _db;
 
-        public RequestsController(ApplicationDbContext context)
+        public RequestsController(IRequestRepository db)
         {
-            _context = context;
+            _db = db;
         }
 
         // GET: Requests
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
-              return _context.Requests != null ? 
-                          View(await _context.Requests.ToListAsync()) :
+              return _db != null ? 
+                          View(_db.GetAll()) :
                           Problem("Entity set 'ApplicationDbContext.Requests'  is null.");
         }
 
         // GET: Requests/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null || _context.Requests == null)
+            if (id == null || _db == null)
             {
                 return NotFound();
             }
 
-            var request = await _context.Requests
-                .FirstOrDefaultAsync(m => m.Requestid == id);
+            var request =  _db.GetFirstOrDefault(m => m.Requestid == id);
             if (request == null)
             {
                 return NotFound();
@@ -57,26 +57,26 @@ namespace HalloDocWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Requestid,Requesttypeid,Userid,Firstname,Lastname,Phonenumber,Email,Status,Physicianid,Confirmationnumber,Createddate,Isdeleted,Modifieddate,Declinedby,Isurgentemailsent,Lastwellnessdate,Ismobile,Calltype,Completedbyphysician,Lastreservationdate,Accepteddate,Relationname,Casenumber,Ip,Casetag,Casetagphysician,Patientaccountid,Createduserid")] Request request)
+        public IActionResult Create([Bind("Requestid,Requesttypeid,Userid,Firstname,Lastname,Phonenumber,Email,Status,Physicianid,Confirmationnumber,Createddate,Isdeleted,Modifieddate,Declinedby,Isurgentemailsent,Lastwellnessdate,Ismobile,Calltype,Completedbyphysician,Lastreservationdate,Accepteddate,Relationname,Casenumber,Ip,Casetag,Casetagphysician,Patientaccountid,Createduserid")] Request request)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(request);
-                await _context.SaveChangesAsync();
+                _db.Add(request);
+                _db.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(request);
         }
 
         // GET: Requests/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
-            if (id == null || _context.Requests == null)
+            if (id == null || _db == null)
             {
                 return NotFound();
             }
 
-            var request = await _context.Requests.FindAsync(id);
+            var request =  _db.GetFirstOrDefault(m=>m.Requestid==id);
             if (request == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace HalloDocWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Requestid,Requesttypeid,Userid,Firstname,Lastname,Phonenumber,Email,Status,Physicianid,Confirmationnumber,Createddate,Isdeleted,Modifieddate,Declinedby,Isurgentemailsent,Lastwellnessdate,Ismobile,Calltype,Completedbyphysician,Lastreservationdate,Accepteddate,Relationname,Casenumber,Ip,Casetag,Casetagphysician,Patientaccountid,Createduserid")] Request request)
+        public IActionResult Edit(int id, [Bind("Requestid,Requesttypeid,Userid,Firstname,Lastname,Phonenumber,Email,Status,Physicianid,Confirmationnumber,Createddate,Isdeleted,Modifieddate,Declinedby,Isurgentemailsent,Lastwellnessdate,Ismobile,Calltype,Completedbyphysician,Lastreservationdate,Accepteddate,Relationname,Casenumber,Ip,Casetag,Casetagphysician,Patientaccountid,Createduserid")] Request request)
         {
             if (id != request.Requestid)
             {
@@ -100,12 +100,12 @@ namespace HalloDocWeb.Controllers
             {
                 try
                 {
-                    _context.Update(request);
-                    await _context.SaveChangesAsync();
+                    _db.Update(request);
+                    _db.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RequestExists(request.Requestid))
+                    if (_db.GetFirstOrDefault(M=>M.Requestid==request.Requestid)==null)
                     {
                         return NotFound();
                     }
@@ -120,15 +120,15 @@ namespace HalloDocWeb.Controllers
         }
 
         // GET: Requests/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
-            if (id == null || _context.Requests == null)
+            if (id == null || _db == null)
             {
                 return NotFound();
             }
 
-            var request = await _context.Requests
-                .FirstOrDefaultAsync(m => m.Requestid == id);
+            var request =  _db
+                .GetFirstOrDefault(m => m.Requestid == id);
             if (request == null)
             {
                 return NotFound();
@@ -142,24 +142,25 @@ namespace HalloDocWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Requests == null)
+            if (_db == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Requests'  is null.");
             }
-            var request = await _context.Requests.FindAsync(id);
+            var request = _db.GetFirstOrDefault(m => m.Requestid == id);
             if (request != null)
             {
-                _context.Requests.Remove(request);
+                _db.Remove(request);
             }
             
-            await _context.SaveChangesAsync();
+            _db.Save();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RequestExists(int id)
-        {
-          return (_context.Requests?.Any(e => e.Requestid == id)).GetValueOrDefault();
-        }
-        
+        //private bool RequestExists(int id)
+        //{
+        //    return (bool)_db?.GetFirstOrDefault(e => e.Requestid == id));
+
+        //}
+
     }
 }

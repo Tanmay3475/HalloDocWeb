@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    Layout = null;
+}
+@model HalloDoc.Models.AdminLoginViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <button class="btno"><img src="/images/moon.svg" alt=""></button>
+    <img src="/images/Screenshot (2).png" alt="" class="alogo">
+    <div class="container">
+       
+        <div class="row">
+            <div class="col-6">
+                <img src="/images/SRS Screen Shorts/11116016_415.jpg" alt="" width="943px" height="100%" style="position: absolute;left: 0;">
+            </div>
+            <div class="col-6">
+                <div class="container login-card-a">
+                 
+                    <div class="h3 login-head">Login to your account</div>
+                    <form asp-action="Admin_Login" enctype="multipart/form-data">
+                        <div class="form-floating username">
+                        <input type="text" class="form-control" id="floatingUsername" placeholder="Username" asp-for="Username">
+                        <span class="text-danger" asp-validation-for="Username"></span>
+                        <img src="/images/person-circle.svg" alt="" class="user-icon"><label for="floatingUsername" asp-for="Username">Username</label>
+                    </div>
+                    <div class="form-floating username">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="Password">
+                        <span class="text-danger" asp-validation-for="Password"></span><label for="floatingPassword" asp-for="Password">Password</label>
+                    </div>
+                    <button type="submit" class="login-button">Login</button>
+                    
+                    <a asp-action="Admin_Reset" class="forgot-link">Forgot Password</a>
+                    <!-- <ul class="nav footer-nav-a">
+                        <li class="nav-item">
+                         <a class="nav-link footer-link" href="#">Terms of conditions</a>
+                       </li>
+
+                       <li class="nav-item">
+
+                         <a class="nav-link footer-link" href="#">Privacy Policy</a>
+                       </li>
+                        </form>                       </ul> -->
+                               </form>    </div>
+                <!-- <ul class="nav a-footer-nav">
+                   <li class="nav-item">
+                    <a class="nav-link footer-link" href="#">Terms of conditions</a>
+                  </li>
+
+                  <li class="nav-item">
+
+                    <a class="nav-link footer-link" href="#">Privacy Policy</a>
+                  </li>
+                  </ul> -->
+
+            </div>
+        </div>
+        <!-- </div><ul class="nav a-footer-nav">
+            <li class="nav-item">
+             <a class="nav-link footer-link" href="#">Terms of conditions</a>
+           </li>
+
+           <li class="nav-item">
+
+             <a class="nav-link footer-link" href="#">Privacy Policy</a>
+           </li>
+           </ul> -->
+        <!-- <div class="divider">|</div> -->
+    </div>
+    <ul class="nav footer-nav-a">
+        <li class="nav-item">
+            <a class="nav-link footer-link" href="#">Terms of conditions</a>
+        </li>
+
+        <li class="nav-item">
+
+            <a class="nav-link footer-link" href="#">Privacy Policy</a>
+        </li>
+    </ul>
+    <div class="divider-a">|</div>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
