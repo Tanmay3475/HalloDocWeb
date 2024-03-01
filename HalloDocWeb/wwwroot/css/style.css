@@ -336,14 +336,12 @@ margin: 10px;
     color: black;
 }
 
-    .dash-nav:focus {
+    .dash-nav:focus, .dash-nav:hover ,.active{
         color: #64A6B4;
         border-bottom: 1px solid #64A6B4;
     }
-.active {
-    color: #64A6B4;
-    border-bottom: 1px solid #64A6B4;
-}
+    
+
 .login-card-a {
     position: absolute;
     top: 300px;
@@ -351,8 +349,8 @@ margin: 10px;
 }
 
 .alogo {
-    position: absolute;
-    top: 50px;
+    position: absolute !important;
+    top: 50px ;
     left: 1350px;
 }
 
@@ -370,7 +368,173 @@ margin: 10px;
 
 .forgot-link-a {
     text-decoration: none;
-    position: absolute;
+    position: absolute !important;
     top: 200px;
     left: 110px;
+}
+.a-button {
+    
+    border-radius:10px;
+    height: 100px;
+    width: 250px
+}
+.status-1 {
+    background-color: #E9EAEF;
+    color: #293F84;
+    text-align: left;
+    border: 1px solid #D6D6DE;
+}
+.status-2 {
+    background-color: #E5F2F8;
+    color: #2C9ACA;
+    text-align: left;
+    border: 1px solid #D6EBEF;
+}
+.status-3 {
+    background-color: #E9F0E8;
+    color: #337B2E;
+    text-align: left;
+    border: 1px solid #F3FCF0
+}
+.status-4 {
+    background-color: #F7E6EE;
+    color: #B93C86;
+    text-align: left;
+    border: 1px solid #E7D2DE;
+}
+.status-5 {
+    background-color: #E5EEF5;
+    color: #1F6EB0;
+    text-align: left;
+    border: 1px solid #D6E5EA;
+}
+.status-6 {
+    background-color: #EFEEF4;
+    color: #926AB7;
+    text-align: left;
+    border: 1px solid #B8A6BE;
+}
+.status-1:hover,.active-1 {
+    background-color: #203F9A;
+    color: #FBFDFC;
+    border:none;
+}
+.bottom-arrow {
+    position: relative;
+    left:120px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: none;
+    height: 0px;
+    width: 0px;
+}
+.status-1:hover + .bottom-arrow, .active-1 + .bottom-arrow {
+    border-top: 15px solid #203F9A !important;
+    z-index: 3;
+}
+.status-1:hover .new-img, .status-2:hover .pending-img, .status-3:hover .active-img, .status-4:hover .conclude-img, .status-5:hover .close-img, .status-6:hover .unpaid-img {
+    visibility: hidden;
+}
+.new-img-h, .pending-img-h, .active-img-h, .conclude-img-h, .close-img-h, .unpaid-img-h {
+    visibility: hidden;
+}
+.status-1:hover .new-img-h, .status-2:hover .pending-img-h, .status-3:hover .active-img-h, .status-4:hover .conclude-img-h, .status-5:hover .close-img-h,.status-6:hover .unpaid-img-h {
+    visibility: visible;
+    position: relative;
+    left: -48px;
+}
+.active-1 .new-img-h {
+    visibility: visible;
+    position: relative;
+    left: -48px;
+}
+.new-h
+{
+    position:relative;
+    left:-40px;
+}
+.status-1:hover .new-h
+{
+    position:relative;
+    left:-34px;
+}
+.status-2:hover {
+    background-color: #00ADEF;
+    color: #EAFFFB;
+    border: none;
+}
+    .status-2:hover + .bottom-arrow {
+        border-top: 15px solid #00ADEF !important;
+        z-index: 3;
+    }
+.status-3:hover {
+    background-color: #228C20;
+    color: #ECFEEB;
+    border: none;
+}
+    .status-3:hover + .bottom-arrow {
+        border-top: 15px solid #228C20 !important;
+        z-index: 3;
+    }
+.status-4:hover {
+    background-color: #DA0F82;
+    color: #FFF3FC;
+    border: none;
+}
+
+.status-4:hover + .bottom-arrow {
+    border-top: 15px solid #DA0F82 !important;
+    z-index: 3;
+}
+.status-5:hover {
+    background-color: #0370D7;
+    color: #F3FFFF;
+    border: none;
+}
+
+    .status-5:hover + .bottom-arrow {
+        border-top: 15px solid #0370D7 !important;
+        z-index: 3;
+    }
+.status-6:hover {
+    background-color: #9966CD;
+    color: #FBF3FF;
+    border: none;
+}
+
+    .status-6:hover + .bottom-arrow {
+        border-top: 15px solid #9966CD !important;
+        z-index: 3;
+    }
+.btn-link-a {
+   height:40px;
+    background-color: #00BEEB;
+    color: #92FFFF;
+    border: 1px solid #BFFEFF;
+    border-radius:10px;
+    font-size:16px;
+}
+.search {
+    border: 1px solid #A6C8CD !important;
+    background-color: #FFFFFF !important;
+    height:50px !important;
+    width:200px !important;
+    padding-left:50px !important;
+    border-radius:10px !important;
+}
+.btn-filter {
+    height:50px !important;
+    background-color: #FFFFFF;
+    color: #727172;
+    border:none;
+}
+    .btn-filter:hover {
+        background-color: #FFFFFF !important;
+        color: #727172 !important;
+        border: 1px solid #DCDCDC !important;
+    }
+.dtable-head {
+    background-color: #F0F0F0;
+    color: #3C3E40;
+    border:none;
 }

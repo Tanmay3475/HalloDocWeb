@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using HalloDoc.Models.DataContext;
+
 namespace HalloDoc.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
@@ -39,5 +40,7 @@ namespace HalloDoc.Repository
         public void RemoveRange(IEnumerable<T> items)
         {
             dbSet.RemoveRange(items);        }
+
+       
     }
 }

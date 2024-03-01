@@ -29,7 +29,8 @@ namespace HalloDocWeb.Controllers
                     var admin = _db.GetFirstOrDefault(m => m.Aspnetuserid == aspnetuser.AspNetUserId);
                     int id = admin.Adminid;
                     HttpContext.Session.SetInt32("Admin_Id", id);
-                    return RedirectToAction("Admin_Dashboard");
+                    HttpContext.Session.SetString("Admin_User", admin.Firstname);
+                    return RedirectToAction("Admin_Dashboard_New","AdminStatus",new {status = 1 });
                 }
             }
             return NotFound();
@@ -38,9 +39,6 @@ namespace HalloDocWeb.Controllers
         {
             return View();
         }
-        public IActionResult Admin_Dashboard()
-        {
-            return View();
-        }
+        
     }
 }

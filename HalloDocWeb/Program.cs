@@ -14,9 +14,18 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 builder.Services.AddScoped<IRequestRepository,RequestRepository>();
 builder.Services.AddScoped<IAspnetuserRepository,AspnetuserRepository>();
 builder.Services.AddScoped<IAdminRepository,AdminRepository>();
+
+builder.Services.AddScoped<IUserRepository,UserRepository>();
+
+builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
+builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

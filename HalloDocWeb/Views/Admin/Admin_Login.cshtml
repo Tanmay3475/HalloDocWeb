@@ -7,6 +7,7 @@
     Layout = null;
 }
 @model HalloDoc.Models.AdminLoginViewModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,19 +19,25 @@
 
 </head>
 <body>
-    <button class="btno"><img src="/images/moon.svg" alt=""></button>
-    <img src="/images/Screenshot (2).png" alt="" class="alogo">
+    <form asp-action="Admin_Login" enctype="multipart/form-data">
+    
     <div class="container">
        
         <div class="row">
             <div class="col-6">
-                <img src="/images/SRS Screen Shorts/11116016_415.jpg" alt="" width="943px" height="100%" style="position: absolute;left: 0;">
+                    <button class="btno"><img src="/images/moon.svg" alt=""></button>
+                    <img src="/images/Screenshot (2).png" alt="" style=" position: absolute;
+    top: 50px;
+    left: 1350px;">
+                <img src="/images/SRS Screen Shorts/11116016_415.jpg" alt=""  style="position: absolute;left: 0;width:943px;height:100%">
             </div>
             <div class="col-6">
-                <div class="container login-card-a">
+                    <div class="container" style="position: absolute;
+    top: 300px;
+    left: 1300px;">
                  
                     <div class="h3 login-head">Login to your account</div>
-                    <form asp-action="Admin_Login" enctype="multipart/form-data">
+                    
                         <div class="form-floating username">
                         <input type="text" class="form-control" id="floatingUsername" placeholder="Username" asp-for="Username">
                         <span class="text-danger" asp-validation-for="Username"></span>
@@ -53,7 +60,7 @@
                          <a class="nav-link footer-link" href="#">Privacy Policy</a>
                        </li>
                         </form>                       </ul> -->
-                               </form>    </div>
+                                </div>
                 <!-- <ul class="nav a-footer-nav">
                    <li class="nav-item">
                     <a class="nav-link footer-link" href="#">Terms of conditions</a>
@@ -91,6 +98,6 @@
     </ul>
     <div class="divider-a">|</div>
     <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-</body>
+</form></body>
 
 </html>

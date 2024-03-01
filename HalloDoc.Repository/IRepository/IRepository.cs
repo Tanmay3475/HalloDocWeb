@@ -14,5 +14,7 @@ namespace HalloDoc.Repository.IRepository
         void Add(T item);
         void Remove(T item);
         void RemoveRange(IEnumerable<T> items);
+       
+    
     }
 }
