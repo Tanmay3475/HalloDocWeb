@@ -1,9 +1,11 @@
 ﻿using HalloDoc.Models;
 using HalloDoc.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HalloDocWeb.Controllers
 {
+    
     public class AdminController : Controller
     {
         private readonly IAdminRepository _db;
@@ -30,7 +32,7 @@ namespace HalloDocWeb.Controllers
                     int id = admin.Adminid;
                     HttpContext.Session.SetInt32("Admin_Id", id);
                     HttpContext.Session.SetString("Admin_User", admin.Firstname);
-                    return RedirectToAction("Admin_Dashboard_New","AdminStatus",new {status = 1 });
+                    return RedirectToAction("tabs","AdminStatus");
                 }
             }
             return NotFound();

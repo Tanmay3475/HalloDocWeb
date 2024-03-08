@@ -12,7 +12,7 @@ namespace HalloDoc.Models
         public User? User { get; set; }
         public List<Request>? Requests { get; set; }
         public string? Aspuser { get; set; }
-
+        public string Confirmation { get; set; }
         public List<Requestwisefile>? requestwisefiles { get; set; }
 
         enum statusName

@@ -11,9 +11,12 @@ using Microsoft.AspNetCore.StaticFiles;
 using System.IO.Compression;
 using System.Collections;
 using HalloDoc.Models;
+using Microsoft.AspNetCore.Authorization;
+using Services.Implementation;
 
 namespace HalloDocWeb.Controllers
 {
+    [AuthorizationRepository("User")]
     public class AspnetusersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -159,6 +162,7 @@ namespace HalloDocWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
         // POST: Aspnetusers/Delete/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Dashboard([Bind("Id,Username,Passwordhash,Email,Phonenumber,Createddate,Ip")] Aspnetuser asp)
@@ -236,7 +240,7 @@ namespace HalloDocWeb.Controllers
             var files = (from m in _context.Requestwisefiles
                          where m.Requestid == id
                          select m).ToList();
-            DashboardViewModel ds = new DashboardViewModel { Aspuser=aspuser.AspNetUserId,User=user,requestwisefiles=files,requestid=id}; 
+            DashboardViewModel ds = new DashboardViewModel { Aspuser=aspuser.AspNetUserId,User=user,requestwisefiles=files,requestid=id,Confirmation=request.Confirmationnumber}; 
             return View(ds);
         }
 
@@ -352,7 +356,7 @@ namespace HalloDocWeb.Controllers
         public IActionResult submit_me(DashboardViewModel model)
         {
             var id = (int)HttpContext.Session.GetInt32("UserId");
-            Request r = new Request { Userid=id, Requesttypeid = 1, Status = 1, Firstname = model.FirstName, Lastname = model.LastName, Createddate = DateTime.Now, Isurgentemailsent = new BitArray(1) };
+            Request r = new Request { Userid=id, Requesttypeid = 1, Status = 1, Firstname = model.FirstName, Lastname = model.LastName, Createddate = DateTime.Now, Isurgentemailsent = new BitArray(1) , Confirmationnumber = model.FirstName +  DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = model.FirstName, Lastname = model.LastName, Phonenumber = model.PhoneNumber, Address = model.Room, Notes = model.Symptoms, Email = model.Email, City = model.City, Zipcode = model.ZipCode, State = model.State, Intyear = model.DateOfBirth.Year, Strmonth = Convert.ToString(model.DateOfBirth.Month), Intdate = model.DateOfBirth.Day };
@@ -387,7 +391,7 @@ namespace HalloDocWeb.Controllers
             var id = (int)HttpContext.Session.GetInt32("UserId");
             DashboardViewModel model = new DashboardViewModel();
             var user = _context.Users.FirstOrDefault(m => m.Userid == id);
-            Request r = new Request {Userid=id, Requesttypeid = 2, Status = 1, Firstname = user.Firstname, Lastname = user.Lastname, Createddate = DateTime.Now, Relationname = s.Relationname, Email = user.Email, Phonenumber = user.Mobile, Isurgentemailsent = new BitArray(1) };
+            Request r = new Request {Userid=id, Requesttypeid = 2, Status = 1, Firstname = user.Firstname, Lastname = user.Lastname, Createddate = DateTime.Now, Relationname = s.Relationname, Email = user.Email, Phonenumber = user.Mobile, Isurgentemailsent = new BitArray(1), Confirmationnumber = s.FirstName+DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };

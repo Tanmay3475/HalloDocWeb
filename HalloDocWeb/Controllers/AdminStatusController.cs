@@ -1,12 +1,14 @@
 ﻿using HalloDoc.Models;
 using HalloDoc.Models.DataContext;
 using HalloDoc.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace HalloDocWeb.Controllers
 {
+    
     public class AdminStatusController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,27 +23,62 @@ namespace HalloDocWeb.Controllers
             _db3= db3;
             _context=context;
         }
-        public IActionResult Admin_Dashboard_New(int status)
+        public IActionResult tabs()
         {
             AdminDashboardViewModel A = new AdminDashboardViewModel
             {
-                Requests = _context.Requests.ToList(),
+                Requests = (from user in _context.Users join req in _context.Requests on user.Userid equals req.Userid select req).ToList(),
                 adminDashboardTableDataViewModels = getallAdminDashboard(1)
             };
             
             return View(A);
         }
-        
+      
+        public IActionResult New()
+        {
+            var adminlist = getallAdminDashboard(1);
+            return View(adminlist);
+        }
+        public IActionResult Pending()
+        {
+            var adminlist = getallAdminDashboard(2);
+            return View(adminlist);
+        }
+        public IActionResult Active()
+        {
+            var adminlist = getallAdminDashboard(4);
+            adminlist.AddRange(getallAdminDashboard(5));
+            return View(adminlist);
+        }
+        public IActionResult Conclude()
+        {
+            var adminlist = getallAdminDashboard(6);
+            return View(adminlist);
+        }
+        public IActionResult Close()
+        {
+            var adminlist = getallAdminDashboard(3);
+            adminlist.AddRange(getallAdminDashboard(7));
+            adminlist.AddRange(getallAdminDashboard(8));
+            return View(adminlist);
+        }
+        public IActionResult Unpaid()
+        {
+            var adminlist = getallAdminDashboard(9);
+            return View(adminlist);
+        }
+
+
+
         public List<AdminDashboardTableDataViewModel> getallAdminDashboard(int status)
         {
             var AdminDashboardDataTableViewModels = from user in _context.Users
             join req in _context.Requests on user.Userid equals req.Userid
-                                                    join reqclient in _context.Requestclients on req.Requestid equals reqclient.Requestid
                                                     where req.Status == status
                                                     orderby req.Createddate descending
                                                     select new AdminDashboardTableDataViewModel
                                                     {
-                                                        PatientName = reqclient.Firstname + " " + reqclient.Lastname,
+                                                        PatientName = req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Firstname + " " + req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Lastname,
                                                         PatientDOB = new DateTime(Convert.ToInt32(user.Intyear), Convert.ToInt32(user.Strmonth), Convert.ToInt32(user.Intdate)),
                                                         RequestorName = req.Firstname + " " + req.Lastname,
                                                         RequestedDate = req.Createddate,
@@ -49,7 +86,7 @@ namespace HalloDocWeb.Controllers
                                                         RequestorPhone = req.Phonenumber,
                                                         Address = req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Address,
                                                         Notes = req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Notes,
-                                                        ProviderEmail = _db3.GetFirstOrDefault(x => x.Physicianid == req.Physicianid).Email,
+                                                        ProviderEmail = _context.Physicians.FirstOrDefault(x => x.Physicianid ==req.Physicianid).Email,
                                                         PatientEmail = user.Email,
                                                         RequestorEmail = req.Email,
                                                         RequestorType = req.Requesttypeid,

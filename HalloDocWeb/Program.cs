@@ -2,6 +2,7 @@ using HalloDoc.Models.DataContext;
 using HalloDoc.Repository;
 using HalloDoc.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,10 @@ builder.Services.AddScoped<IUserRepository,UserRepository>();
 
 builder.Services.AddScoped<IRequestClientRepository, RequestClientRepository>();
 builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
+builder.Services.AddScoped<IUserService,UserService>();
+
 
 
 var app = builder.Build();
@@ -46,6 +51,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Admin_Login}/{id?}");
+    pattern: "{controller=Admin}/{action=Admin_Login}");
 
 app.Run();

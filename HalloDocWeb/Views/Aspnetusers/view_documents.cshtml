@@ -49,7 +49,7 @@
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Patient Name</h6>
                 <h5 class="card-title float-start mt-1 pe-2">@Model.User.Firstname</h5>
-                <h6 class="card-subtitle text-muted clearfix mt-3">@Model.Aspuser</h6>
+                <h6 class="card-subtitle text-muted clearfix mt-3">@Model.Confirmation</h6>
                 <h6 class="card-subtitle mb-2 text-muted float-start mt-1">Check here for any files that you or the doctors of your subsequents requestors have attached for you to review.</h6>
                 <form asp-controller="Aspnetusers" asp-action="view_documents" enctype="multipart/form-data">
                     <input asp-for="requestid" value="@Model.requestid" hidden/>

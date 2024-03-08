@@ -3,53 +3,197 @@
 *@
 @{
 }
+
+@model HalloDoc.Models.AdminDashboardViewModel
+@inject IHttpContextAccessor accessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"> </script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/bd0516d00b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @*     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" href="~/HalloDoc.styles.css" asp-append-version="true" /> *@
+
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <header class="py-3  border-bottom bg-white">
+        <div class="xl-container d-flex flex-wrap">
+            <a href="/" class="d-flex  mb-3 mb-lg-0 align-items-left me-lg-auto text-dark text-decoration-none">
+
+                <img src="/images/Screenshot (2).png" alt="" width="50%">
+            </a>
+            <div class="mt-1 me-2">Welcome</div>
+            <h3 class="ms-2 me-3">@accessor.HttpContext.Session.GetString("Admin_User")</h3>
+            <button class="btno "><img src="/images/moon.svg" alt=""></button>
+            <ul class="nav">
+                <li class="nav-item"><a asp-controller="Admin" asp-action="Admin_Login" class=" btn btn-outline-primary " style="margin-right: 100px;">Logout</a></li>
+            </ul>
+
+        </div>
+    </header>
+    <nav class="py-2 m-0 bg-white">
+        <div class="xl-container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="#" class="nav-link active px-2 dash-nav">DashBoard</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Provider Locations</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav">My Profile</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Providers</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Partners</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Access</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Records</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="nav-home">
+    <div class="container-fluid" style="position:absolute;left:0px; ">
+        <div class="row  mt-3">
+            <div class="col-2 new">
+
+                <button class="btn active-1 dashboardtab a-button ms-4 status-1" data-bs-target="#status_new" >
+                        <img src="/images/icons8-new-50 (1).png" alt="" class="me-1 new-img"><img src="\images\icons8-new-50 (2).png" alt="" class="me-1 new-img-h"><strong class="new-h">NEW</strong> <div class="h3">
+                            @Model.Requests.Count(m => m.Status == 1)
+                        </div>
+                    </button><div class="bottom-arrow"></div>
+                </div>
+            
+            <div class="col-2 pending"><div><button class="btn dashboardtab a-button ms-2 status-2" data-bs-target="#status_pending"><img src="/images/icons8-user-50.png" alt="" class="me-1 pending-img"><img src="\images\icons8-user-50 (2).png" alt="" class="me-1 pending-img-h"><strong class="new-h">PENDING</strong><div class="h3">@Model.Requests.Count(m => m.Status == 2)</div></button><div class="bottom-arrow"></div></div></div>
+            <div class="col-2 activ"><div><button class="btn dashboardtab a-button ms-2 status-3" data-bs-target="#status_active"><img src="\images\icons8-ok-50.png" alt="" class="me-1  active-img">    <img src="\images\icons8-ok-50 (1).png" alt="" class="me-1   active-img-h">      <strong class="new-h">ACTIVE</strong><div class="h3">@Model.Requests.Count(m => m.Status == 4 || m.Status == 5)</div></button><div class="bottom-arrow"></div></div></div>
+            <div class="col-2 conclude"><div><button class="btn dashboardtab a-button ms-2 status-4" data-bs-target="#status_conclude"><img src="\images\icons8-refresh-50.png" alt="" class="me-1  conclude-img">  <img src="\images\icons8-refresh-50 (1).png" alt="" class="me-1  conclude-img-h"><strong class="new-h">CONCLUDE</strong><div class="h3">@Model.Requests.Count(m => m.Status == 6)</div></button><div class="bottom-arrow"></div></div></div>
+            <div class="col-2 close"><div><button class="btn dashboardtab a-button ms-2 status-5" data-bs-target="#status_close"><img src="\images\icons8-remove-user-50 (1).png" alt="" class="me-1 close-img"><img src="\images\icons8-remove-user-50 (2).png" alt="" class="me-1  close-img-h"> <strong class="new-h">TO CLOSE</strong><div class="h3"> @Model.Requests.Count(m => m.Status == 3 || m.Status == 7 || m.Status == 8)</div></button><div class="bottom-arrow"></div></div></div>
+            <div class="col-2 unpaid"><div><button class="btn dashboardtab a-button ms-2 status-6" data-bs-target="#status_unpaid"><img src="\images\icons8-receive-dollar-50.png" alt="" class="me-1  unpaid-img"><img src="\images\icons8-receive-dollar-50 (1).png" alt="" class="me-1 unpaid-img-h"><strong class="new-h">UNPAID</strong><div class="h3">@Model.Requests.Count(m => m.Status == 9)</div></button>   <div class="bottom-arrow"></div></div></div>
+        </div>
+        <div class="container-fluid" style="position:absolute;left:0px; ">
+            <div class="row mt-5">
+                <div class="col-6">
+                    <div class="h3">Patients<span class="h6" id="statusnamehead">  (New)</span></div>
+                </div>
+                @* <div class="col-1"></div> *@
+                <div class="col-6">
+                    @*  <div class="container"> *@
+                    @* <div class="container-fluid" style="position:absolute;left:200px; "> *@
+                    @*   <div class="row"> *@
+
+                    @* <div class="col-2"> *@<button class="btn btn-link-a"><img src="\images\icons8-telegram-25.png" alt="" class="me-1"><strong>Send Link</strong></button>
+                    @* <div class="col-2"> *@<button class="btn btn-link-a"><img src="\images\icons8-note-25.png" alt="" class="me-1">    <strong>Create Requests</strong></button>
+                    @* <div class="col-2"> *@<button class="btn btn-link-a"><img src="\images\icons8-right-2-25.png" alt="" class="me-1">   <strong>Export</strong></button>
+                    @* <div class="col-3"> *@<button class="btn btn-link-a"><img src="\images\icons8-all-25.png" alt="" class="me-1">     <strong>Export All</strong></button>
+                    @* <div class="col-3"> *@<button class="btn btn-link-a"><img src="\images\icons8-user-25.png" alt="" class="me-1"> <strong>Request DTY Support</strong></button>
+
+                    @*  </div> *@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="datatable"></div>
+    </div>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"> </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"> </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"> </script>
+    <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+</body>
+</html>
+
 <script>
     $(document).ready(function () {
+        $.ajax({
+            url: '/AdminStatus/New',
+
+            success: function (response) {
+                $('#datatable').html(response);
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
 
         $('.dashboardtab').on('click', function (e) {
+        console.log("hello");
+            debugger;
             e.preventDefault();
-            $('.dashboardtab').removeClass('active');
-            $(this).addClass('active');
+            $('.dashboardtab').removeClass('active-1');
+            $(this).addClass('active-1');
             var target = $(this).data('bs-target');
-            localStorage.setItem("target", target);
-            console.log;
             var url;
-            switch  {
+        console.log(target);
+            switch (target) {
                 case '#status_new':
-                $('#statusnamehead').html('New');
-                url = '/Admin/New';
+                    $('#statusnamehead').html('(New)');
+                                        url = '/AdminStatus/New';
 
-                break;
+                    break;
                 case '#status_pending':
-                $('#statusnamehead').html('Pending');
+                    $('#statusnamehead').html('(Pending)');
 
-                url = '/Admin/Pending';
-                break;
+                    url = '/AdminStatus/Pending';
+                    break;
                 case '#status_active':
-                $('#statusnamehead').html('Active');
+                    $('#statusnamehead').html('(Active)');
 
-                url = '/Admin/Active';
-                break;
+                    url = '/AdminStatus/Active';
+                    break;
                 case '#status_conclude':
-                $('#statusnamehead').html('Conclude');
+                    $('#statusnamehead').html('(Conclude)');
 
-                url = '/Admin/Conclude';
-                break;
-                case '#status_toclose':
-                $('#statusnamehead').html('To Close');
+                    url = '/AdminStatus/Conclude';
+                    break;
+                case '#status_close':
+                    $('#statusnamehead').html('(To Close)');
 
-                url = '/Admin/Toclose';
-                break;
+                    url = '/AdminStatus/Close';
+                    break;
                 case '#status_unpaid':
-                $('#statusnamehead').html('Unpaide');
+                    $('#statusnamehead').html('(Unpaid)');
 
-                url = '/Admin/Unpaid';
-                break;
+                    url = '/AdminStatus/Unpaid';
+                    break;
 
                 default:
-                    url = '../Home/AdminLogin';
+              
             }
-              console.log(url);
+            console.log(url);
             $.ajax({
                 url: url,
 

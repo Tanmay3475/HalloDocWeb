@@ -414,7 +414,7 @@ margin: 10px;
     text-align: left;
     border: 1px solid #B8A6BE;
 }
-.status-1:hover,.active-1 {
+.status-1:hover,.new .active-1 {
     background-color: #203F9A;
     color: #FBFDFC;
     border:none;
@@ -428,7 +428,7 @@ margin: 10px;
     height: 0px;
     width: 0px;
 }
-.status-1:hover + .bottom-arrow, .active-1 + .bottom-arrow {
+.status-1:hover + .bottom-arrow,.new .active-1 + .bottom-arrow {
     border-top: 15px solid #203F9A !important;
     z-index: 3;
 }
@@ -443,66 +443,65 @@ margin: 10px;
     position: relative;
     left: -48px;
 }
-.active-1 .new-img-h {
+.active-1 .new-img-h, .active-1 .pending-img-h, .active-1 .active-img-h, .active-1 .conclude-img-h, .active-1 .close-img-h, .active-1 .unpaid-img-h {
     visibility: visible;
     position: relative;
     left: -48px;
 }
+.active-1 .new-img, .active-1 .pending-img, .active-1 .active-img, .active-1 .conclude-img, .active-1 .close-img, .active-1 .unpaid-img {
+    visibility: hidden;
+    }
 .new-h
 {
     position:relative;
     left:-40px;
 }
-.status-1:hover .new-h
-{
-    position:relative;
-    left:-34px;
-}
-.status-2:hover {
+
+.status-2:hover,.pending .active-1 {
     background-color: #00ADEF;
     color: #EAFFFB;
     border: none;
 }
-    .status-2:hover + .bottom-arrow {
+    .status-2:hover + .bottom-arrow,.pending .active-1+.bottom-arrow {
         border-top: 15px solid #00ADEF !important;
         z-index: 3;
     }
-.status-3:hover {
+.status-3:hover,.activ .active-1 {
     background-color: #228C20;
     color: #ECFEEB;
     border: none;
 }
-    .status-3:hover + .bottom-arrow {
+    .status-3:hover + .bottom-arrow,.activ .active-1 + .bottom-arrow {
         border-top: 15px solid #228C20 !important;
         z-index: 3;
     }
-.status-4:hover {
+.status-4:hover,.conclude .active-1 {
     background-color: #DA0F82;
     color: #FFF3FC;
     border: none;
 }
 
-.status-4:hover + .bottom-arrow {
-    border-top: 15px solid #DA0F82 !important;
-    z-index: 3;
-}
-.status-5:hover {
+    .status-4:hover + .bottom-arrow,.conclude .active-1 + .bottom-arrow {
+        border-top: 15px solid #DA0F82 !important;
+        z-index: 3;
+    }
+.status-5:hover,.close .active-1 {
     background-color: #0370D7;
     color: #F3FFFF;
     border: none;
 }
 
-    .status-5:hover + .bottom-arrow {
+    .status-5:hover + .bottom-arrow,.close .active-1 + .bottom-arrow {
         border-top: 15px solid #0370D7 !important;
         z-index: 3;
     }
-.status-6:hover {
+.status-6:hover,.unpaid .active-1 {
     background-color: #9966CD;
     color: #FBF3FF;
     border: none;
 }
 
-    .status-6:hover + .bottom-arrow {
+    .status-6:hover + .bottom-arrow,.unpaid .active-1 + .bottom-arrow {
         border-top: 15px solid #9966CD !important;
         z-index: 3;
     }
@@ -537,4 +536,11 @@ margin: 10px;
     background-color: #F0F0F0;
     color: #3C3E40;
     border:none;
+}
+.cs-head {
+    padding:2px;
+    font-size:16px;
+    border-radius: 10px ;
+    background-color: #5FBC61 ;
+    color:white ;
 }

@@ -1,0 +1,129 @@
+﻿@using HalloDoc.Models
+@model IEnumerable<AdminDashboardTableDataViewModel>
+
+
+<div class="container-fluid mt-2" style="position:absolute;left:0px; top:400px;">
+    <div class="row mb-2" style="background-color:white;">
+        <div class="col-2 mt-3"><input type="search" placeholder="Search Patients" class="search" /><img src="/images/icons8-search-25.png" style="position:relative;left:-180px;" /></div>
+        <div class="col-2 mt-3">
+            <select class="form-select search" aria-label="Default select example">
+                <option selected>All Regions</option>
+                <option value="1">Surat</option>
+                <option value="2">Amdavad</option>
+                <option value="3">Vadodra</option>
+
+            </select>
+            <img src="/images/icons8-search-25.png" style="position:relative;left:10px;top:-40px;" />
+        </div>
+        <div class="col-2"></div>
+        <div class="col-6 mt-3">
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="requestby" id="requestbyAll" autocomplete="off" checked value="requestByAll">
+                <label class="btn btn-filter me-5" for="requestbyAll">All</label>
+
+                <input type="radio" class="btn-check " name="requestby" id="1" autocomplete="off" value="1">
+                <label class="btn btn-filter me-5" for="1"><img src="~/images/icons8-circle-25.png" class="me-1" />Patient</label>
+
+                <input type="radio" class="btn-check" name="requestby" id="2" autocomplete="off" value="2">
+                <label class="btn btn-filter me-5" for="2"><img src="~/images/icons8-circle-25 (1).png" class="me-1" />Family/Friend</label>
+
+                <input type="radio" class="btn-check" name="requestby" id="3" autocomplete="off" value="3">
+                <label class="btn btn-filter me-5" for="3"><img src="~/images/icons8-circle-25 (2).png" class="me-1" />Business</label>
+
+                <input type="radio" class="btn-check" name="requestby" id="4" autocomplete="off" value="4">
+                <label class="btn btn-filter me-5" for="4"><img src="~/images/icons8-circle-25 (3).png" class="me-1" />Concierge</label>
+
+                <input type="radio" class="btn-check" name="requestby" id="5" autocomplete="off" value="5">
+                <label class="btn btn-filter me-5" for="5"><img src="~/images/icons8-circle-25 (4).png" class="me-1" />Vip</label>
+            </div>
+        </div>
+    </div>
+    <table class="table" id="example">
+        <thead class="dtable-head">
+            <tr>
+                <th scope="col" class="d-none"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Date Of Birth</th>
+                <th scope="col">Requestor</th>
+                <th scope="col">Requested Date</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Chat With</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (AdminDashboardTableDataViewModel item in Model)
+            {
+                var color = "";
+                switch (item.RequestorType)
+                {
+                    case 1:
+                        color = "#5FBC61";
+                        break;
+                    case 2:
+                        color = "#E8932F";
+                        break;
+                    case 3:
+                        color = "#E0657A";
+                        break;
+                    case 4:
+                        color = "#007FC6";
+                        break;
+                    case 5:
+                        color = "#913FB0";
+                        break;
+
+                }
+                <tr style="background-color:@color !important;color:white !important">
+                    <td class="d-none">@item.RequestorType</td>
+                    <td>@item.PatientName</td>
+                    <td>@item.PatientDOB</td>
+                    <td>@item.RequestorName</td>
+                    <td>@item.RequestedDate</td>
+                    <td>@item.PatientPhone  @item.RequestorPhone</td>
+                    <td>@item.Address</td>
+                    <td>@item.Notes</td>
+                    <td>@item.ProviderEmail</td>
+                    <td>
+
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:@color !important;color:white !important; border:1px solid white !important">
+                                Actions
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<script>
+
+    var table = $('#example').DataTable({ dom: 'lrtip' });
+    $('input[type="search"]').on('keyup', function () {
+        table.search(this.value).draw();
+    });
+    $('input[name="requestby"]').on('click', function () {
+        var value = $(this).attr('id');
+        if (value == 'requestbyAll') {
+            table.columns(0).search('').draw();
+        }
+        else {
+            table.columns(0).search(value).draw(); // Replace 0 with the index of the column you want to filter
+        }
+    });
+</script>

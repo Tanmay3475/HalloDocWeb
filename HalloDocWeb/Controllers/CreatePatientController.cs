@@ -13,6 +13,7 @@ using HalloDoc.Models;
 
 namespace HalloDocWeb.Controllers
 {
+   
     public class CreatePatientController : Controller
     {
          
@@ -33,7 +34,7 @@ namespace HalloDocWeb.Controllers
         public IActionResult Create_patient(CreatePatientViewModel s)
         {
             
-            Request r= new Request { Requesttypeid=1,Status=1,Firstname=s.FirstName,Lastname=s.LastName,Createddate=DateTime.Now,Isurgentemailsent = new BitArray(1) };
+            Request r= new Request { Requesttypeid=1,Status=1,Firstname=s.FirstName,Lastname=s.LastName,Createddate=DateTime.Now,Isurgentemailsent = new BitArray(1), Confirmationnumber = s.FirstName + DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };
@@ -83,7 +84,7 @@ namespace HalloDocWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Friend_request(CreateFriendViewModel s)
         {
-            Request r = new Request { Requesttypeid = 2, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now,Relationname=s.Relationname,Email=s.email,Phonenumber=s.phonenumber,Isurgentemailsent=new BitArray(1)};
+            Request r = new Request { Requesttypeid = 2, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now,Relationname=s.Relationname,Email=s.email,Phonenumber=s.phonenumber,Isurgentemailsent=new BitArray(1), Confirmationnumber = s.firstName + DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };
@@ -113,7 +114,7 @@ namespace HalloDocWeb.Controllers
             Concierge r = new Concierge { Conciergename = s.Conciergename, Street =s.Street,City=s.City,Zipcode=s.ZipCode,State=s.State,Createddate=DateTime.Now,Regionid=1};
             _context.Add(r);
             _context.SaveChanges();
-            Request r1 = new Request { Requesttypeid = 3, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now,  Email = s.email, Phonenumber = s.phoneNumber, Isurgentemailsent = new BitArray(1) };
+            Request r1 = new Request { Requesttypeid = 3, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now,  Email = s.email, Phonenumber = s.phoneNumber, Isurgentemailsent = new BitArray(1) ,Confirmationnumber = s.firstName +DateTime.Now };
             _context.Add(r1);
             _context.SaveChanges();
             Requestclient r2 = new Requestclient { Requestid = r1.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month) ,Intdate=s.DateOfBirth.Day};
@@ -135,7 +136,7 @@ namespace HalloDocWeb.Controllers
             Business r = new Business { Name = s.Name,  Createddate = DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
-            Request r1 = new Request { Requesttypeid = 4, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now, Email = s.email, Phonenumber = s.phoneNumber , Isurgentemailsent = new BitArray(1) };
+            Request r1 = new Request { Requesttypeid = 4, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now, Email = s.email, Phonenumber = s.phoneNumber , Isurgentemailsent = new BitArray(1) ,Confirmationnumber=s.firstName+DateTime.Now};
             _context.Add(r1);
             _context.SaveChanges();
             Requestclient r2 = new Requestclient { Requestid = r1.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };
