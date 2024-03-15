@@ -95,7 +95,8 @@
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><button class="dropdown-item viewUploads" value="@item.requestid"><img src="~/images/icons8-import-file-25.png" /> View Upload</button></li>
+
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
@@ -125,5 +126,18 @@
         else {
             table.columns(0).search(value).draw(); // Replace 0 with the index of the column you want to filter
         }
+    });
+    $('.viewUploads').on('click', function (e) {
+        var reqid = $(this).attr('value');
+        $.ajax({
+            url: '/Case/ViewUploads',
+            data: {id:reqid},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
 </script>

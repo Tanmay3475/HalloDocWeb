@@ -3,3 +3,167 @@
 *@
 @{
 }
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model HalloDoc.Models.ViewNotesViewModel
+@inject IHttpContextAccessor accessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"> </script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/bd0516d00b.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @*     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" href="~/HalloDoc.styles.css" asp-append-version="true" /> *@
+
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+        <h2 class="mt-2 float-start ">Notes</h2>
+        <a class="btn btn-outline-primary float-end mt-2 me-5">
+            < Back
+        </a>
+        </div>
+        <div class="row" style="margin-top:150px;position:absolute;left:300px;width:1300px;">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2 mt-1">
+                            <img src="/images/icons8-transfer-50.png" />
+                        </div>
+                        <div class="col-10">
+                        <h3 class="card-title">Transfer Notes</h3>
+                        <p class="card-text">@Model.adminName transfer case to @Model.PhysicianName at @Model.createddate</p>
+             </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-2 mt-1">
+                            <img src="/images/icons8-doctor-50.png" />
+                        </div>
+                        <div class="col-10">
+                        <h3 class="card-title">Physician Notes</h3>
+                        <p class="card-text">@Model.Physician</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row" style="margin-top:300px;position:absolute;left:300px;width:1300px;">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2 mt-1">
+                            <img src="/images/icons8-admin-50.png" />
+                        </div>
+                        <div class="col-10">
+                    <h3 class="card-title">Admin Notes</h3>
+                            <p class="card-text AdminNotes">@Model.Admin</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row" style="margin-top:450px;position:absolute;left:300px;width:1300px;">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="@Model.Admin" id="floatingTextarea" style="height:250px"></textarea>
+                        <label for="floatingTextarea">Admin Notes</label>
+                    </div>
+                    <input type="hidden" value="@Model.req_id" id="req_id"/>
+                    <button class="btn btn-info mt-2 float-end" id="save_admin">Save Changes</button>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"> </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"> </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"> </script>
+    <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script>
+       
+        $('#save_admin').on('click', function (e) {
+            console.log("hello");
+            var reqid = $('#req_id').val();
+            var reqdata = $('#floatingTextarea').val();
+            console.log(reqid);
+            console.log(reqdata);
+            var viewModel = { req_id : reqid, req_data : reqdata };
+            console.log(viewModel);
+            $.ajax({
+                url: '/Case/ViewNotes',
+                type: 'POST',
+                data: viewModel,
+                dataType:'json',
+                success: function (response) {
+                    $('#nav-home').html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+            $('.AdminNotes').html(reqdata);
+        });
+    </script>
+
+</body>
+</html>

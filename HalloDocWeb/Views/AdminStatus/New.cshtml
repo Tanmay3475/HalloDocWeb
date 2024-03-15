@@ -95,11 +95,100 @@
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><button class="dropdown-item" ><img src="~/images/icons8-checklist-25.png"/> Assign Case</button></li>
+                                <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1"><img src="~/images/icons8-checklist-25.png"/> Assign Case</button></li>
                                 <li><button class="dropdown-item viewCase" value="@item.requestid"><img src="/images/icons8-search-in-list-25.png"/> View Case</button></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><button class="dropdown-item viewNotes" value="@item.requestid"><img src="/images/icons8-copybook-25.png"/> View Notes</button></li>
+                                <li><button class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/images/icons8-cancel-25.png"/> Cancel Case</button></li>
+                                <li><button class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="/images/icons8-block-25 (1).png"/> Block Patient</button></li>
+
                             </ul>
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Assign Request</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="border:none">
+                                            <div class="h6 mb-2" style="color:#9D9D9D"> To assign this request,search and select another Physician.</div>
+                                            <select class="form-select mt-4" aria-label="Default select example" style="color:#8F8F8F" id="regions">
+                                                <option selected hidden>Narrow search by region</option>
+                                                @foreach(var item1 in item.regions)
+                                                {
+                                                    <option id="@item1.Regionid">@item1.Name</option>
+                                                }
+
+                                            </select>
+                                            <select class="form-select mt-4 mb-4" aria-label="Default select example" style="color:#8F8F8F" id="physician">
+                                                <option selected hidden>Select Physicians</option>
+                                               <div class="hello"></div>
+                                            </select>
+                                            <div class="form-floating mt-4">
+                                                <textarea class="form-control" placeholder="Leave a comment here" id="float" style="height:100px;"></textarea>
+                                                <label for="floating" style="color:#8F8F8F">Description</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="border:none">
+
+                                            <button type="button" class="btn btn-outline-info" id="assign_case" value="@item.requestid" data-bs-dismiss="modal">Submit</button>
+                                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel" >Confirm Cancellation</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="border:none">
+                                            <div class="h5 mb-4" style="color:#9D9D9D"> Patient Name:<span style="color:#5BB0C3"> @item.PatientName</span></div>
+                                            <select class="form-select" aria-label="Default select example" style="color:#8F8F8F" id="casetags">
+                                                <option selected>Reasons for Cancellation</option>
+                                                @foreach(var item1 in item.casetags){
+                                                <option value="@item1.Name">@item1.Name</option>
+                                                }
+                                            </select>
+                                            <div class="form-floating mt-4">
+                                                <textarea class="form-control" placeholder="Leave a comment here" id="floating" style="height:100px;"></textarea>
+                                                <label for="floating" style="color:#8F8F8F">Provide additional notes</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="border:none">
+
+                                            <button type="button" class="btn btn-outline-info" id="cancel_case" value="@item.requestid" data-bs-dismiss="modal">Confirm</button>
+                                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel" >Confirm Block</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="border:none">
+                                            <div class="h5 mb-4" style="color:#9D9D9D"> Patient Name:<span style="color:#5BB0C3"> @item.PatientName</span></div>
+                                           
+                                            <div class="form-floating mt-4">
+                                                <textarea class="form-control" placeholder="Leave a comment here" id="floating" style="height:100px;"></textarea>
+                                                <label for="floating" style="color:#8F8F8F">Reason for block request</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="border:none">
+
+                                            <button type="button" class="btn btn-outline-info" id="block_case" value="@item.requestid" data-bs-dismiss="modal">Confirm</button>
+                                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </td>
 
                 </tr>
@@ -139,5 +228,93 @@
                 console.error(error);
             }
         });
+    }); 
+    $('.viewNotes').on('click', function (e) {
+        var requestid = $(this).attr('value');
+        $.ajax({
+            url: '/Case/ViewNotes',
+            type: 'GET',
+            data: { id: requestid },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
+    $('#cancel_case').on('click', function (e) {
+        var requestid = $(this).attr('value');
+        var reason1 = $('#casetags').val();
+        var addon = $('#floating').val();
+        
+        $.ajax({
+            url: '/Case/CancelCase',
+            type: 'POST',
+            data: { Id: requestid, admin_notes:addon,reason:reason1},
+            success: function (response) {
+                $('#nav-new').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });$('#block_case').on('click', function (e) {
+        var requestid = $(this).attr('value');
+        var addon = $('#floating1').val();
+        
+        $.ajax({
+            url: '/Case/BlockCase',
+            type: 'POST',
+            data: { Id: requestid, admin_notes:addon},
+            success: function (response) {
+                $('#nav-new').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#assign_case').on('click', function (e) {
+        var requestid = $(this).attr('value');  
+        var physician = $('#physician').val();
+        var addon = $('#float').val();
+        
+        $.ajax({
+            url: '/Case/AssignCase',
+            type: 'POST',
+            data: { Id: requestid, admin_notes:addon,physician:physician},
+            success: function (response) {
+                $('#nav-new').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#regions').change(function () {
+        var regionId = $(this).find(":selected").attr('id'); // This will get the id of the selected region
+
+        $.ajax({
+            url: '/Case/GetPhysicianByRegionId', // Replace with your server script URL
+            type: 'GET',
+            data: { regionId: regionId },
+            success: function (data) {
+                var secondDropdown = $('#physician'); // Replace with your second dropdown selector
+                secondDropdown.empty(); // Clear existing options
+                secondDropdown.append($('<option>', {
+                    hidden: "hidden",
+                    value: "",
+                    text: "Select Physician"
+                }))
+                $.each(data, function (index, item) {
+                    secondDropdown.append($('<option>', {
+                        value: item.id, // Replace with the actual value from your data
+                        text: item.first+" " + item.last // Replace with the actual text from your data
+                    }));
+                });
+            }
+        });
+    });
+
 </script>

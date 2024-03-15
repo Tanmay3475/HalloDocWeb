@@ -133,6 +133,7 @@ namespace HalloDocWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Business_request(BusinessViewModel s)
         {
+            
             Business r = new Business { Name = s.Name,  Createddate = DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
@@ -141,6 +142,7 @@ namespace HalloDocWeb.Controllers
             _context.SaveChanges();
             Requestclient r2 = new Requestclient { Requestid = r1.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };
             _context.Add(r2);
+            
             _context.SaveChanges();
             Requestbusiness r3 = new Requestbusiness {Businessid=r.Businessid, Requestid = r1.Requestid };
             _context.Add(r3);

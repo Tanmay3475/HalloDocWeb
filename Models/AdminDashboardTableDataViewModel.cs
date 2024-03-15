@@ -23,5 +23,9 @@ namespace HalloDoc.Models
         public int RequestorType { get; set;}
         public int requestid { get;set;}
         public string RequestorPhone {  get; set;}
+        public List<Casetag> casetags { get; set; }
+        public List<Physician> physicians { get; set; }
+        public List<Region> regions { get; set; }
+        
     }
 }

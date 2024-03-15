@@ -28,6 +28,7 @@ builder.Services.AddScoped<IPhysicianRepository, PhysicianRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
 builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IViewNotes,ViewNotes>();
 
 
 

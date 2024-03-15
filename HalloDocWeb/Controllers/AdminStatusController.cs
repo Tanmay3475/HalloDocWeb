@@ -72,6 +72,9 @@ namespace HalloDocWeb.Controllers
 
         public List<AdminDashboardTableDataViewModel> getallAdminDashboard(int status)
         {
+            var casetag = _context.Casetags.ToList();
+            var region=_context.Regions.ToList();
+            var provider=_context.Physicians.ToList();
             var AdminDashboardDataTableViewModels = from user in _context.Users
             join req in _context.Requests on user.Userid equals req.Userid
                                                     where req.Status == status
@@ -91,6 +94,9 @@ namespace HalloDocWeb.Controllers
                                                         RequestorEmail = req.Email,
                                                         RequestorType = req.Requesttypeid,
                                                         requestid = req.Requestid,
+                                                        casetags=casetag,
+                                                        regions=region,
+                                                        physicians=provider
                                                     };
             return AdminDashboardDataTableViewModels.ToList();
 

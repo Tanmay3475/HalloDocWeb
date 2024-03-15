@@ -1,0 +1,131 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model DashboardViewModel
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;">
+        <h2 class="mt-2 float-start ">Documents</h2>
+        <a class="btn btn-outline-info float-end mt-2 me-5" >
+            < Back
+        </a>
+
+
+    </div>
+ 
+    <div class="card" style="width: 80rem;">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">Patient Name</h6>
+            <h5 class="card-title float-start mt-1 pe-2" style="color:#57ADC3">@Model.FirstName</h5>
+            <h6 class="card-subtitle text-muted clearfix mt-3">@Model.Confirmation</h6>
+            <h6 class="card-subtitle mb-2 text-muted float-start mt-1">Check here to review and add files that you or the Client/Member has attached to the request</h6>
+          
+               
+                <div class="input-group mb-3">
+                <input class="RequestsId" value="@Model.requestid" hidden />
+                    <input type="file" class="form-control" id="actualBtn" multiple>
+                    <button type="submit" class="input-group-text btn-info uploadbtn" for="inputGroupFile02" value="@Model.requestid"><img src="/images/cloud-arrow-up.svg" class="p-1" srcset="">Upload</button>
+                </div>
+           
+            <h2 class="mt-2 float-start ">Documents</h2>
+           
+                <button type="submit" class="btn btn-outline-info float-end ms-1">Send Mail</button>
+                <button type="submit" class="btn btn-outline-info float-end ms-1">Delete All</button>
+                <button type="submit" class="btn btn-outline-info float-end ">Download All</button>
+                <div class="clearfix"></div>
+                <div class="table-responsive mt-2">
+                    <table class="table  table-sm">
+                        <thead>
+                            <tr style="background-color:#F0F0F0">
+                                <th scope="col"><input type="checkbox" /></th>
+                                <th scope="col"></th>
+                               
+                                <th scope="col">Upload Date</th>
+                                <th scope="col">Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.requestwisefiles)
+                            { 
+                            <tr style="background-color:#FFFFFF !important;">
+                                    <td><input type="checkbox" name="downloadselect" value="@item.Requestwisefileid" /></td>
+                                    <td><img src="~/images/icons8-doc-25.png" /> @item.Filename</td>
+                                   
+                                    <td>
+                                        @item.Createddate</td>
+                                    <td>
+                                        <a class="btn btn-outline-info" href="~/UploadDocument/@item.Filename.Substring(33)" download>download</a>
+                                    <button class="btn dbutton" style="width:50px;height:40px;color:#77B6BF;border:1px solid #77B6BF"><img src="~/images/icons8-download-25 (4).png" style="width:25px;height:25px;" /></button>
+                                    <button class="btn ms-1"  style="width:50px;height:40px;color:#77B6BF;border:1px solid #77B6BF"><img src="~/images/icons8-remove-25.png" style="width:25px;height:25px;" /></button>
+
+                                    </td>
+
+                                </tr>
+                             }
+ 
+
+                        </tbody>
+                    </table>
+                </div>
+
+           
+        </div>
+
+
+
+    </div>
+</main>
+<script>
+    $('.uploadbtn').on('click', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        $('input[type="file"]').each(function () {
+            formData.append('files', $(this)[0].files[0]);
+        });
+        formData.append('id', $('.RequestsId').val());
+        console.log(formData);
+        // Add any other data you need (e.g., RequestsId)
+
+        $.ajax({
+            url: '/Case/ViewUploads', // Replace with your controller action URL
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (error) {
+                console.error('Error uploading files:', error);
+            }
+        });
+    });
+    $('.uploadbtn').on('click', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        $('input[type="file"]').each(function () {
+            formData.append('files', $(this)[0].files[0]);
+        });
+        formData.append('id', $('.RequestsId').val());
+        console.log(formData);
+        // Add any other data you need (e.g., RequestsId)
+
+        $.ajax({
+            url: '/Case/ViewUploads', // Replace with your controller action URL
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (error) {
+                console.error('Error uploading files:', error);
+            }
+        });
+    });
+</script>
