@@ -129,9 +129,9 @@ namespace HalloDocWeb.Controllers
 
             foreach (var item in file)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadDocument", item.FileName);
+                //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadDocument", item.FileName);
 
-                //string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Documents", id.ToString() + item.FileName);
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Documents", id.ToString() + item.FileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     item.CopyTo(fileStream);
