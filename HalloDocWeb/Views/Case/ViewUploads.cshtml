@@ -24,21 +24,21 @@
                
                 <div class="input-group mb-3">
                 <input class="RequestsId" value="@Model.requestid" hidden />
-                    <input type="file" class="form-control" id="actualBtn" multiple>
+                    <input type="file" class="form-control" id="actualBtn">
                     <button type="submit" class="input-group-text btn-info uploadbtn" for="inputGroupFile02" value="@Model.requestid"><img src="/images/cloud-arrow-up.svg" class="p-1" srcset="">Upload</button>
                 </div>
            
             <h2 class="mt-2 float-start ">Documents</h2>
-           
-                <button type="submit" class="btn btn-outline-info float-end ms-1">Send Mail</button>
-                <button type="submit" class="btn btn-outline-info float-end ms-1">Delete All</button>
+           <form  asp-action="DownloadAll" asp-route-id="@Model.requestid">
+                <button class="btn btn-outline-info float-end ms-1">Send Mail</button>
+                <button class="btn btn-outline-info float-end ms-1" id="delete" value="@Model.requestid">Delete All</button>
                 <button type="submit" class="btn btn-outline-info float-end ">Download All</button>
                 <div class="clearfix"></div>
                 <div class="table-responsive mt-2">
                     <table class="table  table-sm">
                         <thead>
                             <tr style="background-color:#F0F0F0">
-                                <th scope="col"><input type="checkbox" /></th>
+                                <th scope="col"><input type="checkbox" id="downall"/></th>
                                 <th scope="col"></th>
                                
                                 <th scope="col">Upload Date</th>
@@ -49,27 +49,29 @@
                         <tbody>
                             @foreach (var item in Model.requestwisefiles)
                             { 
-                            <tr style="background-color:#FFFFFF !important;">
-                                    <td><input type="checkbox" name="downloadselect" value="@item.Requestwisefileid" /></td>
-                                    <td><img src="~/images/icons8-doc-25.png" /> @item.Filename</td>
-                                   
-                                    <td>
-                                        @item.Createddate</td>
-                                    <td>
-                                      
-                                    <button class="btn dbutton" style="width:50px;height:40px;color:#77B6BF;border:1px solid #77B6BF"><img src="~/images/icons8-download-25 (4).png" style="width:25px;height:25px;" /></button>
-                                    <button class="btn ms-1"  style="width:50px;height:40px;color:#77B6BF;border:1px solid #77B6BF"><img src="~/images/icons8-remove-25.png" style="width:25px;height:25px;" /></button>
+                                {
+                                    <tr style="background-color:#FFFFFF !important;">
+                                        <td><input type="checkbox" name="downloadselect" value="@item.Requestwisefileid" class="childdownall"/></td>
+                                        <td><img src="~/images/icons8-doc-25.png" /> @item.Filename</td>
 
-                                    </td>
+                                        <td>
+                                            @item.Createddate</td>
+                                        <td>
 
-                                </tr>
-                             }
+                                            <a  class="btn" asp-controller="Case" asp-action="Download" asp-route-id="@item.Requestwisefileid" style="width:50px;height:40px;color:#77B6BF;border:1px solid #77B6BF"><img src="~/images/icons8-download-25 (4).png" style="width:25px;height:25px;" /></a>
+                                            <button class="btn ms-1 del-button"  style="width:50px;height:40px;color:#77B6BF;border:1px solid #77B6BF" value="@item.Requestwisefileid"><img src="~/images/icons8-remove-25.png" style="width:25px;height:25px;" /></button>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
  
 
                         </tbody>
                     </table>
                 </div>
-
+                </form>
            
         </div>
 
@@ -78,6 +80,31 @@
     </div>
 </main>
 <script>
+    // $('.uploadbtn').on('click', function (e) {
+    //     e.preventDefault();
+
+    //     var formData = new FormData();
+    //     $('input[type="file"]').each(function () {
+    //         formData.append('files', $(this)[0].files[0]);
+    //     });
+    //     formData.append('id', $('.RequestsId').val());
+    //     console.log(formData);
+    //     // Add any other data you need (e.g., RequestsId)
+
+    //     $.ajax({
+    //         url: '/Case/ViewUploads', // Replace with your controller action URL
+    //         type: 'POST',
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false,
+    //         success: function (response) {
+    //             $('#nav-home').html(response);
+    //         },
+    //         error: function (error) {
+    //             console.error('Error uploading files:', error);
+    //         }
+    //     });
+    // });
     $('.uploadbtn').on('click', function (e) {
         e.preventDefault();
 
@@ -103,19 +130,23 @@
             }
         });
     });
-    $('.uploadbtn').on('click', function (e) {
+    $('#delete').on('click', function (e) {
         e.preventDefault();
-
+        var reqid = $(this).attr('value');
         var formData = new FormData();
-        $('input[type="file"]').each(function () {
-            formData.append('files', $(this)[0].files[0]);
+        $('.childdownall').each(function () {
+            var req = $(this).attr('value');
+            if ($(this).is(':checked')) {
+                formData.append('check',req );
+            }
+            
         });
-        formData.append('id', $('.RequestsId').val());
+        formData.append('id', reqid);
         console.log(formData);
         // Add any other data you need (e.g., RequestsId)
 
         $.ajax({
-            url: '/Case/ViewUploads', // Replace with your controller action URL
+            url: '/Case/DeleteAll', // Replace with your controller action URL
             type: 'POST',
             data: formData,
             processData: false,
@@ -127,5 +158,36 @@
                 console.error('Error uploading files:', error);
             }
         });
+    });
+    $('.del-button').on('click', function (e) {
+        e.preventDefault();
+
+        // var formData = new FormData();
+        // $('input[type="file"]').each(function () {
+        //     formData.append('files', $(this)[0].files[0]);
+        // });
+        // formData.append('id', $('.RequestsId').val());
+        // console.log(formData);
+        // Add any other data you need (e.g., RequestsId)
+        var req = $(this).attr('value');
+
+        $.ajax({
+            url: '/Case/Delete', // Replace with your controller action URL
+            type: 'POST',
+            data: {id:req},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (error) {
+                console.error('Error uploading files:', error);
+            }
+        });
+    });
+    $('#downall').change(function () {
+        if ($(this).is(':checked')) {
+            $('.childdownall').prop('checked', true);
+        } else {
+            $('.childdownall').prop('checked', false);
+        }
     });
 </script>

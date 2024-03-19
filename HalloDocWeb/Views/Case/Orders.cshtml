@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDoc.Models.OrdersViewModel
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start "> Send Order</h2>
+    <a class="btn btn-outline-info float-end mt-2 me-5">
+        < Back
+    </a>
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+
+
+    <div class="row">
+        <div class="col-6">
+            <select class="form-select profession" aria-label="Default select example" style="height:55px;margin-top:13px">
+            <option selected >Select Profession</option>
+            @foreach(var item in Model.healthprofessionaltypes){
+            <option value="@item.Healthprofessionalid">@item.Professionname</option>
+            }
+           
+            </select>
+           
+        </div>
+
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="Business" placeholder="Password">
+            <label for="floatinglastname" >Business</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="email" class="form-control" id="Contact" placeholder="Password">
+            <span class="text-danger"></span><label for="floatingemail">Business Contact</label>
+        </div>
+
+        <div class="col-6 form-floating pc-text">
+            <input type="email" class="form-control" id="email" placeholder="Password" >
+            <span  class="text-danger"></span><label for="floatingemail" >Email</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            
+            <input type="text" class="form-control" id="number" placeholder="Password" >
+            <span class="text-danger"></span><label for="floatingrelation" >Fax Number</label>
+        </div>
+        <div class="col-6 form-floating pc-text">
+           
+        </div>
+    </div>
+
+        
+        <div class="row">
+            <div class="col mt-3 mb-3">
+               
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="order" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Prescription or order details</label>
+                </div>
+                
+            </div>
+           
+        </div>
+        <div class="row">
+        <div class="col form-floating">
+            <select class="form-select refill" id="floatingSelect" aria-label="Floating label select example">
+                <option selected>Not required</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <label for="floatingSelect">Number of Refill</label>
+        </div>
+            <div class="col">
+            </div>
+        </div>
+  
+
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2">Cancel</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 sendOrder">Submit</button>
+</div>
+<script>
+    $('.sendOrder').on('click', function () {
+        var pro = $('.profession').val();
+        console.log(pro);
+        var bus = $('#Business').val();
+        var con = $('#Contact').val();
+        var email = $('#email').val();
+        var num = $('#number').val();
+        var pres = $('#order').val();
+        var ref = $('.refill').val();
+        $.ajax({
+            url: '/Case/Orders',
+            type:'POST',
+            data: {
+                profession:pro,
+                business:bus,
+                business_contact:con,
+                business_email:email,
+                prescription:pres,
+                fax_number:num,
+                no_of_refills:ref
+            },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

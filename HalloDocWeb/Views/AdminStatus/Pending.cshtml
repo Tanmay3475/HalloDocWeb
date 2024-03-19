@@ -96,10 +96,72 @@
 
                             <ul class="dropdown-menu">
                                 <li><button class="dropdown-item viewUploads" value="@item.requestid"><img src="~/images/icons8-import-file-25.png" /> View Upload</button></li>
+                                <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1"><img src="~/images/icons8-list-25.png" /> Transfer</button></li>
+                                <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal"><img src="~/images/icons8-cancel-25.png" /> Clear Case</button></li>
+                               
 
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
+                            </ul> 
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="border:none">
+                                            <div class="h6 mb-2" style="color:#9D9D9D"> To assign this request,search and select another Physician.</div>
+                                            <select class="form-select mt-4" aria-label="Default select example" style="color:#8F8F8F" id="regions">
+                                                <option selected hidden>Narrow search by region</option>
+                                                @foreach (var item1 in item.regions)
+                                                {
+                                                    <option id="@item1.Regionid">@item1.Name</option>
+                                                }
+
+                                            </select>
+                                            <select class="form-select mt-4 mb-4" aria-label="Default select example" style="color:#8F8F8F" id="physician">
+                                                <option selected hidden>Select Physicians</option>
+                                                <div class="hello"></div>
+                                            </select>
+                                            <div class="form-floating mt-4">
+                                                <textarea class="form-control" placeholder="Leave a comment here" id="float" style="height:100px;"></textarea>
+                                                <label for="floating" style="color:#8F8F8F">Description</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="border:none">
+
+                                            <button type="button" class="btn btn-outline-info" id="assign_case" value="@item.requestid" data-bs-dismiss="modal">Submit</button>
+                                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header m-h" style="border-bottom:none">
+                                            <img src="/images/icons8-warning-100.png" alt="" class="m-h-img">
+                                            <h4 class="modal-title" style="color:black">Confirmation for clear case</h4>
+
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body m-h-b" style="border:none;color:#838486">
+                                            Are sure you want to clear this request?Once clear this request then you are not able to see this request.
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer m-h-f" style="border-top:none">
+                                            <button type="button" class="btn btn-info" data-bs-dismiss="modal" id="clear_case" value="@item.requestid">Clear</button>
+                                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </td>
 
@@ -134,6 +196,62 @@
             data: {id:reqid},
             success: function (response) {
                 $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#regions').change(function () {
+        var regionId = $(this).find(":selected").attr('id'); // This will get the id of the selected region
+
+        $.ajax({
+            url: '/Case/GetPhysicianByRegionId', // Replace with your server script URL
+            type: 'GET',
+            data: { regionId: regionId },
+            success: function (data) {
+                var secondDropdown = $('#physician'); // Replace with your second dropdown selector
+                secondDropdown.empty(); // Clear existing options
+                secondDropdown.append($('<option>', {
+                    hidden: "hidden",
+                    value: "",
+                    text: "Select Physician"
+                }))
+                $.each(data, function (index, item) {
+                    secondDropdown.append($('<option>', {
+                        value: item.id, // Replace with the actual value from your data
+                        text: item.first + " " + item.last // Replace with the actual text from your data
+                    }));
+                });
+            }
+        });
+    });
+    $('#assign_case').on('click', function (e) {
+        var requestid = $(this).attr('value');
+        var physician = $('#physician').val();
+        var addon = $('#float').val();
+
+        $.ajax({
+            url: '/Case/AssignCase',
+            type: 'POST',
+            data: { Id: requestid, admin_notes: addon, physician: physician },
+            success: function (response) {
+                $('#nav-new').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#clear_case').on('click', function (e) {
+        var requestid = $(this).attr('value');
+        
+        $.ajax({
+            url: '/Case/ClearCase',
+            type: 'POST',
+            data: { id: requestid },
+            success: function (response) {
+                $('#nav-new').html(response);
             },
             error: function (xhr, status, error) {
                 console.error(error);
