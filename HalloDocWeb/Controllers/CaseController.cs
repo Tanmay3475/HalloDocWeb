@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.IO.Compression;
+using System.Net.Mail;
+using System.Net;
 
 namespace HalloDocWeb.Controllers
 {
@@ -20,6 +22,13 @@ namespace HalloDocWeb.Controllers
             this.viewNotes = viewNotes;
         }
         public IActionResult ViewCase(int id)
+        {
+            var req = applicationDb.Requests.FirstOrDefault(req => req.Requestid == id);
+            var req1 = applicationDb.Requestclients.FirstOrDefault(req => req.Requestid == id);
+            var reg = applicationDb.Regions.FirstOrDefault(r => r.Regionid == req1.Regionid);
+            return View(new ViewCaseViewModel { Address = req1.Street, PhoneNumber = req.Phonenumber, Confirmation = req.Confirmationnumber, DateOfBirth = new DateTime(Convert.ToInt32(req1.Intyear), Convert.ToInt32(req1.Strmonth), Convert.ToInt32(req1.Intdate)), Region = reg.Name, Email = req.Email, LastName = req.Lastname, FirstName = req.Firstname, Room = req1.Address, Symptoms = req1.Notes });
+        } 
+        public IActionResult CloseCase(int id)
         {
             var req = applicationDb.Requests.FirstOrDefault(req => req.Requestid == id);
             var req1 = applicationDb.Requestclients.FirstOrDefault(req => req.Requestid == id);
@@ -190,6 +199,28 @@ namespace HalloDocWeb.Controllers
             var req1 = new Requeststatuslog { Requestid = req.Requestid, Status = 2, Notes = Vw.admin_notes, Createddate = DateTime.Now };
             applicationDb.Requeststatuslogs.Add(req1);
             applicationDb.SaveChanges();
+            return RedirectToAction("tabs", "AdminStatus");
+        }
+        private Task SendEmail(string email, string subject, string message)
+        {
+            var mail = "tatva.dotnet.tanmaymehta@outlook.com";
+            var password = "Tan@3475";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        }
+        [HttpPost]
+        public IActionResult SendEmail(String mail)
+        {
+           
+            string subject = "Review Agreement";
+            string msg = "Hello World";
+            SendEmail(mail, subject, msg);
             return RedirectToAction("tabs", "AdminStatus");
         }
         public List<DataViewModel> GetPhysicianByRegionId(int regionId)

@@ -98,10 +98,8 @@
                                 <li><button class="dropdown-item viewUploads" value="@item.requestid"><img src="~/images/icons8-import-file-25.png" /> View Upload</button></li>
                                 <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1"><img src="~/images/icons8-list-25.png" /> Transfer</button></li>
                                 <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal"><img src="~/images/icons8-cancel-25.png" /> Clear Case</button></li>
-                               
-
-                                
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="~/images/icons8-document-25.png" /> Send Agreement</button></li>
+                                <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="~/images/icons8-document-25.png" /> Doctor Notes</button></li>
                             </ul> 
                             <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog  modal-dialog-centered">
@@ -132,6 +130,34 @@
                                         <div class="modal-footer" style="border:none">
 
                                             <button type="button" class="btn btn-outline-info" id="assign_case" value="@item.requestid" data-bs-dismiss="modal">Submit</button>
+                                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Send Agreement</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="border:none">
+                                            <div class="h4" style="color:black"><img src="/images/icons8-circle-25.png" /> Patient</div>
+                                            <div class="h6 mb-4 mt-2" style="color:#9D9D9D"> To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </div>
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" style="color:black" value="@item.PatientPhone">
+                                                <label for="floatingInput" style="color:black">Phone Number</label>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="patientEmail" placeholder="name@example.com" style="color:black" value="@item.PatientEmail">
+                                                <label for="floatingInput" style="color:black">Email</label>
+                                            </div>
+                                       
+                                        </div>
+                                        <div class="modal-footer" style="border:none">
+
+                                            <button type="button" class="btn btn-info" id="send" value="@item.requestid" data-bs-dismiss="modal">Send</button>
                                             <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>
@@ -250,6 +276,21 @@
             url: '/Case/ClearCase',
             type: 'POST',
             data: { id: requestid },
+            success: function (response) {
+                $('#nav-new').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#send').on('click', function (e) {
+        var email = $('#patientEmail').attr('value');
+        
+        $.ajax({
+            url: '/Case/SendEmail',
+            type: 'POST',
+            data: { mail: email },
             success: function (response) {
                 $('#nav-new').html(response);
             },
