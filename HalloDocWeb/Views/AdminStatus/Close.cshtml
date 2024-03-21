@@ -127,7 +127,7 @@
     $('.closeCase').on('click', function (e) {
         var reqid = $(this).attr('value');
         $.ajax({
-            url: '/Case/ViewUploads',
+            url: '/Case/CloseCase',
             data: { id: reqid },
             success: function (response) {
                 $('#nav-home').html(response);

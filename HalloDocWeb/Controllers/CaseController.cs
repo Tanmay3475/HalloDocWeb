@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO.Compression;
 using System.Net.Mail;
 using System.Net;
+using Org.BouncyCastle.Ocsp;
 
 namespace HalloDocWeb.Controllers
 {
@@ -30,16 +31,34 @@ namespace HalloDocWeb.Controllers
         } 
         public IActionResult CloseCase(int id)
         {
+            
+            var request = applicationDb.Requests.FirstOrDefault(m => m.Requestid == id);
+            var user = applicationDb.Users.FirstOrDefault(m => m.Userid == request.Userid);
+            var files = (from m in applicationDb.Requestwisefiles
+                         where m.Requestid == id && m.Isdeleted == null
+            select m).ToList();
+            DashboardViewModel ds = new DashboardViewModel { FirstName = request.Firstname, requestwisefiles = files, requestid = id, Confirmation = request.Confirmationnumber,LastName=request.Lastname, DateOfBirth = new DateTime(Convert.ToInt32(user.Intyear), Convert.ToInt32(user.Strmonth), Convert.ToInt32(user.Intdate)),PhoneNumber=user.Mobile,Email= user.Email };
+            return View(ds);
+        }
+        [HttpPost]
+        public IActionResult closeCase(int id)
+        {
+
             var req = applicationDb.Requests.FirstOrDefault(req => req.Requestid == id);
-            var req1 = applicationDb.Requestclients.FirstOrDefault(req => req.Requestid == id);
-            var reg = applicationDb.Regions.FirstOrDefault(r => r.Regionid == req1.Regionid);
-            return View(new ViewCaseViewModel { Address = req1.Street, PhoneNumber = req.Phonenumber, Confirmation = req.Confirmationnumber, DateOfBirth = new DateTime(Convert.ToInt32(req1.Intyear), Convert.ToInt32(req1.Strmonth), Convert.ToInt32(req1.Intdate)), Region = reg.Name, Email = req.Email, LastName = req.Lastname, FirstName = req.Firstname, Room = req1.Address, Symptoms = req1.Notes });
-        } 
+            req.Status = 9;
+            req.Modifieddate = DateTime.Now;
+            applicationDb.Requests.Update(req);
+
+            var req1 = new Requeststatuslog { Requestid = req.Requestid, Status = 9, Createddate = DateTime.Now };
+            applicationDb.Requeststatuslogs.Add(req1);
+            applicationDb.SaveChanges();
+            return RedirectToAction("tabs", "AdminStatus");
+        }
         public IActionResult Orders(int id)
         {
             var req=applicationDb.Healthprofessionaltypes.ToList();
-           OrdersViewModel
-                viewModel = new OrdersViewModel { healthprofessionaltypes=req};  
+            OrdersViewModel
+            viewModel = new OrdersViewModel { healthprofessionaltypes=req};
             return View
                 (viewModel);
         }
