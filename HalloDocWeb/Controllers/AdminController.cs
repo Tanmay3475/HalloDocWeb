@@ -18,6 +18,10 @@ namespace HalloDocWeb.Controllers
         public IActionResult Admin_Login()
         {
             return View();
+        } 
+        public IActionResult MyProfile(int id)
+        {
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

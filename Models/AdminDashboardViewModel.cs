@@ -10,6 +10,7 @@ namespace HalloDoc.Models
     {
         public List<AdminDashboardTableDataViewModel> adminDashboardTableDataViewModels { get; set; }
         public List<Request> Requests { get; set; }
+       
          
     }
 }

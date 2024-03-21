@@ -56,9 +56,9 @@
     <nav class="py-2 m-0 bg-white">
         <div class="xl-container d-flex flex-wrap">
             <ul class="nav me-auto">
-                <li class="nav-item"><a href="#" class="nav-link active px-2 dash-nav">DashBoard</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active px-2 dash-nav dashboard">DashBoard</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Provider Locations</a></li>
-                <li class="nav-item"><a href="#" class="nav-link   dash-nav">My Profile</a></li>
+                <li class="nav-item"><a href="#" class="nav-link dash-nav profile" id="@accessor.HttpContext.Session.GetInt32("Admin_Id")">My Profile</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Providers</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Partners</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Access</a></li>
@@ -207,5 +207,19 @@
             });
         });
     });
-
+    $('.profile').on('click', function (e) {
+        var admin_id = $(this).attr('value');
+        $('.dashboard').removeClass("active");
+        $.ajax({
+            url: '/Admin/MyProfile',
+            
+            data: { id: admin_id },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
 </script>
