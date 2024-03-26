@@ -6,9 +6,9 @@
 @model HalloDoc.Models.OrdersViewModel
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
     <h2 class="mt-2 float-start "> Send Order</h2>
-    <a class="btn btn-outline-info float-end mt-2 me-5">
+    <button class="btn btn-outline-info float-end mt-2 me-5 back-button">
         < Back
-    </a>
+    </button>
 
 
 </div>
@@ -84,6 +84,7 @@
     <button type="button" class="btn btn-outline-info float-end me-1 mb-2">Cancel</button>
     <button type="button" class="btn btn-info float-end me-1 mb-2 sendOrder">Submit</button>
 </div>
+<script src="/js/site.js"></script>
 <script>
     $('.sendOrder').on('click', function () {
         var pro = $('.profession').val();
@@ -107,7 +108,7 @@
                 no_of_refills:ref
             },
             success: function (response) {
-                $('#nav-home').html(response);
+                $('#nav-new').html(response);
             },
             error: function (xhr, status, error) {
                 console.error(error);

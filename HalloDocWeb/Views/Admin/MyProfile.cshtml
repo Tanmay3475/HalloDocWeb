@@ -3,6 +3,8 @@
 *@
 @{
 }
+@inject IHttpContextAccessor accessor
+@model HalloDoc.Models.MyProfileViewModel
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
     <h2 class="mt-2 float-start "> My Profile</h2>
     <a class="btn btn-outline-info float-end mt-2 me-5">
@@ -16,10 +18,10 @@
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="March" disabled>
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.UserName" disabled>
             <label for="floatinglastname">User Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="123" disabled>
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.password" disabled>
             <label for="floatinglastname">Password</label>
         </div>
 
@@ -48,10 +50,10 @@
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="Charms" disabled>
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.FirstName" disabled>
             <label for="floatinglastname">First Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="Sanatani" disabled>
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.LastName" disabled>
             <label for="floatinglastname">Last Name</label>
         </div>
 
@@ -59,10 +61,10 @@
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="20cp075@bvmcollege.in" disabled>
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Email" disabled>
             <label for="floatinglastname">Email</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="20cp075@bvmcollege.in" disabled>
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Email" disabled>
             <label for="floatinglastname">Confirm Email</label>
         </div>
 
@@ -79,15 +81,65 @@
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Separated link</a></li>
             </ul>
-            <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="9484993571">
+            <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="@Model.Phone">
         </div>
         </div>
         <div class="col-6">
+            @foreach(var item in Model.regions){
             <div class="form-check mt-3">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
                 <label class="form-check-label" for="flexCheckDefault">
-                    Vadodra
+                    @item.Name
                 </label>
+            </div>
+            }
+        </div>
+
+
+    </div>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
+    <div class="clearfix"></div>
+    <div class="row"><div class="col-12 pc-head">Mailing and Billing Information</div></div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Address1" disabled>
+            <label for="floatinglastname">Address1</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Address2" disabled>
+            <label for="floatinglastname">Address2</label>
+        </div>
+
+
+    </div> 
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.City" disabled>
+            <label for="floatinglastname">City</label>
+        </div><div class="col-6 form-floating pc-text">
+            <select class="form-select refill" id="floatingSelect" aria-label="Floating label select example" disabled>
+                <option selected> @Model.state</option>
+
+            </select>
+            <label for="floatingSelect">State</label>
+        </div>
+
+
+    </div> 
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.ZipCode" disabled>
+            <label for="floatinglastname">Pin</label>
+        </div><div class="col-6">
+            <div class="input-group mb-3 mt-2" style="height:60px">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="@Model.Phone">
             </div>
         </div>
 
@@ -95,54 +147,5 @@
     </div>
     <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
     <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-6 form-floating pc-text">
-            <input type="email" class="form-control" id="Contact" placeholder="Password">
-            <span class="text-danger"></span><label for="floatingemail">Business Contact</label>
-        </div>
-
-        <div class="col-6 form-floating pc-text">
-            <input type="email" class="form-control" id="email" placeholder="Password">
-            <span class="text-danger"></span><label for="floatingemail">Email</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 form-floating pc-text">
-
-            <input type="text" class="form-control" id="number" placeholder="Password">
-            <span class="text-danger"></span><label for="floatingrelation">Fax Number</label>
-        </div>
-        <div class="col-6 form-floating pc-text">
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col mt-3 mb-3">
-
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="order" style="height: 100px"></textarea>
-                <label for="floatingTextarea2">Prescription or order details</label>
-            </div>
-
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col form-floating">
-            <select class="form-select refill" id="floatingSelect" aria-label="Floating label select example">
-                <option selected>Not required</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <label for="floatingSelect">Number of Refill</label>
-        </div>
-        <div class="col">
-        </div>
-    </div>
-
-
-    <button type="button" class="btn btn-outline-info float-end me-1 mb-2">Cancel</button>
-    <button type="button" class="btn btn-info float-end me-1 mb-2 sendOrder">Submit</button>
+   
 </div>

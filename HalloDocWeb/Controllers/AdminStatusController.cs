@@ -96,7 +96,8 @@ namespace HalloDocWeb.Controllers
                                                         requestid = req.Requestid,
                                                         casetags=casetag,
                                                         regions=region,
-                                                        physicians=provider
+                                                        physicians=provider,
+                                                        regionid=user.Regionid
                                                     };
             return AdminDashboardDataTableViewModels.ToList();
 

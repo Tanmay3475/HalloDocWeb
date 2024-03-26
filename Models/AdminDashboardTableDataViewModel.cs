@@ -26,6 +26,7 @@ namespace HalloDoc.Models
         public List<Casetag> casetags { get; set; }
         public List<Physician> physicians { get; set; }
         public List<Region> regions { get; set; }
+        public int? regionid { get; set;}
         
     }
 }

@@ -209,6 +209,7 @@
     });
     $('.profile').on('click', function (e) {
         var admin_id = $(this).attr('value');
+        console.log(admin_id);
         $('.dashboard').removeClass("active");
         $.ajax({
             url: '/Admin/MyProfile',

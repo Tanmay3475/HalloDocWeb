@@ -8,9 +8,14 @@
         <div class="col-2 mt-3">
             <select class="form-select search" aria-label="Default select example">
                 <option selected>All Regions</option>
-                <option value="1">Surat</option>
-                <option value="2">Amdavad</option>
-                <option value="3">Vadodra</option>
+                @foreach (var item in Model)
+                {
+                    @foreach (var item1 in item.regions)
+                    {
+                        <option value="@item1.Regionid">@item1.Name</option>
+                    }
+                    break;
+                }
 
             </select>
             <img src="/images/icons8-search-25.png" style="position:relative;left:10px;top:-40px;" />
@@ -41,6 +46,7 @@
     <table class="table" id="example">
         <thead class="dtable-head">
             <tr>
+                <th scope="col" class="d-none"></th>
                 <th scope="col" class="d-none"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Date Of Birth</th>
@@ -78,7 +84,9 @@
 
                 }
                 <tr style="background-color:@color !important;color:white !important">
+                  
                     <td class="d-none">@item.RequestorType</td>
+                    <td class="d-none">@item.regionid</td>
                     <td>@item.PatientName</td>
                     <td>@item.PatientDOB</td>
                     <td>@item.RequestorName</td>

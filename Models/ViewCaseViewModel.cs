@@ -18,5 +18,7 @@ namespace HalloDoc.Models
         public string Address { get; set; }
         public string Room { get; set; }
         public string Symptoms { get; set; }
+        public int id {  get; set; }
+        public List<Region> regions { get; set; }
     }
 }

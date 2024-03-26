@@ -24,10 +24,11 @@ namespace HalloDocWeb.Controllers
         }
         public IActionResult ViewCase(int id)
         {
+            var region = applicationDb.Regions.ToList();
             var req = applicationDb.Requests.FirstOrDefault(req => req.Requestid == id);
             var req1 = applicationDb.Requestclients.FirstOrDefault(req => req.Requestid == id);
             var reg = applicationDb.Regions.FirstOrDefault(r => r.Regionid == req1.Regionid);
-            return View(new ViewCaseViewModel { Address = req1.Street, PhoneNumber = req.Phonenumber, Confirmation = req.Confirmationnumber, DateOfBirth = new DateTime(Convert.ToInt32(req1.Intyear), Convert.ToInt32(req1.Strmonth), Convert.ToInt32(req1.Intdate)), Region = reg.Name, Email = req.Email, LastName = req.Lastname, FirstName = req.Firstname, Room = req1.Address, Symptoms = req1.Notes });
+            return View(new ViewCaseViewModel {regions=region, id=id, Address = req1.Street, PhoneNumber = req.Phonenumber, Confirmation = req.Confirmationnumber, DateOfBirth = new DateTime(Convert.ToInt32(req1.Intyear), Convert.ToInt32(req1.Strmonth), Convert.ToInt32(req1.Intdate)), Region = reg.Name, Email = req.Email, LastName = req.Lastname, FirstName = req.Firstname, Room = req1.Address, Symptoms = req1.Notes });
         } 
         public IActionResult CloseCase(int id)
         {
@@ -108,15 +109,19 @@ namespace HalloDocWeb.Controllers
 
             var req = applicationDb.Requestnotes.FirstOrDefault(req => req.Requestid == id);
             var req1 = applicationDb.Requeststatuslogs.FirstOrDefault(r => r.Requestid == id);
-            if (req1 != null)
+            if (req != null)
             {
-                var req2 = applicationDb.Physicians.FirstOrDefault(r => r.Physicianid == req1.Transtophysicianid);
-                if (req2 != null)
+                if (req1 != null)
                 {
-                    return View(new ViewNotesViewModel { Admin = req.Adminnotes, Physician = req.Physiciannotes, Transfer = req1.Admin.Firstname + "transferred to Dr." + req2.Lastname + "on" + req1.Createddate + "at" + req1.Createddate.TimeOfDay + ":test assign", req_id = id });
-                }
-            }//return View(model);
-            return View(new ViewNotesViewModel { Admin = req.Adminnotes, Physician = req.Physiciannotes, req_id = id });
+                    var req2 = applicationDb.Physicians.FirstOrDefault(r => r.Physicianid == req1.Transtophysicianid);
+                    if (req2 != null)
+                    {
+                        return View(new ViewNotesViewModel { Admin = req.Adminnotes, Physician = req.Physiciannotes, Transfer = req1.Admin.Firstname + "transferred to Dr." + req2.Lastname + "on" + req1.Createddate + "at" + req1.Createddate.TimeOfDay + ":test assign", req_id = id });
+                    }
+                }//return View(model);
+                return View(new ViewNotesViewModel { Admin = req.Adminnotes, Physician = req.Physiciannotes, req_id = id });
+            }
+            return View(new ViewNotesViewModel {  req_id = id });
 
 
         }
