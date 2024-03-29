@@ -1,0 +1,141 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject IHttpContextAccessor accessor
+@model HalloDoc.Models.CreateRequestViewModel
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start "> Submit Information</h2>
+    <button class="btn btn-outline-info float-end mt-2 me-5 back-button">
+        < Back
+    </button>
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row"><div class="col-12 pc-head">Patient</div></div>
+
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="firstname" placeholder="Password" >
+            <label for="floatinglastname">First Name</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="lastname" placeholder="Password" >
+            <label for="floatinglastname">Last Name</label>
+        </div>
+
+       
+    </div> 
+    <div class="row">
+        <div class="col-6">
+            <div class="input-group mb-3 mt-2" style="height:60px">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/icons8-india-25.png" /></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="(201) 555-0123" id="phone">
+            </div>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="email" placeholder="Password">
+            <label for="floatinglastname">Email</label>
+        </div>
+
+       
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="date" class="form-control" id="dateofbirth" placeholder="Password">
+            <label for="floatinglastname">Date Of Birth(Optional)</label>
+        </div>
+
+       
+    </div>
+    <div class="row"><div class="col-12 pc-head">Location</div></div>
+
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="street" placeholder="Password" >
+            <label for="floatinglastname">Street</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="city" placeholder="Password" >
+            <label for="floatinglastname">City</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="state" placeholder="Password" >
+            <label for="floatinglastname">State</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="zipcode" placeholder="Password">
+            <label for="floatinglastname">Zip Code(Optional)</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="room" placeholder="Password">
+            <label for="floatinglastname">Room #(Optional)</label>
+        </div>
+        <div class="col-6">
+        
+            <button type="button" class="btn btn-outline-info me-1 mb-2 mt-3">Verify</button>
+            <button type="button" class="btn btn-outline-info me-1 mb-2 mt-3"><img src="~/images/icons8-location-25.png" /> Map</button>
+        </div>
+
+
+    </div>
+    <div class="row"><div class="col-12 pc-head">Notes</div></div>
+    <div class="row">
+        <div class="form-floating" >
+            <textarea class="form-control" placeholder="Leave a comment here" id="adminnotes" style="height:100px"></textarea>
+            <label for="floatingTextarea">Admin Notes(Optional)</label>
+        </div>
+
+
+    </div> 
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2 back-button">Cancel</button>
+
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="CreateRequest">Save</button>
+    <div class="clearfix"></div>
+   
+</div>
+<script src="/js/site.js"></script>
+<script>
+    $('#CreateRequest').on('click', function (e) { 
+        var firstname = $('#firstname').val();
+        console.log(firstname);
+        var lastname = $('#lastname').val();
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+        var room = $('#room').val();
+        var street = $('#street').val();
+        var city = $('#city').val();
+        var state = $('#state').val();
+        var zipcode = $('#zipcode').val();
+        var dateofbirth = $('#dateofbirth').val();
+        console.log(dateofbirth);
+        var adminnotes = $('#adminnotes').val();
+        $.ajax({
+            url:'/Admin/CreateRequest',
+            type:'POST',
+            data: { FirstName: firstname, LastName: lastname, Email: email, Phone: phone, City: city, AdminNotes: adminnotes, ZipCode: zipcode, State: state, Street: street, Room:room,DateOfBirth:dateofbirth},
+            success: function (response) { $('#nav-new').html(response); },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
