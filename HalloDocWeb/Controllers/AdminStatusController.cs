@@ -102,5 +102,39 @@ namespace HalloDocWeb.Controllers
             return AdminDashboardDataTableViewModels.ToList();
 
         }
+        public List<AdminDashboardTableDataViewModel> getallAdminDashboard()
+        {
+            
+           
+            var AdminDashboardDataTableViewModels = from user in _context.Users
+            join req in _context.Requests on user.Userid equals req.Userid
+                                                  
+                                                    orderby req.Createddate descending
+                                                    select new AdminDashboardTableDataViewModel
+                                                    {
+                                                        PatientName = req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Firstname + " " + req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Lastname,
+                                                        PatientDOB = new DateTime(Convert.ToInt32(user.Intyear), Convert.ToInt32(user.Strmonth), Convert.ToInt32(user.Intdate)),
+                                                        RequestorName = req.Firstname + " " + req.Lastname,
+                                                        RequestedDate = req.Createddate,
+                                                        PatientPhone = user.Mobile,
+                                                        RequestorPhone = req.Phonenumber,
+                                                        Address = req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Address,
+                                                        Notes = req.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid).Notes,
+                                                        ProviderEmail = _context.Physicians.FirstOrDefault(x => x.Physicianid ==req.Physicianid).Email,
+                                                        PatientEmail = user.Email,
+                                                        RequestorEmail = req.Email,
+                                                        RequestorType = req.Requesttypeid,
+                                                        requestid = req.Requestid,
+                                                        regionid=user.Regionid
+                                                    };
+            return AdminDashboardDataTableViewModels.ToList();
+
+        }
+        [HttpGet]
+        public List<AdminDashboardTableDataViewModel> ExportAllDownload()
+        {
+            var alldata = getallAdminDashboard();
+            return alldata;
+        }
     }
 }

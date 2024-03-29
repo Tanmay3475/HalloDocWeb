@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Net.Mail;
 using System.Net;
 using Org.BouncyCastle.Ocsp;
+using DocumentFormat.OpenXml.Math;
 
 namespace HalloDocWeb.Controllers
 {
@@ -246,6 +247,14 @@ namespace HalloDocWeb.Controllers
             string msg = "Hello World";
             SendEmail(mail, subject, msg);
             return RedirectToAction("tabs", "AdminStatus");
+        } 
+        [HttpPost]
+        public IActionResult SendEmail1(String mail,int Id)
+        {
+            var req = applicationDb.Physicians.FirstOrDefault(m => m.Physicianid == Id);
+            string subject = "Provider Mail";
+            SendEmail(req.Email, subject, mail);
+            return RedirectToAction("Information", "Provider");
         }
         public List<DataViewModel> GetPhysicianByRegionId(int regionId)
         {

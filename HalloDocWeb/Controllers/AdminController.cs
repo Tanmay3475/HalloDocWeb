@@ -3,6 +3,8 @@ using HalloDoc.Models.DataContext;
 using HalloDoc.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace HalloDocWeb.Controllers
 {
@@ -21,7 +23,25 @@ namespace HalloDocWeb.Controllers
         public IActionResult Admin_Login()
         {
             return View();
+        } 
+        public IActionResult CreateRequest()
+        {
+            return View();
         }
+        [HttpPost]
+        public IActionResult CreateRequest(CreateRequestViewModel s)
+        {
+            Request r1 = new Request { Userid=1,Requesttypeid = 5, Status = 1, Firstname = s.FirstName, Lastname = s.LastName, Createddate = DateTime.Now, Email = s.Email, Phonenumber = s.Phone, Isurgentemailsent = new BitArray(1), Confirmationnumber = DateTime.Now.ToString() };
+            applicationDb.Add(r1);
+            applicationDb.SaveChanges();
+            Requestclient r2 = new Requestclient { Requestid = r1.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.Phone, Address = s.Room, Notes = s.AdminNotes, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };
+            applicationDb.Add(r2);
+            applicationDb.SaveChanges();
+            return RedirectToAction("tabs", "AdminStatus");
+        }
+       
+
+
         public IActionResult MyProfile()
         {
             var id = HttpContext.Session.GetInt32("Admin_Id");

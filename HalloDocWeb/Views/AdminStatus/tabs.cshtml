@@ -56,10 +56,21 @@
     <nav class="py-2 m-0 bg-white">
         <div class="xl-container d-flex flex-wrap">
             <ul class="nav me-auto">
-                <li class="nav-item"><a href="#" class="nav-link active px-2 dash-nav dashboard">DashBoard</a></li>
+                <li class="nav-item"><a asp-action="tabs" class="nav-link active px-2 dash-nav dashboard">DashBoard</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Provider Locations</a></li>
                 <li class="nav-item"><a href="#" class="nav-link dash-nav profile" id="@accessor.HttpContext.Session.GetInt32("Admin_Id")">My Profile</a></li>
-                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Providers</a></li>
+               @*  <li class="nav-item"><a href="#" class="nav-link   dash-nav">Providers</a></li> *@
+                <li class="nav-item">
+                    
+                        <a href="#" class="nav-link dash-nav provider" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:white">
+                        Providers
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" id="provider">Provider</a></li>
+                        <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                        <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Partners</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Access</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Records</a></li>
@@ -95,10 +106,52 @@
                     @* <div class="container-fluid" style="position:absolute;left:200px; "> *@
                     @*   <div class="row"> *@
 
-                    @* <div class="col-2"> *@<button class="btn btn-link-a"><img src="\images\icons8-telegram-25.png" alt="" class="me-1"><strong>Send Link</strong></button>
-                    @* <div class="col-2"> *@<button class="btn btn-link-a"><img src="\images\icons8-note-25.png" alt="" class="me-1">    <strong>Create Requests</strong></button>
-                    @* <div class="col-2"> *@<button class="btn btn-link-a"><img src="\images\icons8-right-2-25.png" alt="" class="me-1">   <strong>Export</strong></button>
-                    @* <div class="col-3"> *@<button class="btn btn-link-a"><img src="\images\icons8-all-25.png" alt="" class="me-1">     <strong>Export All</strong></button>
+                        @* <div class="col-2"> *@<button class="btn btn-link-a" data-bs-toggle="modal" data-bs-target="#sendLink"><img src="\images\icons8-telegram-25.png" alt="" class="me-1"><strong>Send Link</strong></button>
+                        @* <div class="col-2"> *@  <div class="modal fade" id="sendLink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog  modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Send mail to patient for submitting request</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" style="border:none">
+                                        
+                                        <div class="form-floating mt-4">
+                                            <input type="text" class="form-control" placeholder="Leave a comment here" id="float"></>
+                                            <label for="floating" style="color:#8F8F8F">First Name</label>
+                                        </div>
+                                        <div class="form-floating mt-4">
+                                            <input type="text" class="form-control" placeholder="Leave a comment here" id="float"></>
+                                            <label for="floating" style="color:#8F8F8F">LastName</label>
+                                        </div>
+                                        <div class="input-group  mt-4" style="height:60px">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/icons8-india-25.png" /></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                            </ul>
+                                            <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="(201) 555-0123">
+                                        </div>
+                                        <div class="form-floating mt-4">
+                                            <input type="text" class="form-control" placeholder="Leave a comment here" id="message"></>
+                                            <label for="floating" style="color:#8F8F8F">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="border:none">
+
+                                        <button type="button" class="btn btn-outline-info" id="send" @* value="@item.requestid" *@ data-bs-dismiss="modal">Send</button>
+                                        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-link-a" id="adminrequest"><img src="\images\icons8-note-25.png" alt="" class="me-1">    <strong>Create Requests</strong></button>
+                        @* <div class="col-2"> *@<button class="btn btn-link-a buttondownload"><img src="\images\icons8-right-2-25.png" alt="" class="me-1">   <strong>Export</strong></button>
+                        @* <div class="col-3"> *@<button class="btn btn-link-a exportall-download"><img src="\images\icons8-all-25.png" alt="" class="me-1">     <strong>Export All</strong></button>
                     @* <div class="col-3"> *@<button class="btn btn-link-a"><img src="\images\icons8-user-25.png" alt="" class="me-1"> <strong>Request DTY Support</strong></button>
 
                     @*  </div> *@
@@ -108,6 +161,7 @@
     </div>
     <div id="datatable"></div>
     </div>
+  
     <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
@@ -119,7 +173,8 @@
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/file-saver"></script>
     <script src="/lib/jquery/dist/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
@@ -215,6 +270,125 @@
             url: '/Admin/MyProfile',
             
             data: { id: admin_id },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }); 
+    $('#send').on('click', function (e) {
+        var email = $('#message').val();
+
+        $.ajax({
+            url: '/Case/SendEmail1',
+            type: 'POST',
+            data: { mail: email },
+            success: function (response) {
+                $('#nav-new').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#adminrequest').on('click', function (e) {
+       
+
+        $.ajax({
+            url: '/Admin/CreateRequest',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
+    //for export all GamepadButton
+
+    $('.exportall-download').click(function () {
+        console.log("Allexport")
+        $.ajax({
+            url: '/AdminStatus/ExportAllDownload',
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
+                // Include the xlsx library
+                /*    var XLSX = require('xlsx');*/
+
+                // Convert the JSON data to a worksheet
+                var worksheet = XLSX.utils.json_to_sheet(data);
+
+                // Create a new workbook, with the newly created worksheet
+                var workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+                // Write the workbook to a file
+                XLSX.writeFile(workbook, 'output.xlsx');
+            }
+        })
+    });
+
+    //for export button
+    $('.buttondownload').on('click', function () {
+
+        console.log("excel-download")
+        // Get the table associated with this tab
+        //var tableId = $(this).data('table');
+        var tabledata = $('#example');
+        console.log("table" + tabledata)
+        // Convert the table data to JSON
+        var data = tableToJson(tabledata);
+
+        // Use xlsx.js to convert the JSON to an Excel file
+        var wb = XLSX.utils.book_new();
+        var ws = XLSX.utils.json_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        // Use FileSaver.js to save the file
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'data.xlsx');
+    });
+    function tableToJson(tabledata) {
+
+        var data = [];
+
+        // Get the headers
+        var headers = [];
+        tabledata.find('th').each(function () {
+            headers.push($(this).text().trim());
+        });
+        console.log("headers : " + headers);
+
+
+        // Get the row data
+        tabledata.find('tr').each(function () {
+            var row = {}
+            $(this).find('td').each(function (i) {
+                row[headers[i]] = $(this).text().trim();
+            });
+
+            console.log(row)
+            data.push(row);
+        });
+
+        return data;
+    }
+
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+    $('#provider').on('click', function (e) {
+        $('.dashboard').removeClass("active");
+        $('.provider').addClass("active");
+        $.ajax({
+            url: '/Provider/Information',
             success: function (response) {
                 $('#nav-home').html(response);
             },

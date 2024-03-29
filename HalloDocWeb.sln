@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDocWeb", "HalloDocWeb\HalloDocWeb.csproj", "{9460538A-034D-4C42-8288-FA2729DE1B32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalloDoc.Models", "Models\HalloDoc.Models.csproj", "{3B289C14-0DAD-4692-80AE-578A26320E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDoc.Models", "Models\HalloDoc.Models.csproj", "{3B289C14-0DAD-4692-80AE-578A26320E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalloDoc.Repository", "HalloDoc.Repository\HalloDoc.Repository.csproj", "{737CF626-1F1B-422B-860F-3F43F571E725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDoc.Repository", "HalloDoc.Repository\HalloDoc.Repository.csproj", "{737CF626-1F1B-422B-860F-3F43F571E725}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
