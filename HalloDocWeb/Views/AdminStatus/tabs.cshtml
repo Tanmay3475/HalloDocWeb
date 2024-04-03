@@ -72,7 +72,7 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Partners</a></li>
-                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Access</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav access">Access</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Records</a></li>
             </ul>
         </div>
@@ -266,6 +266,8 @@
         var admin_id = $(this).attr('value');
         console.log(admin_id);
         $('.dashboard').removeClass("active");
+        $('.provider').removeClass("active");
+        $('.access').removeClass("active");
         $.ajax({
             url: '/Admin/MyProfile',
             
@@ -386,9 +388,24 @@
     }
     $('#provider').on('click', function (e) {
         $('.dashboard').removeClass("active");
+        $('.access').removeClass("active");
         $('.provider').addClass("active");
         $.ajax({
             url: '/Provider/Information',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.access').on('click', function (e) {
+        $('.dashboard').removeClass("active");
+        $('.provider').removeClass("active");
+        $('.access').addClass("active");
+        $.ajax({
+            url: '/Admin/Access',
             success: function (response) {
                 $('#nav-home').html(response);
             },

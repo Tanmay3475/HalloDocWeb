@@ -1,0 +1,108 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDoc.Models.CreateRoleViewModel
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start ">Create Role</h2>
+    <button class="btn btn-outline-info float-end mt-2 me-5 crback">
+        < Back
+    </button>
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row"><div class="col-12 pc-head">Details</div></div>
+
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="RoleName" placeholder="Password">
+            <label for="floatinglastname">Role Name</label>
+        </div> <div class="col-6 form-floating pc-text">
+            <select class="form-select refill" id="floatingSelect" aria-label="Floating label select example">
+                <option selected value="0">All</option>
+                <option value="1">Admin</option>
+                <option value="2">Physician</option>
+
+            </select>
+            <label for="floatingSelect">Account Type</label>
+        </div>
+
+
+    </div>
+    <div class="check-container">
+        @foreach (var item in Model.menus)
+        {
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="@item.Menuid" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    @item.Name
+                </label>
+            </div>
+        }
+    </div>
+    <div class="clearfix"></div>
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2 crback">Cancel</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 crsave">Save</button>
+    <div class="clearfix"></div>
+</div>
+<script>
+    $('.refill').change(function () {
+        var regionId = $(this).find(":selected").attr('value'); // This will get the id of the selected region
+
+        $.ajax({
+            url: '/Admin/GetRoles', // Replace with your server script URL
+            type: 'GET',
+            data: { AccountType: regionId },
+            success: function (data) {
+                var secondDropdown = $('.check-container'); // Replace with your second dropdown selector
+                secondDropdown.empty(); // Clear existing options
+                var check = "";
+                $.each(data, function (index, item) {
+                    console.log(item);
+                    check += ' <div class="form-check form-check-inline"> <input class="form-check-input" type = "checkbox" name="menu-check" value = "' + item.id + '" > <label class="form-check-label" for= "flexCheckDefault">' + item.name + '</label></div>';
+                });
+                secondDropdown.append(check);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+
+    });
+    $('.crback').on('click', function (e) {
+        
+
+        $.ajax({
+            url: '/Admin/Access',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.crsave').on('click', function (e) {
+        
+        var roleName = $('#RoleName').val();
+        var account = $('.refill').val();
+        var selectedValues = [];
+        $("input:checkbox[name='menu-check']:checked").each(function () {
+            selectedValues.push($(this).val());
+        });
+
+        $.ajax({
+            url: '/Admin/SaveRole',
+            type:'POST',
+            data: {name:roleName,menuid:selectedValues,accounttype:account},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

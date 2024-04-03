@@ -24,6 +24,53 @@ namespace HalloDocWeb.Controllers
         {
             return View();
         } 
+        public IActionResult Access()
+        {
+            var rol = applicationDb.Roles.ToList();
+            return View(new CreateRoleViewModel { roles=rol});
+        }
+        public List<MenuDataViewModel> GetRoles(int AccountType)
+        {
+            if (AccountType == 0)
+            {
+                var DataTableViewModels = from menus in applicationDb.Menus select new MenuDataViewModel { Id = menus.Menuid, Name = menus.Name };
+                return DataTableViewModels.ToList();
+
+            }
+            else
+            {
+                var DataTableViewModels = from menus in applicationDb.Menus where menus.Accounttype == AccountType select new MenuDataViewModel { Id = menus.Menuid, Name = menus.Name };
+                return DataTableViewModels.ToList();
+            }
+        }
+        public IActionResult CreateRole()
+        {
+            var req=applicationDb.Menus.ToList();
+            return View(new CreateRoleViewModel {menus=req});
+        }
+        [HttpPost]
+        public IActionResult SaveRole(CreateRoleViewModel model)
+        {
+            var req = new Role { Accounttype = (short)model.accounttype, Name = model.name, Createdby = "Tanmay", Createddate = DateTime.Now, Isdeleted = new BitArray(1) };
+            applicationDb.Roles.Add(req);
+            applicationDb.SaveChanges();
+            foreach (var item in model.menuid)
+            {
+                var rolemenu = new Rolemenu { Menuid = item, Roleid = req.Roleid };
+                applicationDb.Rolemenus.Add(rolemenu);
+            }
+            applicationDb.SaveChanges();
+            return RedirectToAction("Access");
+        }
+        [HttpPost]
+        public IActionResult DeleteRole(int Id)
+        {
+            var req = applicationDb.Roles.FirstOrDefault(m=>m.Roleid==Id);
+            req.Isdeleted[0] = true;
+                applicationDb.Roles.Update(req);
+            applicationDb.SaveChanges();
+            return RedirectToAction("Access");
+        }
         public IActionResult CreateRequest()
         {
             return View();

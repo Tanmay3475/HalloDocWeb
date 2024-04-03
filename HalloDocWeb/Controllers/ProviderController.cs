@@ -21,5 +21,12 @@ namespace HalloDocWeb.Controllers
         //    var req = (from pro in context.Physicians join not in context.Physiciannotifications on pro.Physicianid equals not.Physicianid select new ProviderInfoViewModel { ProviderName = pro.Firstname + ',' + pro.Lastname, Status = (int)pro.Status, BitArray = not.Isnotificationstopped ,id=pro.Physicianid}).ToList();
             return View();
         }
+        public IActionResult Create()
+        {
+            //    var req = (from pro in context.Physicians join not in context.Physiciannotifications on pro.Physicianid equals not.Physicianid select new ProviderInfoViewModel { ProviderName = pro.Firstname + ',' + pro.Lastname, Status = (int)pro.Status, BitArray = not.Isnotificationstopped ,id=pro.Physicianid}).ToList();
+            var reg = context.Regions.ToList();
+            var role=context.Roles.ToList();
+            return View(new ProviderViewModel { regions=reg,roles=role});
+        }
     }
 }

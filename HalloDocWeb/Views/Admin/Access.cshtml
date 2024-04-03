@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDoc.Models.CreateRoleViewModel
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start ">Account Access</h2>
+  
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+ <button type="button" class="btn btn-outline-info float-end me-1 mt-3 mb-2" id="accountaccess">Create Access</button></div>
+   
+
+    </div>    
+    <table id="exampl2" class="table" style="width:100%">
+        <thead class="dtable-head">
+            <tr>
+                
+                <th>Name </th>
+                <th>Account Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.roles)
+            {
+                if (!item.Isdeleted[0])
+                {
+                    <tr style="background-color:white !important;color:black !important">
+
+             
+                    
+                <td>@item.Name</td>
+                <td>@Model.findAccount(item.Accounttype)</td>
+                <td><button type="button" class="btn btn-outline-info me-1 mt-1">Edit</button>
+                    <button type="button" class="btn btn-outline-info me-1 mt-1 del-role" value="@item.Roleid">Delete</button></td>
+            </tr>
+            }
+            }
+            </tbody>
+            </table>
+</div>
+<script>
+    $('#accountaccess').on('click', function (e) {
+         $.ajax({
+            url: '/Admin/CreateRole',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.del-role').on('click', function (e) {
+        var id = $(this).attr('value');
+         $.ajax({
+            url: '/Admin/DeleteRole',
+            type:'POST',
+             data: {Id:id},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

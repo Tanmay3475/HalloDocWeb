@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Compile Remove="Views\Admin\Index.cshtml.cs" />
+    <Compile Remove="Views\Provider\Create.cs" />
   </ItemGroup>
 
   <ItemGroup>

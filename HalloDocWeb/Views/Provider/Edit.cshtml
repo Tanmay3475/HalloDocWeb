@@ -5,7 +5,7 @@
 }
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3" style="width: 80rem;left:300px;position:absolute;">
     <h2 class="mt-2 float-start ">Edit Physician Account</h2>
-    <button class="btn btn-outline-info float-end mt-2 me-5 back-button">
+    <button class="btn btn-outline-info float-end mt-2 me-5 pback">
         < Back
     </button>
 
@@ -198,17 +198,92 @@
     <div class="row">
         <div class="col-6 form-floating pc-text">
             <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02" title="CHoose Photo">
-                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                <input type="file" class="form-control" id="inputGroupFile02" title="CHoose Photo" disabled>
+                <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1"/>Upload Photo</label>
             </div>
         </div><div class="col-6 form-floating pc-text">
             <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02">
-                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                <input type="file" class="form-control" id="inputGroupFile02" disabled>
+                <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Signature</label>
+                <button type="button" class="btn btn-info ms-2" disabled><img src="~/images/icons8-edit-25.png" class="me-1" />Create</button>
             </div>
+           
         </div>
 
 
+    </div><div class="row">
+       
+            <div class="col-12 form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height:100px" disabled></textarea>
+                <label for="floatingTextarea">Admin Notes</label>
+            </div>
+           
+      
+
+
     </div>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
+    <div class="clearfix" style="border-bottom:1px solid black"></div>
+    <div class="row"><div class="col-12 pc-head">Onboarding</div></div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Independent Contractor Agreement
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">View</button>
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" checked disabled />
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            HIPAA Compliance
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">View</button>
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Background Check
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">View</button>
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" checked disabled> 
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Non-disclosure Agreement
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">View</button>
+
+    </div>
+    <div class="form-check mb-2" style="border-bottom:1px solid black;padding-bottom:12px">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            License Document
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">View</button>
+
+    </div>
+    <button type="button" class="btn btn-danger float-end me-1 mb-2 mt-2">Delete Account</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Save</button>
+    <div class="clearfix"></div>
 </div>
-<script src="/js/site.js"></script>
+<script>
+    $('.pback').on('click', function (e) {
+        $.ajax({
+            url: '/Provider/Information',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

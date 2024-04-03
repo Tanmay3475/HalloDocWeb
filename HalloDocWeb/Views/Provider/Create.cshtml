@@ -1,0 +1,345 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDoc.Models.ProviderViewModel
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start ">Create Provider Account</h2>
+    <button class="btn btn-outline-info float-end mt-2 me-5 pback">
+        < Back
+    </button>
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row"><div class="col-12 pc-head">Account  Information</div></div>
+
+    <div class="row">
+        <div class="col-4 form-floating pc-text">
+            <input type="text" class="form-control" id="username" placeholder="Password">
+            <label for="floatinglastname">User Name</label>
+        </div><div class="col-4 form-floating pc-text">
+            <input type="password" class="form-control" id="password" placeholder="Password">
+            <label for="floatinglastname">Password</label>
+        </div>
+
+
+    
+    <div class="col-4 form-floating pc-text">
+            <select class="form-select" id="role" aria-label="Floating label select example">
+               
+                <option selected>Select Role</option>
+                @foreach(var item in Model.roles)
+                {
+                    if(item.Accounttype==2)
+                    {
+                        <option value="@item.Roleid">@item.Name</option>
+
+                    }
+                }
+
+            </select>
+            <label for="floatingSelect">Role</label>
+        </div>
+
+
+    </div>
+    <div class="row"><div class="col-12 pc-head">Administrator Information</div></div>
+
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="firstname" placeholder="Password">
+            <label for="floatinglastname">First Name</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="lastname" placeholder="Password">
+            <label for="floatinglastname">Last Name</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="email" placeholder="Password">
+            <label for="floatinglastname">Email</label>
+        </div> <div class="col-6">
+            <div class="input-group mb-3 mt-2" style="height:60px">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/icons8-india-25.png" /></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <input type="text" class="form-control" aria-label="Text input with dropdown button" id="phone" placeholder="(02612652666)">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="medical" placeholder="Password">
+            <label for="floatinglastname">Medical License#</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="npi" placeholder="Password">
+            <label for="floatinglastname">NPI Number</label>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                @foreach(var item in Model.regions){
+                <div class="col">
+                    <div class="form-check mt-4">
+                        <input class="form-check-input regionid" type="checkbox" value="@item.Regionid" id="flexCheckDefault" >
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @item.Name
+                        </label>
+                    </div>
+                </div>
+                }
+               
+            </div>
+        </div>
+        <div class="col-6"></div>
+
+    </div>
+    <div class="row"><div class="col-12 pc-head">Mailing and Billing Information</div></div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="address1" placeholder="Password">
+            <label for="floatinglastname">Address1</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="address2" placeholder="Password">
+            <label for="floatinglastname">Address2</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="city" placeholder="Password">
+            <label for="floatinglastname">City</label>
+        </div><div class="col-6 form-floating pc-text">
+            <select class="form-select refill" id="state" aria-label="Floating label select example">
+                <option selected> Select State</option>
+                @foreach(var item in Model.regions)
+                {
+                    <option value="@item.Name"> @item.Name</option>
+
+                }
+            </select>
+            <label for="floatingSelect">State</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="pin" placeholder="Password">
+            <label for="floatinglastname">Pin</label>
+        </div><div class="col-6">
+            <div class="input-group mb-3 mt-2" style="height:60px">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/icons8-india-25.png" /></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <input type="text" class="form-control" id="altPhone" aria-label="Text input with dropdown button" placeholder="(02612652666)">
+            </div>
+        </div>
+
+
+    </div>
+   
+    <div class="row"><div class="col-12 pc-head">Provider Profile</div></div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="BusinessName" placeholder="Password">
+            <label for="floatinglastname">Business Name</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="BusinessWeb" placeholder="Password">
+            <label for="floatinglastname">Business Website</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="photo">
+                <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Photo</label>
+            </div>
+        </div><div class="col-6">
+            
+
+        </div>
+
+
+    </div><div class="row">
+
+        <div class="col-12 form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="adminnotes" style="height:100px"></textarea>
+            <label for="floatingTextarea">Admin Notes</label>
+        </div>
+
+
+
+
+    </div>
+    <div class="row"><div class="col-12 pc-head">Onboarding</div></div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox0" disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Independent Contractor Agreement
+        </label>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput0" id="actual-file-input" hidden>
+  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox1"  disabled />
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            HIPAA Compliance
+        </label>
+        <button type="button" class="btn btn-info ms-2"><input type="file" class="fileInput1" id="actual-file-input" hidden>
+  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox2" disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Background Check
+        </label>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput2" id="actual-file-input" hidden>
+  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox3" disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Non-disclosure Agreement
+        </label>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput3" id="actual-file-input" hidden>
+  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+
+    </div>
+    <div class="form-check mb-2" style="border-bottom:1px solid black;padding-bottom:12px">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox4" disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            License Document
+        </label>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput4" id="actual-file-input" hidden>
+  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+
+    </div>
+    <button type="button" class="btn btn-success float-end me-1 mb-2 mt-2" id="createProvider"> Create Account</button>
+    <div class="clearfix"></div>
+</div>
+<script>
+    $('.pback').on('click', function (e) {
+        $.ajax({
+            url: '/Provider/Information',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#createProvider').on('click', function (e) {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var role = $('#role').val();
+        var firstname = $('#firstname').val();
+        var lastname = $('#lastname').val();
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+        var medical = $('#medical').val();
+        var npi = $('#npi').val();
+        var address1 = $('#address1').val();
+        var address2 = $('#address2').val();
+        var city = $('#city').val();
+        var state = $('#state').val();
+        var pin = $('#pin').val();
+        var altPhone = $('#altPhone').val();
+        var BusinessName = $('#BusinessName').val();
+        var BusinessWeb = $('#BusinessWeb').val();
+        var BusinessWeb = $('#BusinessWeb').val();
+        var regionid = $('.regionid:checkbox:checked').map(function () {
+            return $(this).val();
+        }).get();
+        $.ajax({
+            url: '/Provider/Information',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.fileInput0').change( function () {
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox0").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox0").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput1').change( function () {
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox1").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox1").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput2').change( function () {
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox2").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox2").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput3').change( function () {
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox3").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox3").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput4').change( function () {
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox4").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox4").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+</script>
