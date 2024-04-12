@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start "> Vendor(s)</h2>
+   
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row">
+        <div class="col-2 mt-3"><input type="search" placeholder="Search Patients" class="search" /><img src="/images/icons8-search-25.png" style="position:relative;left:21px;bottom:39px" /></div>
+        <div class="col-2 mt-3">
+            <select class="form-select search" aria-label="Default select example" id="region">
+                <option selected value="All">All Regions</option>
+             
+                        <option value="Regionid">Name</option>
+                                    
+            </select>
+            <img src="/images/icons8-search-25.png" style="position:relative;left:10px;top:-40px;" />
+        </div>
+        <div class="col-8">
+            <button type="button" class="btn btn-outline-info float-end me-1 mt-3 mb-2" id="addbusiness">+ Add Business</button>
+        </div>
+
+
+    </div>
+    <table id="exampl2" class="table" style="width:100%">
+        <thead class="dtable-head">
+            <tr>
+
+                <th>Profession </th>
+                <th>Business Name </th>
+                <th>Email </th>
+                <th>Fax Number </th>
+                <th>Phone Number </th>
+                <th>Business Contact </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+         
+                    <tr style="background-color:white !important;color:black !important">
+
+
+
+                        <td>Name</td>
+                        <td>Name</td>
+                        <td>Name</td>
+                        <td>Name</td>
+                        <td>Name</td>
+                        <td>findAccount(item.Accounttype)</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-info me-1 mt-1">Edit</button>
+                            <button type="button" class="btn btn-outline-info me-1 mt-1 del-role" value="Roleid">Delete</button>
+                        </td>
+                    </tr>
+                
+            
+        </tbody>
+    </table>
+</div>
+<script>
+    $('#addbusiness').on('click', function (e) {
+    
+        $.ajax({
+            url: '/Partner/AddBusiness',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

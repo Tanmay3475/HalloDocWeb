@@ -164,7 +164,7 @@
 
 
     </div>
-   
+   Z
     <div class="row"><div class="col-12 pc-head">Provider Profile</div></div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
@@ -180,7 +180,7 @@
     <div class="row">
         <div class="col-6 form-floating pc-text">
             <div class="input-group mb-3">
-                <input type="file" class="form-control" id="photo">
+                <input type="file" class="form-control photos" id="photo">
                 <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Photo</label>
             </div>
         </div><div class="col-6">
@@ -207,8 +207,8 @@
             Independent Contractor Agreement
         </label>
         <button type="button" class="btn btn-info ms-2">
-            <input type="file" class="fileInput0" id="actual-file-input" hidden>
-  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+            <input type="file" class="fileInput0" id="actual-file-input4" hidden>
+  <label for="actual-file-input4"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
 
     </div>
     <div class="form-check mb-2">
@@ -226,8 +226,8 @@
             Background Check
         </label>
         <button type="button" class="btn btn-info ms-2">
-            <input type="file" class="fileInput2" id="actual-file-input" hidden>
-  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+            <input type="file" class="fileInput2" id="actual-file-input1" hidden>
+  <label for="actual-file-input1"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
 
     </div>
     <div class="form-check mb-2">
@@ -236,8 +236,8 @@
             Non-disclosure Agreement
         </label>
         <button type="button" class="btn btn-info ms-2">
-            <input type="file" class="fileInput3" id="actual-file-input" hidden>
-  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+            <input type="file" class="fileInput3" id="actual-file-input2" hidden>
+  <label for="actual-file-input2"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
 
     </div>
     <div class="form-check mb-2" style="border-bottom:1px solid black;padding-bottom:12px">
@@ -246,8 +246,8 @@
             License Document
         </label>
         <button type="button" class="btn btn-info ms-2">
-            <input type="file" class="fileInput4" id="actual-file-input" hidden>
-  <label for="actual-file-input"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
+            <input type="file" class="fileInput4" id="actual-file-input3" hidden>
+  <label for="actual-file-input3"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label></button>
 
     </div>
     <button type="button" class="btn btn-success float-end me-1 mb-2 mt-2" id="createProvider"> Create Account</button>
@@ -283,12 +283,57 @@
         var altPhone = $('#altPhone').val();
         var BusinessName = $('#BusinessName').val();
         var BusinessWeb = $('#BusinessWeb').val();
-        var BusinessWeb = $('#BusinessWeb').val();
+        var adminnotes = $('#adminnotes').val();
         var regionid = $('.regionid:checkbox:checked').map(function () {
             return $(this).val();
         }).get();
+        var formData = new FormData();
+        $('.photos').each(function () {
+            formData.append('Photo', $(this)[0].files[0]);
+        });
+        $('.fileInput0').each(function () {
+            formData.append('Independent', $(this)[0].files[0]);
+        });
+        $('.fileInput1').each(function () {
+            formData.append('hipaa', $(this)[0].files[0]);
+        });
+        $('.fileInput2').each(function () {
+            formData.append('background', $(this)[0].files[0]);
+        });
+        $('.fileInput3').each(function () {
+            formData.append('Non_disclosure', $(this)[0].files[0]);
+        });
+        $('.fileInput4').each(function () {
+            formData.append('License', $(this)[0].files[0]);
+        });
+        formData.append('UserName', username);
+        formData.append('Password', password);
+        formData.append('role_id', role);
+        formData.append('first_name', firstname);
+        formData.append('last_name', lastname);
+        formData.append('email',email);
+        formData.append('phone',phone);
+        formData.append('medicalLicense',medical);
+        formData.append('NPI_number',npi);
+        formData.append('Address1',address1);
+        formData.append('Address2',address2);
+        formData.append('City',city);
+        formData.append('Country',state);
+        formData.append('Pin',pin);
+        formData.append('AltPhone',altPhone);
+        formData.append('BusinessName',BusinessName);
+        formData.append('BusinessWebsite',BusinessWeb);
+        formData.append('AdminNotes',adminnotes);
+        formData.append('region_id',regionid);
+        console.log("Hello");
+        debugger;
         $.ajax({
-            url: '/Provider/Information',
+            url: '/Provider/Create',
+            type:'POST',
+            data:formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
             success: function (response) {
                 $('#nav-home').html(response);
             },
@@ -298,6 +343,7 @@
         });
     });
     $('.fileInput0').change( function () {
+        console.log("0");
         if (this.files.length > 0) {
             // File has been selected
             $("#checkbox0").prop("checked", true); // Check the checkbox
@@ -307,6 +353,7 @@
         }
     });
     $('.fileInput1').change( function () {
+        console.log("1");
         if (this.files.length > 0) {
             // File has been selected
             $("#checkbox1").prop("checked", true); // Check the checkbox
@@ -316,6 +363,7 @@
         }
     });
     $('.fileInput2').change( function () {
+        console.log("2");
         if (this.files.length > 0) {
             // File has been selected
             $("#checkbox2").prop("checked", true); // Check the checkbox
@@ -325,6 +373,7 @@
         }
     });
     $('.fileInput3').change( function () {
+        console.log("3");
         if (this.files.length > 0) {
             // File has been selected
             $("#checkbox3").prop("checked", true); // Check the checkbox
@@ -334,6 +383,7 @@
         }
     });
     $('.fileInput4').change( function () {
+        console.log("4");
         if (this.files.length > 0) {
             // File has been selected
             $("#checkbox4").prop("checked", true); // Check the checkbox

@@ -29,12 +29,12 @@ namespace HalloDoc.Models
         public string AltPhone { get; set;}
         public string BusinessName { get;set;}
         public string BusinessWebsite { get; set;}
-        public IFormFile Photo { get; set;}
+        public List<IFormFile> Photo { get; set;}
         public string AdminNotes{ get; set;}
-        public IFormFile Independent { get; set;}
-        public IFormFile hipaa { get; set;}
-        public IFormFile background { get; set;}
-        public IFormFile Non_disclosure { get; set;}
-        public IFormFile License { get; set;}
+        public List<IFormFile> Independent { get; set;}
+        public List<IFormFile> hipaa { get; set;}
+        public List<IFormFile> background { get; set;}
+        public List<IFormFile> Non_disclosure { get; set;}
+        public List<IFormFile> License { get; set;}
     }
 }

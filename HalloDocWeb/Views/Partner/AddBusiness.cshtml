@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start "> Add Business</h2>
+    <button class="btn btn-outline-info float-end mt-2 me-5 abback">
+        < Back
+    </button>
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row"><div class="col-12 pc-head">Submit Information</div></div>
+
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="Business" placeholder="Password">
+            <label for="floatinglastname">Business Name</label>
+        </div>
+        <div class="col-6">
+            <select class="form-select profession" aria-label="Default select example" style="height:55px;margin-top:10px">
+                <option selected>Select Profession</option>
+                    <option value="Healthprofessionalid">Professionname</option>
+                
+            </select>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+
+            <input type="text" class="form-control" id="number" placeholder="Password">
+            <span class="text-danger"></span><label for="floatingrelation">Fax Number</label>
+        </div>
+        <div class="col-6 form-floating pc-text">
+            <div class="input-group mb-3 mt-1" style="height:60px">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="/images/icons8-india-25.png" /></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <input type="text" class="form-control" id="altPhone" aria-label="Text input with dropdown button" placeholder="(02612652666)">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="email" class="form-control" id="email" placeholder="Password">
+            <span class="text-danger"></span><label for="floatingemail">Email</label>
+        </div>
+        <div class="col-6 form-floating pc-text">
+            <input type="email" class="form-control" id="Contact" placeholder="Password">
+            <span class="text-danger"></span><label for="floatingemail">Business Contact</label>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="street" placeholder="Password">
+            <label for="street">Street</label>
+        </div>
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="floatingcity" placeholder="Password">
+            <label for="floatingcity">City</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control" id="country" placeholder="Password">
+            <label for="country">State</label>
+        </div>
+        <div class="col-6 form-floating pc-text">
+            <input type="number" class="form-control" id="floatingzip" placeholder="Password">
+            <label for="floatingzip">Zip/Postal</label>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2">Cancel</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 addbuss">Save</button>
+</div>
+
+<script>
+    $('.abback').on('click', function (e) {
+
+        $.ajax({
+            url: '/Partner/Vendor',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.addbuss').on('click', function (e) {
+        var name=$
+        $.ajax({
+            url: '/Partner/Vendor',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

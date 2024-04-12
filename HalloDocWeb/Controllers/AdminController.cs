@@ -29,6 +29,10 @@ namespace HalloDocWeb.Controllers
             var rol = applicationDb.Roles.ToList();
             return View(new CreateRoleViewModel { roles=rol});
         }
+        public IActionResult ProviderLocation()
+        {
+            return View();
+        }
         public List<MenuDataViewModel> GetRoles(int AccountType)
         {
             if (AccountType == 0)

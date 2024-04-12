@@ -15,7 +15,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"> </script>
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -57,7 +62,7 @@
         <div class="xl-container d-flex flex-wrap">
             <ul class="nav me-auto">
                 <li class="nav-item"><a asp-action="tabs" class="nav-link active px-2 dash-nav dashboard">DashBoard</a></li>
-                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Provider Locations</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav providerlocation">Provider Locations</a></li>
                 <li class="nav-item"><a href="#" class="nav-link dash-nav profile" id="@accessor.HttpContext.Session.GetInt32("Admin_Id")">My Profile</a></li>
                @*  <li class="nav-item"><a href="#" class="nav-link   dash-nav">Providers</a></li> *@
                 <li class="nav-item">
@@ -67,11 +72,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#" id="provider">Provider</a></li>
-                        <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                        <li><a class="dropdown-item" href="#" id="schedule">Scheduling</a></li>
                         <li><a class="dropdown-item" href="#">Invoicing</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Partners</a></li>
+                <li class="nav-item"><a href="#" class="nav-link   dash-nav partner">Partners</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav access">Access</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav">Records</a></li>
             </ul>
@@ -268,10 +273,49 @@
         $('.dashboard').removeClass("active");
         $('.provider').removeClass("active");
         $('.access').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.partner').removeClass("active");
+        $('.profile').addClass("active");
         $.ajax({
             url: '/Admin/MyProfile',
             
             data: { id: admin_id },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }); 
+    $('.providerlocation').on('click', function (e) {
+        
+        $('.dashboard').removeClass("active");
+        $('.provider').removeClass("active");
+        $('.access').removeClass("active");
+        $('.profile').removeClass("active");
+        $('.partner').removeClass("active");
+        $('.providerlocation').addClass("active");
+        $.ajax({
+            url: '/Admin/ProviderLocation',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.partner').on('click', function (e) {
+        
+        $('.dashboard').removeClass("active");
+        $('.provider').removeClass("active");
+        $('.access').removeClass("active");
+        $('.profile').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.partner').addClass("active");
+        $.ajax({
+            url: '/Partner/Vendor',
             success: function (response) {
                 $('#nav-home').html(response);
             },
@@ -389,6 +433,9 @@
     $('#provider').on('click', function (e) {
         $('.dashboard').removeClass("active");
         $('.access').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.profile').removeClass("active");
+        $('.partner').removeClass("active");
         $('.provider').addClass("active");
         $.ajax({
             url: '/Provider/Information',
@@ -400,9 +447,29 @@
             }
         });
     });
+    $('#schedule').on('click', function (e) {
+        $('.dashboard').removeClass("active");
+        $('.access').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.profile').removeClass("active");
+        $('.partner').removeClass("active");
+        $('.provider').addClass("active");
+        $.ajax({
+            url: '/Scheduling/Scheduling',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
     $('.access').on('click', function (e) {
         $('.dashboard').removeClass("active");
         $('.provider').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.partner').removeClass("active");
+        $('.profile').removeClass("active");
         $('.access').addClass("active");
         $.ajax({
             url: '/Admin/Access',

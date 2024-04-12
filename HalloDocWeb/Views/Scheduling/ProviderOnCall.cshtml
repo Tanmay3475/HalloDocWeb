@@ -1,0 +1,134 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDoc.Models.SchedulingViewModel
+
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <h4>MDs On Call</h4>
+        <a asp-controller="AdminStatus" asp-action="tabs" class="btn btn-outline-info text-decoration-none">
+            <span class="back-btn p-2" style="color: #00b8e6;">&lt;Back</span>
+        </a>
+    </div>
+
+    <div class="mt-3">
+
+        <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <select name="regionname" class="form-select shadow-none mt-3 regpro" asp-for="selectedregionid">
+                    <option class="regionselect"  value="0">All Region</option>
+
+                    @foreach (var item in Model.regions)
+                    {
+                        <option class="regionselect"  value="@item.Regionid">@item.Name</option>
+
+                    }
+                </select>
+            </div>
+            <div class="d-flex">
+                <button class="p-2 mx-2 text-white btn-info border-0 shadow-none rounded d-flex align-items-center" id="onCall">
+                    <span class="d-none d-lg-block ps-2">Calender View</span>
+                </button>
+                <button class="p-2 mx-2 text-white rounded btn-info border-0 shadow-none d-flex align-items-center">
+                    <span class="d-none d-lg-block ps-2">Shifts For Review</span>
+                </button>
+                 </div>
+        </div>
+        
+
+    </div>
+
+
+   
+</div>
+
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row"><div class="col-12 pc-head">MD's On Call</div></div>
+    <div class="row">
+   @foreach(var item in Model.active)
+   {
+            <div class="col-2">
+                @if (item.Photo == null)
+                {
+                    <img src="/images/icons8-admin-50.png" />
+                }
+                else
+                {
+                    <img src="\Onboarding\@item.Physicianid.ToString()\Photo.jpg" style="width:50px;height:50px" />
+                }
+                @item.Firstname
+        </div>
+   }
+    </div>
+    <div class="row"><div class="col-12 pc-head">Physicians Off Duty</div></div>
+    @foreach (var item in Model.inactive)
+    {
+        <div class="col-2">
+            @if (item.Photo == null)
+            {
+                <img src="/images/icons8-admin-50.png" />
+            }
+            else
+            {
+                <img src="\Onboarding\@item.Physicianid.ToString()\Photo.jpg" style="width:50px;height:50px"/>
+            }
+            @item.Firstname
+        </div>
+    }
+
+</div>
+
+
+
+
+
+@*Add view Shift Modal*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script src="/js/Scheduling.js"></script>
+<script>
+    var regid;
+    $('.regpro').on('change', function (e) {
+        console.log("Hello");
+        regid = $(this).val();
+        console.log(regid);
+        $.ajax({
+            url: '/Scheduling/ProviderOnCall',
+            data: {regionid:regid},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    // $('#onCall').on('click', function (e) {
+    //     console.log("Hello");
+    //     $.ajax({
+    //         url: '/Scheduling/ProviderOnCall',
+    //         success: function (response) {
+    //             $('#nav-home').html(response);
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.error(error);
+    //         }
+    //     });
+    // });
+    $('#onCall').on('click', function (e) {
+        console.log("Hello");
+        $.ajax({
+            url: '/Scheduling/Scheduling',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,188 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HalloDoc.Models.SchedulingViewModel
+<head>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+
+</head>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;">
+        <h2 class="mt-2 float-start">Requested Shifts</h2>
+        <button class="btn btn-outline-info float-end mt-2 me-5" id="rsback">
+            < Back
+        </button>
+
+
+    </div>
+
+    <div class="card" style="width: 80rem;">
+        <div class="card-body">
+           
+            
+           <div class="row">
+               <div class="col-2">
+                    <select name="regionname" class="form-select shadow-none" id="region">
+                        <option class="regionselect" selected value="">All Region</option>
+
+                        @foreach (var item in Model.regions)
+                        {
+                            <option class="regionselect" itemid="@item.Regionid" value="@item.Regionid">@item.Name</option>
+
+                        }
+                    </select>
+
+               </div>
+               <div class="col-10">
+                <button type="submit" class="btn btn-danger float-end ms-1" id="deleteshift">Delete Selected</button>
+                <button class="btn btn-success float-end ms-1" id="approve">Approved Selected</button>
+                <button class="btn btn-success float-end ms-1" id="viewcurrent" value="@DateTime.Now.Month">View Current Month Shifts</button>
+                <div class="clearfix"></div>
+                </div>
+                </div>
+                <div class="table-responsive" style="margin-top:50px">
+                    <table class="table  table-sm" id="requestedShift">
+                        <thead>
+                            <tr style="background-color:#F0F0F0">
+                                <th scope="col" class="d-none"></th>
+                                <th scope="col" class="d-none"></th>
+                                <th scope="col"><input type="checkbox" id="downall" /></th>
+                                <th scope="col">Staff <img src="/images/icons8-arrow-up-25.png" /></th>
+
+                                <th scope="col">Day</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Region</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model.shiftdetails)
+                            {
+                                                                   <tr style="background-color:#FFFFFF !important;">
+                                      <td class="d-none">@item.Regionid</td>
+                                      <td class="d-none">@item.Shiftdate.Month</td>
+                                                                       <td><input type="checkbox" name="downloadselect" value="@item.Shiftdetailid" class="childdownall" /></td>
+                                <td>@Model.physicians.FirstOrDefault(m => m.Physicianid == item.Shift.Physicianid).Firstname @Model.physicians.FirstOrDefault(m => m.Physicianid == item.Shift.Physicianid).Lastname</td>
+
+                                        <td>
+                                            @item.Shiftdate
+                                        </td>
+                                        <td>
+
+                                    @item.Starttime.ToString("hh:mm tt")-@item.Endtime.ToString("hh:mm tt")
+                                        </td>
+                                        <td>
+                                            @Model.regions.FirstOrDefault(m=>m.Regionid==item.Regionid).Name
+                                        </td>
+
+                                    </tr>
+                             }   
+                        </tbody>
+                    </table>
+                </div>
+         
+
+        </div>
+
+
+
+    </div>
+</main>
+
+<script>
+    var table = $('#requestedShift').DataTable({ dom: 'lrtip' });
+    $('#region').on('change', function () {
+        var value = $(this).val();
+        if (value == 'All') {
+            table.columns(0).search('').draw();
+        }
+        else {
+            table.columns(0).search(value).draw(); // Replace 0 with the index of the column you want to filter
+        }
+    });
+    $('#viewcurrent').on('click', function () {
+        var value = $(this).attr('value');
+        console.log(value);
+            table.columns(1).search(value).draw(); // Replace 0 with the index of the column you want to filter
+        
+    });
+    $('#rsback').on('click', function (e) {
+        console.log("Hello");
+        $.ajax({
+            url: '/Scheduling/Scheduling',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#downall').change(function () {
+        if ($(this).is(':checked')) {
+            $('.childdownall').prop('checked', true);
+        } else {
+            $('.childdownall').prop('checked', false);
+        }
+    });
+    $('#approve').on('click', function (e) {
+        e.preventDefault();
+       // var reqid = $(this).attr('value');
+        var formData = new FormData();
+        $('.childdownall').each(function () {
+            var req = $(this).attr('value');
+            if ($(this).is(':checked')) {
+                formData.append('check', req);
+            }
+
+        });
+      
+        console.log(formData);
+        // Add any other data you need (e.g., RequestsId)
+
+        $.ajax({
+            url: '/Scheduling/ApproveShift', // Replace with your controller action URL
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (error) {
+                console.error('Error uploading files:', error);
+            }
+        });
+    });
+    $('#deleteshift').on('click', function (e) {
+        e.preventDefault();
+       // var reqid = $(this).attr('value');
+        var formData = new FormData();
+        $('.childdownall').each(function () {
+            var req = $(this).attr('value');
+            if ($(this).is(':checked')) {
+                formData.append('check', req);
+            }
+
+        });
+      
+        console.log(formData);
+        // Add any other data you need (e.g., RequestsId)
+
+        $.ajax({
+            url: '/Scheduling/DeleteShift', // Replace with your controller action URL
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (error) {
+                console.error('Error uploading files:', error);
+            }
+        });
+    });
+</script>
