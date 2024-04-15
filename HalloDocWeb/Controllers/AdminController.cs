@@ -52,6 +52,7 @@ namespace HalloDocWeb.Controllers
             var req=applicationDb.Menus.ToList();
             return View(new CreateRoleViewModel {menus=req});
         }
+        
         [HttpPost]
         public IActionResult SaveRole(CreateRoleViewModel model)
         {
@@ -101,7 +102,7 @@ namespace HalloDocWeb.Controllers
             //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regionid;
             var region = applicationDb.Adminregions.ToList().Where(m => m.Adminid == id);
             var region1 = applicationDb.Regions.FirstOrDefault(a => a.Regionid == admin.Regionid);
-            var profile = new MyProfileViewModel { Address1 = admin.Address1, Address2 = admin.Address2, Email = admin.Email, password = aspnet.Passwordhash, state = region1.Name, Phone = admin.Mobile, UserName = aspnet.Username, FirstName = admin.Firstname, LastName = admin.Lastname, ZipCode = admin.Zip, City = admin.City };
+            var profile = new MyProfileViewModel { Address1 = admin.Address1, Address2 = admin.Address2, Email = admin.Email, password = aspnet.Passwordhash, state = region1.Name, Phone = admin.Mobile, UserName = aspnet.Username, FirstName = admin.Firstname, LastName = admin.Lastname, ZipCode = admin.Zip, City = admin.City,altphone=admin.Altphone };
             //List<Region> regions = new List<Region>();
             var x = new List<Region>();
             foreach (var item in region)
@@ -109,9 +110,92 @@ namespace HalloDocWeb.Controllers
                 x.AddRange(applicationDb.Regions.ToList().Where(m => m.Regionid == item.Regionid));
                 //var regis = applicationDb.Regions.FirstOrDefault(m => m.Regionid == item.Regionid);
             }
+            var y=applicationDb.Regions.AsEnumerable().Except(x).ToList();
                 profile.regions = x;
-            
+            profile.regionexcept= y;
+            var z=applicationDb.Regions.ToList();
+            profile.All= z;
             return View(profile);
+        }
+        [HttpPost]
+        public IActionResult MyProfile(string pass)
+        {
+            var id = HttpContext.Session.GetInt32("Admin_Id");
+            var admin = applicationDb.Admins.FirstOrDefault(a => a.Adminid == id);
+            var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            aspnet.Passwordhash = pass;
+            applicationDb.Aspnetusers.Update(aspnet);
+            applicationDb.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("MyProfile");
+        }        
+        [HttpPost]
+        public IActionResult EditProfile(MyProfileViewModel model)
+        {
+            var id = HttpContext.Session.GetInt32("Admin_Id");
+            var admin = applicationDb.Admins.FirstOrDefault(a => a.Adminid == id);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            admin.Firstname=model.FirstName; admin.Lastname=model.LastName; admin.Email=model.Email; admin.Mobile = model.Phone;
+            admin.Modifieddate=DateTime.Now;
+            applicationDb.Admins.Update(admin);
+            applicationDb.SaveChanges();
+            List<Region> sel = new List<Region>();
+            if ( model.selected!=null)
+            {
+                foreach (var item in model.selected)
+                {
+                    var reg = applicationDb.Regions.FirstOrDefault(m => m.Regionid == item);
+                    sel.Add(reg);
+                }
+            }
+            List<Region> notsel = new List<Region>();
+            if (model.notselected!=null)
+            {
+                foreach (var item in model.notselected)
+                {
+                    var reg = applicationDb.Regions.FirstOrDefault(m => m.Regionid == item);
+                    notsel.Add(reg);
+                }
+            }
+            var reg1 = applicationDb.Regions.AsEnumerable().Except(sel).ToList();
+            var reg2 = applicationDb.Regions.AsEnumerable().Except(notsel).ToList();
+            foreach (var item in reg1) {
+                var reg = applicationDb.Adminregions.FirstOrDefault(M => M.Regionid == item.Regionid);
+                    if (reg != null)
+                {
+                    applicationDb.Adminregions.Remove(reg);
+                    applicationDb.SaveChanges();
+                }
+            }
+            foreach(var item in reg2) {
+                var reg3 = applicationDb.Adminregions.FirstOrDefault(m => m.Regionid == item.Regionid && m.Adminid == admin.Adminid);
+                if (reg3 == null)
+                {
+                    var reg = new Adminregion { Regionid = item.Regionid, Adminid = admin.Adminid };
+                    applicationDb.Adminregions.Add(reg);
+                    applicationDb.SaveChanges();
+                }
+            }
+            //var reg2 = applicationDb.Regions.AsEnumerable().Except(notsel).ToList();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("MyProfile");
+        }
+        [HttpPost]
+        public IActionResult EditShipProfile(MyProfileViewModel model)
+        {
+            var id = HttpContext.Session.GetInt32("Admin_Id");
+            var admin = applicationDb.Admins.FirstOrDefault(a => a.Adminid == id);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            admin.Address1=model.Address1; admin.Address2=model.Address2; admin.City=model.City; admin.Altphone = model.altphone;admin.Regionid = model.regid;
+            admin.Modifieddate=DateTime.Now;
+            applicationDb.Admins.Update(admin);
+            applicationDb.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("MyProfile");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

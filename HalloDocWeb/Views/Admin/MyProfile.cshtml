@@ -21,7 +21,7 @@
             <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.UserName" disabled>
             <label for="floatinglastname">User Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.password" disabled>
+            <input type="text" class="form-control" id="adpass" placeholder="Password" value="@Model.password" disabled>
             <label for="floatinglastname">Password</label>
         </div>
 
@@ -44,16 +44,17 @@
 
        
     </div>
-    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2">Reset Password</button>
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2" id="reset">Reset Password</button>
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2 d-none" id="resetpass">Save Password</button>
     <div class="clearfix"></div>
     <div class="row"><div class="col-12 pc-head">Administrator  Information</div></div>
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.FirstName" disabled>
+            <input type="text" class="form-control adper" id="adfirst" placeholder="Password" value="@Model.FirstName" disabled>
             <label for="floatinglastname">First Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.LastName" disabled>
+            <input type="text" class="form-control adper" id="adlast" placeholder="Password" value="@Model.LastName" disabled>
             <label for="floatinglastname">Last Name</label>
         </div>
 
@@ -61,10 +62,10 @@
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Email" disabled>
+            <input type="text" class="form-control adper" id="ademail" placeholder="Password" value="@Model.Email" disabled>
             <label for="floatinglastname">Email</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Email" disabled>
+            <input type="text" class="form-control adper" id="Business" placeholder="Password" value="@Model.Email" disabled>
             <label for="floatinglastname">Confirm Email</label>
         </div>
 
@@ -73,7 +74,7 @@
     <div class="row">
         <div class="col-6">
         <div class="input-group mb-3 mt-2" style="height:50px">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
+                <button class="btn btn-outline-secondary dropdown-toggle adper" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Action</a></li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -81,13 +82,21 @@
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Separated link</a></li>
             </ul>
-            <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="@Model.Phone">
+                <input type="text" class="form-control adper" id="adphone" aria-label="Text input with dropdown button" disabled value="@Model.Phone">
         </div>
         </div>
         <div class="col-6">
             @foreach(var item in Model.regions){
             <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                    <input class="form-check-input adper" type="checkbox" value="@item.Regionid" id="flexCheckDefault" checked disabled>
+                <label class="form-check-label" for="flexCheckDefault">
+                    @item.Name
+                </label>
+            </div>
+            }
+            @foreach(var item in Model.regionexcept){
+            <div class="form-check mt-3">
+                    <input class="form-check-input adper" type="checkbox" value="@item.Regionid" id="flexCheckDefault" disabled>
                 <label class="form-check-label" for="flexCheckDefault">
                     @item.Name
                 </label>
@@ -97,15 +106,16 @@
 
 
     </div>
-    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="editper">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 d-none" id="saveper">Save</button>
     <div class="clearfix"></div>
     <div class="row"><div class="col-12 pc-head">Mailing and Billing Information</div></div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Address1" disabled>
+            <input type="text" class="form-control adship" id="adadd1" placeholder="Password" value="@Model.Address1" disabled>
             <label for="floatinglastname">Address1</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Address2" disabled>
+            <input type="text" class="form-control adship" id="adadd2" placeholder="Password" value="@Model.Address2" disabled>
             <label for="floatinglastname">Address2</label>
         </div>
 
@@ -113,12 +123,22 @@
     </div> 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.City" disabled>
+            <input type="text" class="form-control adship" id="adcity" placeholder="Password" value="@Model.City" disabled>
             <label for="floatinglastname">City</label>
         </div><div class="col-6 form-floating pc-text">
-            <select class="form-select refill" id="floatingSelect" aria-label="Floating label select example" disabled>
-                <option selected> @Model.state</option>
+            <select class="form-select refill adship" id="adstate" aria-label="Floating label select example" disabled>
+                @foreach(var item in Model.All)
+                {
+                    if(item.Name==Model.state)
+                    {
+                        <option selected value="@item.Regionid">@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Regionid">@item.Name</option>
 
+                    }
+                }
             </select>
             <label for="floatingSelect">State</label>
         </div>
@@ -127,11 +147,11 @@
     </div> 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.ZipCode" disabled>
+            <input type="text" class="form-control adship" id="adzip" placeholder="Password" value="@Model.ZipCode" disabled>
             <label for="floatinglastname">Pin</label>
         </div><div class="col-6">
             <div class="input-group mb-3 mt-2" style="height:60px">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
+                <button class="btn btn-outline-secondary dropdown-toggle adship" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -139,14 +159,96 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
-                <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="@Model.Phone">
+                <input type="text" class="form-control adship" id="adaltphone" aria-label="Text input with dropdown button" disabled value="@Model.altphone">
             </div>
         </div>
 
 
     </div>
-    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="editship">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 d-none" id="saveship">Save</button>
     <div class="clearfix"></div>
    
 </div>
 <script src="/js/site.js"></script>
+<script>
+    $('#reset').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $("#adpass").prop("disabled", false);
+        $('#resetpass').removeClass('d-none')
+    });
+    $('#editper').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $(".adper").prop("disabled", false);
+        $('#saveper').removeClass('d-none')
+    });
+    $('#editship').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $(".adship").prop("disabled", false);
+        $('#saveship').removeClass('d-none')
+    });
+    $('#resetpass').on('click', function (e) {
+        var addon = $('#adpass').val();
+
+        $.ajax({
+            url: '/Admin/MyProfile',
+            type: 'POST',
+            data: {pass: addon },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#saveper').on('click', function (e) {
+        var addon = $('#adfirst').val();
+        var addon1 = $('#adlast').val();
+        var addon2 = $('#ademail').val();
+        var addon3 = $('#adphone').val();
+        var selectedValues = [];
+        var notselectedValues = [];
+
+        $(".adper:checkbox:checked").each(function () {
+            selectedValues.push($(this).val());
+        });
+        $(".adper:checkbox:not(:checked)").each(function () {
+            notselectedValues.push($(this).val());
+        });
+        console.log(selectedValues);
+        $.ajax({
+            url: '/Admin/EditProfile',
+            type: 'POST',
+            data: {FirstName:addon,LastName:addon1,Email:addon2,Phone:addon3,selected:selectedValues,notselected:notselectedValues },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#saveship').on('click', function (e) {
+        var addon = $('#adadd1').val();
+        var addon1 = $('#adadd2').val();
+        var addon2 = $('#adcity').val();
+        var addon3 = $('#adstate').val();
+        var addon4 = $('#adzip').val();
+        var addon5 = $('#adaltphone').val();
+        $.ajax({
+            url: '/Admin/EditShipProfile',
+            type: 'POST',
+            data: {Address1:addon,Address2:addon1,City:addon2,regid:addon3,ZipCode:addon4,altphone:notselectedValues },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    </script>
