@@ -26,5 +26,7 @@ namespace HalloDoc.Models
             return sName;
         }
         public int id { get; set; }
+        public int regid { get; set; }
+        public List<Region> regions {  get; set; } 
     }
 }

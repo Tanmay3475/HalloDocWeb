@@ -6,29 +6,36 @@
 @model IEnumerable<ProviderInfoViewModel>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
     <h2 class="mt-2 float-start "> Provider Information</h2>
-  
+
 
 </div>
 <div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
     <div class="row">
         <div class="col">
-    <select class="form-select search mt-2" aria-label="Default select example" id="region">
-        <option selected value="All">All</option>
-
-                <option>Name</option>
-
+            <select class="form-select search mt-2" aria-label="Default select example" id="region">
+                <option selected value="All">All</option>
+                @foreach (var item in Model.AsEnumerable())
+                {
+                    @foreach (var item1 in item.regions)
+                    {
+                        <option value="@item1.Regionid">@item1.Name</option>
+                    }
+                    break;
+                }
             </select>
         </div>
         <div class="col">
- <button type="button" class="btn btn-info float-end me-1 mt-3 p-create">Create Provider Account</button></div>
-   
+            <button type="button" class="btn btn-info float-end me-1 mt-3 p-create">Create Provider Account</button>
+        </div>
+
 
     </div>    <img src="/images/icons8-search-25.png" style="position:relative;left:10px;top:-40px;" />
     <table id="exampl2" class="table" style="width:100%">
         <thead class="dtable-head">
             <tr>
+                <th class="d-none">RegionId</th>
                 <th>Stop Notification</th>
-                <th>Provider Name <img src="/images/icons8-arrow-up-25.png"/></th>
+                <th>Provider Name <img src="/images/icons8-arrow-up-25.png" /></th>
                 <th>Role</th>
                 <th>On Call Status</th>
                 <th>Status</th>
@@ -36,33 +43,37 @@
             </tr>
         </thead>
         <tbody>
-             @foreach(var item in Model){
-            <tr style="background-color:white !important;color:black !important">
-              
-                    @if (item.BitArray[0])
-                    {
-                        <td>
-                            <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                        
-                    </div>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            @foreach (var item in Model)
+            {
+                <tr style="background-color:white !important;color:black !important">
+                    <td class="d-none">@item.regid</td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input noticheck" type="checkbox" value="@item.id" @if (item.BitArray[0])
+                            {
+                                @: checked
+                            }
+                                   id="flexCheckDefault">
 
-                            </div>
-                        </td>
-                    }
-                <td>@item.ProviderName</td>
-                <td>Physician</td>
-                <td>UnAvailable</td>
-                <td>@item.findStatus(item.Status)</td>
-                <td><button type="button" class="btn btn-outline-info me-1 mt-1" data-bs-toggle="modal" data-bs-target="#contactModal">Contact</button>
-                     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        </div>
+                    </td>
+
+                    @*  else
+                {
+                <td>
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="@item.id" id="flexCheckDefault">
+
+                </div>
+                </td>
+                } *@
+                    <td>@item.ProviderName</td>
+                    <td>Physician</td>
+                    <td>UnAvailable</td>
+                    <td>@item.findStatus(item.Status)</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-info me-1 mt-1" data-bs-toggle="modal" data-bs-target="#contactModal">Contact</button>
+                        <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog  modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color:#01BCE9;color:#9EF2F6">
@@ -93,7 +104,7 @@
                                             <textarea class="form-control" placeholder="Leave a comment here" id="textMessage" style="height: 100px"></textarea>
                                             <label for="floatingTextarea2">Message</label>
                                         </div>
-                                                                          </div>
+                                    </div>
                                     <div class="modal-footer" style="border:none">
 
                                         <button type="button" class="btn btn-outline-info" id="sendmail" @* value="@item.requestid" *@ data-bs-dismiss="modal" value="@item.id">Send</button>
@@ -102,14 +113,49 @@
                                 </div>
                             </div>
                         </div>
-                    <button type="button" class="btn btn-outline-info me-1 mt-1 edit" value="@item.id">Edit</button></td>
-            </tr>
+                        <button type="button" class="btn btn-outline-info me-1 mt-1 edit" value="@item.id">Edit</button>
+                    </td>
+                </tr>
             }
-            </tbody>
-            </table>
+        </tbody>
+    </table>
 </div>
 <script>
     var table = $('#exampl2').DataTable({ dom: 'lrtip' });
+    $('#region').on('change', function () {
+        var value = $(this).val();
+        if (value == 'All') {
+            table.columns(0).search('').draw();
+        }
+        else {
+            table.columns(0).search(value).draw(); // Replace 0 with the index of the column you want to filter
+        }
+    });
+    $('.noticheck').on('change', function () {
+        var value = $(this).val();
+        console.log(value);
+        var item;
+        // Check if the checkbox is checked
+        if ($(this).prop("checked")) {
+            item = 1;
+            console.log("Checkbox is checked");
+        } else {
+            item = 0;
+            console.log("Checkbox is not checked");
+        }
+        console.log(item);
+        $.ajax({
+            url: '/Provider/CheckNotification',
+            type: 'POST',
+            data: { check: item, Id: value},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
     $('#sendmail').on('click', function (e) {
         var email = $('#textMessage').val();
         var id = $(this).attr('value');
@@ -119,7 +165,7 @@
         $.ajax({
             url: '/Case/SendEmail1',
             type: 'POST',
-            data: { mail: email,Id:id },
+            data: { mail: email, Id: id },
             success: function (response) {
                 $('#nav-home').html(response);
             },
@@ -127,13 +173,13 @@
                 console.error(error);
             }
         });
-    }); 
+    });
     $('.edit').on('click', function (e) {
         var id = $(this).attr('value');
-        
+
         $.ajax({
             url: '/Provider/Edit',
-            data: { Id:id },
+            data: { Id: id },
             success: function (response) {
                 $('#nav-home').html(response);
             },
@@ -141,10 +187,10 @@
                 console.error(error);
             }
         });
-    }); 
+    });
     $('.p-create').on('click', function (e) {
-        
-        
+
+
         $.ajax({
             url: '/Provider/Create',
             success: function (response) {

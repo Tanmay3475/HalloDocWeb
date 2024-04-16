@@ -239,10 +239,17 @@
         var addon3 = $('#adstate').val();
         var addon4 = $('#adzip').val();
         var addon5 = $('#adaltphone').val();
+        console.log(addon);
+        console.log(addon1);
+        console.log(addon2);
+        console.log(addon3);
+        console.log(addon4);
+        console.log(addon5);
+    
         $.ajax({
             url: '/Admin/EditShipProfile',
             type: 'POST',
-            data: {Address1:addon,Address2:addon1,City:addon2,regid:addon3,ZipCode:addon4,altphone:notselectedValues },
+            data: {Address1:addon,Address2:addon1,City:addon2,regid:addon3,ZipCode:addon4,altphone:addon5},
             success: function (response) {
                 $('#nav-home').html(response);
             },

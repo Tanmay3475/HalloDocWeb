@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,5 +37,27 @@ namespace HalloDoc.Models
         public List<IFormFile> background { get; set;}
         public List<IFormFile> Non_disclosure { get; set;}
         public List<IFormFile> License { get; set;}
+        public List<Physicianregion> phyReg { get; set;}
+        public int status { get; set;}
+        public string syncEmail { get; set;}
+        public int regid { get; set;}
+        public BitArray ind { get; set;}
+        public BitArray hip { get; set;}
+        public BitArray back { get; set;}
+        public BitArray non_dis { get; set;}
+        public BitArray lic { get; set;}
+        enum statusName
+        {
+            january,
+            Active,
+            InActive,
+            Pending,
+        }
+        public string findStatus(int status)
+        {
+            string sName = ((statusName)status).ToString();
+            return sName;
+        }
+        public int Id {  get; set;}
     }
 }
