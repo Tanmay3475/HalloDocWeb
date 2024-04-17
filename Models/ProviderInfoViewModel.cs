@@ -15,7 +15,7 @@ namespace HalloDoc.Models
 
         enum statusName
         {
-            january,
+           
             Active,
             InActive,
             Pending,

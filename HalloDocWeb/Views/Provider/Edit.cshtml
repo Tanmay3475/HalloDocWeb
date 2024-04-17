@@ -17,10 +17,10 @@
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.UserName" disabled>
+            <input type="text" class="form-control asp_pro" id="aduser" placeholder="Password" value="@Model.UserName" disabled>
             <label for="floatinglastname">User Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Password" disabled>
+            <input type="text" class="form-control" id="adpass" placeholder="Password" value="@Model.Password" disabled>
             <label for="floatinglastname">Password</label>
         </div>
 
@@ -28,15 +28,15 @@
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <select asp-for="status" class="form-select refill" id="floatingSelect" aria-label="Floating label select example" disabled>
-                @for(int i = 1; i < 4; i++)
-                {
-                    <option value="i">@Model.findStatus(i)</option>
-                }
+            <select asp-for="status" class="form-select refill asp_pro" id="adstatus" aria-label="Floating label select example" disabled>
+                <option value="0">Active</option>
+                <option value="1">InActive</option>
+                <option value="2">Pending</option>
+
             </select>
             <label for="floatingSelect">Status</label>
         </div><div class="col-6 form-floating pc-text">
-            <select class="form-select refill" asp-for="role_id" id="floatingSelect" aria-label="Floating label select example" disabled>
+            <select class="form-select refill asp_pro" asp-for="role_id" id="adrole" aria-label="Floating label select example" disabled>
                 @foreach (var item in Model.roles)
                 {
                     <option value="@item.Roleid">@item.Name</option>
@@ -47,17 +47,19 @@
 
 
     </div>
-    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2">Reset Password</button>
-    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2" id="reset">Reset Password</button>
+    <button type="button" class="btn btn-outline-info float-end me-1 mb-2 mt-2 d-none" id="resetpass">Save Password</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="asp">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 d-none" id="saveasp">Save</button>
     <div class="clearfix"></div>
     <div class="row"><div class="col-12 pc-head">Physician Information</div></div>
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.first_name" disabled>
+            <input type="text" class="form-control adper" id="adfirst" placeholder="Password" value="@Model.first_name" disabled>
             <label for="floatinglastname">First Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.last_name" disabled>
+            <input type="text" class="form-control adper" id="adlast" placeholder="Password" value="@Model.last_name" disabled>
             <label for="floatinglastname">Last Name</label>
         </div>
 
@@ -65,11 +67,11 @@
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.email" disabled>
+            <input type="text" class="form-control adper" id="ademail" placeholder="Password" value="@Model.email" disabled>
             <label for="floatinglastname">Email</label>
         </div> <div class="col-6">
             <div class="input-group mb-3 mt-2" style="height:60px">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
+                <button class="btn btn-outline-secondary dropdown-toggle adper" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -77,16 +79,16 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
-                <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="@Model.phone">
+                <input type="text" class="form-control adper" id="adphone" aria-label="Text input with dropdown button" disabled value="@Model.phone">
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.medicalLicense" disabled>
+            <input type="text" class="form-control adper" id="admed" placeholder="Password" value="@Model.medicalLicense" disabled>
             <label for="floatinglastname">Medical License#</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.NPI_number" disabled>
+            <input type="text" class="form-control adper" id="adnpi" placeholder="Password" value="@Model.NPI_number" disabled>
             <label for="floatinglastname">NPI Number</label>
         </div>
 
@@ -97,7 +99,7 @@
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.syncEmail" disabled>
+            <input type="text" class="form-control adper" id="adsync" placeholder="Password" value="@Model.syncEmail" disabled>
             <label for="floatinglastname">Synchronization Email Address</label>
         </div>
         <div class="col-6">
@@ -106,192 +108,438 @@
                 {
                     <div class="col">
                         <div class="form-check mt-4">
-                            <input class="form-check-input" type="checkbox" value="@item.Regionid" id="flexCheckDefault" 
-                            disabled>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    @item.Name
-                                </label>
-                            </div>
-                        </div>
+                            <input class="form-check-input adper" type="checkbox" value="@item.Regionid" id="flexCheckDefault" @if (Model.phyReg.Any(m => m.Regionid == item.Regionid))
+                            {
+                                @:checked
                             }
-
-                </div>
-            </div>
-
-
-        </div>
-        <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
-        <div class="clearfix"></div>
-        <div class="row"><div class="col-12 pc-head">Mailing and Billing Information</div></div>
-        <div class="row">
-            <div class="col-6 form-floating pc-text">
-                <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Address1" disabled>
-                <label for="floatinglastname">Address1</label>
-            </div><div class="col-6 form-floating pc-text">
-                <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Address2" disabled>
-                <label for="floatinglastname">Address2</label>
-            </div>
-
-
-        </div>
-        <div class="row">
-            <div class="col-6 form-floating pc-text">
-                <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.City" disabled>
-                <label for="floatinglastname">City</label>
-            </div><div class="col-6 form-floating pc-text">
-                <select asp-for="regid" class="form-select refill" id="floatingSelect" aria-label="Floating label select example" disabled>
-                                @foreach (var item in Model.regions) {
-                    <option value="@item.Name"> @item.Name</option>
-                                }
-                </select>
-                <label for="floatingSelect">State</label>
-            </div>
-
-
-        </div>
-        <div class="row">
-            <div class="col-6 form-floating pc-text">
-                <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.Pin" disabled>
-                <label for="floatinglastname">Pin</label>
-            </div><div class="col-6">
-                <div class="input-group mb-3 mt-2" style="height:60px">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>
-                    <input type="text" class="form-control" aria-label="Text input with dropdown button" disabled value="@Model.AltPhone">
-                </div>
-            </div>
-
-
-        </div>
-        <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
-        <div class="clearfix"></div>
-        <div class="row"><div class="col-12 pc-head">Provider Profile</div></div>
-        <div class="row">
-            <div class="col-6 form-floating pc-text">
-                <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.BusinessName" disabled>
-                <label for="floatinglastname">Business Name</label>
-            </div><div class="col-6 form-floating pc-text">
-                <input type="text" class="form-control" id="Business" placeholder="Password" value="@Model.BusinessWebsite" disabled>
-                <label for="floatinglastname">Business Website</label>
-            </div>
-
-
-        </div>
-        <div class="row">
-            <div class="col-6 form-floating pc-text">
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02" title="CHoose Photo" disabled>
-                    <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Photo</label>
-                </div>
-            </div><div class="col-6 form-floating pc-text">
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02" disabled>
-                    <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Signature</label>
-                    <button type="button" class="btn btn-info ms-2" disabled><img src="~/images/icons8-edit-25.png" class="me-1" />Create</button>
-                </div>
-
-            </div>
-
-
-        </div>
-        <div class="row">
-            <div class="col-6 pc-text">
-                <img src="/Onboarding/@Model.Id/Photo.jpg" />
-            </div><div class="col-6  pc-text">
-                <div class="input-group mb-3">
-                    <img src="/Onboarding/@Model.Id/Signature.jpg" />
-                </div>
-
-            </div>
-
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-12 form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height:100px" disabled asp-for="AdminNotes"></textarea>
-                <label for="floatingTextarea">Admin Notes</label>
-            </div>
-
-
-
-
-        </div>
-        <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Edit</button>
-        <div class="clearfix" style="border-bottom:1px solid black"></div>
-        <div class="row"><div class="col-12 pc-head">Onboarding</div></div>
-        <div class="form-check mb-2">
-            <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault"
-                        disabled>
-                <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
-                    Independent Contractor Agreement
-                </label>
-                <button type="button" class="btn btn-info ms-2">Upload</button>
-                            
-                    <button type="button" class="btn btn-info ms-2">View</button>
-                            
-            </div>
-            <div class="form-check mb-2">
-                <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" disabled />
-                    <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
-                        HIPAA Compliance
-                    </label>
-                    <button type="button" class="btn btn-info ms-2">Upload</button>
-                                    
-                        <button type="button" class="btn btn-info ms-2">View</button>
-                                    
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" disabled>
-                        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
-                            Background Check
-                        </label>
-                        <button type="button" class="btn btn-info ms-2">Upload</button>
-                                                                        <button type="button" class="btn btn-info ms-2">View</button>
-                                            
-                    </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" disabled>
-                            <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
-                                Non-disclosure Agreement
+                                   disabled>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                @item.Name
                             </label>
-                            <button type="button" class="btn btn-info ms-2">Upload</button>
-                                                    
-                                <button type="button" class="btn btn-info ms-2">View</button>
-                                                    
                         </div>
-                        <div class="form-check mb-2" style="border-bottom:1px solid black;padding-bottom:12px">
-                            <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
-                                    License Document
-                                </label>
-                                <button type="button" class="btn btn-info ms-2">Upload</button>
-                                                            
-                                    <button type="button" class="btn btn-info ms-2">View</button>
-                                                            
-                            </div>
-                            <button type="button" class="btn btn-danger float-end me-1 mb-2 mt-2">Delete Account</button>
-                            <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Save</button>
-                            <div class="clearfix"></div>
-                        </div>
+                    </div>
+                }
 
-                        <script>
-                            $('.pback').on('click', function (e) {
-                                $.ajax({
-                                    url: '/Provider/Information',
-                                    success: function (response) {
-                                        $('#nav-home').html(response);
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error(error);
-                                    }
-                                });
-                            });
-                        </script>
+            </div>
+        </div>
+
+
+    </div>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="editper">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 d-none" id="saveper">Save</button>
+    <div class="clearfix"></div>
+    <div class="row"><div class="col-12 pc-head">Mailing and Billing Information</div></div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control adship" id="adadd1" placeholder="Password" value="@Model.Address1" disabled>
+            <label for="floatinglastname">Address1</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control adship" id="adadd2" placeholder="Password" value="@Model.Address2" disabled>
+            <label for="floatinglastname">Address2</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control adship" id="adcity" placeholder="Password" value="@Model.City" disabled>
+            <label for="floatinglastname">City</label>
+        </div><div class="col-6 form-floating pc-text">
+            <select asp-for="regid" class="form-select refill adship" id="adstate" aria-label="Floating label select example" disabled>
+                @foreach (var item in Model.regions)
+                {
+                    <option value="@item.Regionid"> @item.Name</option>
+                }
+            </select>
+            <label for="floatingSelect">State</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control adship" id="adzip" placeholder="Password" value="@Model.Pin" disabled>
+            <label for="floatinglastname">Pin</label>
+        </div><div class="col-6">
+            <div class="input-group mb-3 mt-2" style="height:60px">
+                <button class="btn btn-outline-secondary dropdown-toggle adship" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled><img src="/images/icons8-india-25.png" /></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <input type="text" class="form-control adship" id="adaltphone" aria-label="Text input with dropdown button" disabled value="@Model.AltPhone">
+            </div>
+        </div>
+
+
+    </div>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="editship">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 d-none" id="saveship">Save</button>
+    <div class="clearfix"></div>
+    <div class="row"><div class="col-12 pc-head">Provider Profile</div></div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control adbuss" id="Business" placeholder="Password" value="@Model.BusinessName" disabled>
+            <label for="floatinglastname">Business Name</label>
+        </div><div class="col-6 form-floating pc-text">
+            <input type="text" class="form-control adbuss" id="Business" placeholder="Password" value="@Model.BusinessWebsite" disabled>
+            <label for="floatinglastname">Business Website</label>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 form-floating pc-text">
+            <div class="input-group mb-3">
+                <input type="file" class="form-control adbuss" id="adphoto" title="CHoose Photo" disabled>
+                <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Photo</label>
+            </div>
+        </div><div class="col-6 form-floating pc-text">
+            <div class="input-group mb-3">
+                <input type="file" class="form-control adbuss" id="adsign" disabled accept="image/png">
+                <input type="text" id="adsign1" hidden/>
+                <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Signature</label>
+                <button type="button" class="btn btn-info ms-2 adbuss" disabled data-bs-toggle="modal" data-bs-target="#adSignature"><img src="~/images/icons8-edit-25.png" class="me-1" />Create</button>
+                <div class="modal fade" id="adSignature" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content">
+                            <div class="p-4 m-auto border border-1 border-info rounded-2">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h1>E-Signature</h1>
+                                        <p>Sign in the canvas below and save your signature as an image!</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <canvas class="border border-secondary rounded-2" id="signatureCanvas" width="300" height="160">
+                                            Get a better browser, bro.
+                                        </canvas>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="p-2 px-3 text-white bg-info rounded border-info  mx-2 px-3 shadow-none" id="saveButton" data-bs-dismiss="modal">Submit Signature</button>
+                                        <button class="btn border-info text-info shadow-none" id="clearBtn">Clear Signature</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" id="Cancelbutton" class="btn border-info text-info shadow-none" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6 pc-text">
+            <img src="/Onboarding/@Model.Id/Photo.jpg" style="width:250px;height:250px" />
+        </div><div class="col-6  pc-text">
+            <img src="/Onboarding/@Model.Id/Signature.jpg" style="width:250px;height:250px" />
+
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-12 form-floating">
+            <textarea class="form-control adbuss" placeholder="Leave a comment here" id="floatingTextarea" style="height:100px" disabled asp-for="AdminNotes"></textarea>
+            <label for="floatingTextarea">Admin Notes</label>
+        </div>
+
+
+
+
+    </div>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="editbuss">Edit</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2 d-none" id="savebuss">Save</button>
+    <div class="clearfix" style="border-bottom:1px solid black"></div>
+    <div class="row"><div class="col-12 pc-head">Onboarding</div></div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.ind[0] == true)
+        {
+            @:checked
+        }
+               disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Independent Contractor Agreement
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+
+        @if (Model.ind[0] == true)
+        {
+            <button type="button" class="btn btn-info ms-2">View</button>
+
+        }
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.hip[0] == true)
+        {
+            @:checked
+        }disabled />
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            HIPAA Compliance
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        @if (Model.hip[0] == true)
+        {
+            <button type="button" class="btn btn-info ms-2">View</button>
+
+        }
+
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.back[0] == true)
+        {
+            @:checked
+        } disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Background Check
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+        @if (Model.back[0] == true)
+        {
+            <button type="button" class="btn btn-info ms-2">View</button>
+
+        }
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.non_dis[0] == true)
+        {
+            @:checked
+        } disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            Non-disclosure Agreement
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+
+        @if (Model.non_dis[0] == true)
+        {
+            <button type="button" class="btn btn-info ms-2">View</button>
+
+        }
+    </div>
+    <div class="form-check mb-2" style="border-bottom:1px solid black;padding-bottom:12px">
+        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.lic[0] == true)
+        {
+            @:checked
+        } disabled>
+        <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
+            License Document
+        </label>
+        <button type="button" class="btn btn-info ms-2">Upload</button>
+
+        @if (Model.lic[0] == true)
+        {
+            <button type="button" class="btn btn-info ms-2">View</button>
+
+        }
+    </div>
+    <button type="button" class="btn btn-danger float-end me-1 mb-2 mt-2">Delete Account</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Save</button>
+    <div class="clearfix"></div>
+</div>
+
+<script>
+    $('.pback').on('click', function (e) {
+        $.ajax({
+            url: '/Provider/Information',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#reset').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $("#adpass").prop("disabled", false);
+        $('#resetpass').removeClass('d-none')
+    });
+    $('#asp').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $(".asp_pro").prop("disabled", false);
+        $('#saveasp').removeClass('d-none')
+    });
+
+    $('#editper').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $(".adper").prop("disabled", false);
+        $('#saveper').removeClass('d-none')
+    });
+    $('#editship').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $(".adship").prop("disabled", false);
+        $('#saveship').removeClass('d-none')
+    });
+    $('#editbuss').click(function () {
+        console.log("jdsbhjdbshj")
+        $(this).addClass('d-none');
+        $(".adbuss").prop("disabled", false);
+        $('#savebuss').removeClass('d-none')
+    });
+    $('#saveship').on('click', function (e) {
+        var addon = $('#adadd1').val();
+        var addon1 = $('#adadd2').val();
+        var addon2 = $('#adcity').val();
+        var addon3 = $('#adstate').val();
+        var addon4 = $('#adzip').val();
+        var addon5 = $('#adaltphone').val();
+        var id = @Model.Id;
+
+        console.log(addon);
+        console.log(addon1);
+        console.log(addon2);
+        console.log(addon3);
+        console.log(addon4);
+        console.log(addon5);
+
+        $.ajax({
+            url: '/Provider/EditShipProfile',
+            type: 'POST',
+            data: { Id: id, Address1: addon, Address2: addon1, City: addon2, regid: addon3, Pin: addon4, AltPhone: addon5 },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#saveper').on('click', function (e) {
+        var addon = $('#adfirst').val();
+        var addon1 = $('#adlast').val();
+        var addon2 = $('#ademail').val();
+        var addon3 = $('#adphone').val();
+        var addon4 = $('#admed').val();
+        var addon5 = $('#adnpi').val();
+        var addon6 = $('#adsync').val();
+        var id = @Model.Id;
+        var selectedValues = [];
+        var notselectedValues = [];
+
+        $(".adper:checkbox:checked").each(function () {
+            selectedValues.push($(this).val());
+        });
+        $(".adper:checkbox:not(:checked)").each(function () {
+            notselectedValues.push($(this).val());
+        });
+        console.log(selectedValues);
+        $.ajax({
+            url: '/Provider/EditProfile',
+            type: 'POST',
+            data: { Id: id, first_name: addon, last_name: addon1, email: addon2, phone: addon3, medicalLicense: addon4, NPI_number: addon5, syncEmail: addon6, selected: selectedValues, notselected: notselectedValues },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
+    $('#saveasp').on('click', function (e) {
+        var addon = $('#aduser').val();
+        var addon1 = $('#adstatus').val();
+        var addon2 = $('#adrole').val();
+        var id = @Model.Id;
+
+        $.ajax({
+            url: '/Provider/EditAsp',
+            type: 'POST',
+            data: { UserName: addon, Id: id, status: addon1, role_id: addon2 },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }); $('#resetpass').on('click', function (e) {
+        var addon = $('#adpass').val();
+        var id = @Model.Id;
+        $.ajax({
+            url: '/Provider/Edit',
+            type: 'POST',
+            data: { pass: addon, ID: id },
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    const canvas = document.getElementById('signatureCanvas');
+    console.log(canvas);
+    const ctx = canvas.getContext('2d');
+
+    // Set line style properties
+    ctx.strokeStyle = "#000"; // Black color
+    ctx.lineWidth = 2; // Line thickness
+
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function draw(e) {
+        if (!isDrawing) return;
+        ctx.beginPath();
+        // Start from previous position
+        ctx.moveTo(lastX, lastY);
+        // Update last position with current mouse position
+        lastX = e.offsetX;
+        lastY = e.offsetY;
+        // Draw line to current position
+        ctx.lineTo(lastX, lastY);
+        ctx.stroke();
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        lastX = e.offsetX;
+        lastY = e.offsetY;
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseout', () => {
+        isDrawing = false;
+    });
+
+    // Clear button functionality (optional)
+    const clearBtn = document.getElementById('clearBtn');
+    clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Add event listeners for drawing
+    canvas.addEventListener('mousemove', draw);
+    const saveButton = document.getElementById('saveButton');
+    const Sign = document.getElementById('adsign1');
+
+    saveButton.addEventListener('click', () => {
+        const imageData = canvas.toDataURL('image/png'); // Convert canvas to PNG data URL
+        $(Sign).val(imageData);
+        var sac = $(Sign).val();
+        console.log(sac);
+        // Alternative: Set file input value (requires browser support)
+    });
+</script>

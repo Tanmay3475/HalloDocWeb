@@ -191,6 +191,7 @@ namespace HalloDocWeb.Controllers
             //aspnet.Passwordhash = pass;
             //applicationDb.Aspnetusers.Update(aspnet);
             admin.Address1=model.Address1; admin.Address2=model.Address2; admin.City=model.City; admin.Altphone = model.altphone;admin.Regionid = model.regid;
+            admin.Zip = model.ZipCode;
             admin.Modifieddate=DateTime.Now;
             applicationDb.Admins.Update(admin);
             applicationDb.SaveChanges();

@@ -53,10 +53,106 @@ namespace HalloDocWeb.Controllers
                 non_dis = req.Isnondisclosuredoc,
                 lic = req.Islicensedoc,
                 AdminNotes = req.Adminnotes,
-                Id=req.Physicianid
+                Id=req.Physicianid,
+                roles=context.Roles.AsEnumerable().Where(m=>m.Accounttype==2).ToList()
 
             };
             return View(pro);
+        }
+        [HttpPost]
+        public IActionResult Edit(string pass,int ID)
+        {
+            var admin = context.Physicians.FirstOrDefault(a => a.Physicianid == ID);
+            var aspnet = context.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            aspnet.Passwordhash = pass;
+            context.Aspnetusers.Update(aspnet);
+            context.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Edit", new {Id=ID});
+        }[HttpPost]
+        public IActionResult EditAsp(ProviderViewModel model)
+        {
+            var admin = context.Physicians.FirstOrDefault(a => a.Physicianid == model.Id);
+            admin.Roleid = model.role_id;
+            admin.Status= (short?)model.status;
+            context.Physicians.Update(admin);
+            context.SaveChanges();
+            var aspnet = context.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            aspnet.Username = model.UserName;
+            context.Aspnetusers.Update(aspnet);
+            context.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Edit", new {Id=model.Id});
+        }
+        [HttpPost]
+        public IActionResult EditProfile(ProviderViewModel model)
+        {
+            var admin = context.Physicians.FirstOrDefault(a => a.Physicianid == model.Id);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            admin.Firstname = model.first_name; admin.Lastname = model.last_name; admin.Email = model.email; admin.Mobile = model.phone;admin.Medicallicense = model.medicalLicense;admin.Npinumber = model.NPI_number;admin.Syncemailaddress = model.syncEmail;
+            admin.Modifieddate = DateTime.Now;
+            context.Physicians.Update(admin);
+            context.SaveChanges();
+            List<Region> sel = new List<Region>();
+            if (model.selected != null)
+            {
+                foreach (var item in model.selected)
+                {
+                    var reg = context.Regions.FirstOrDefault(m => m.Regionid == item);
+                    sel.Add(reg);
+                }
+            }
+            List<Region> notsel = new List<Region>();
+            if (model.notselected != null)
+            {
+                foreach (var item in model.notselected)
+                {
+                    var reg = context.Regions.FirstOrDefault(m => m.Regionid == item);
+                    notsel.Add(reg);
+                }
+            }
+            var reg1 = context.Regions.AsEnumerable().Except(sel).ToList();
+            var reg2 = context.Regions.AsEnumerable().Except(notsel).ToList();
+            foreach (var item in reg1)
+            {
+                var reg = context.Physicianregions.FirstOrDefault(M => M.Regionid == item.Regionid);
+                if (reg != null)
+                {
+                    context.Physicianregions.Remove(reg);
+                    context.SaveChanges();
+                }
+            }
+            foreach (var item in reg2)
+            {
+                var reg3 = context.Physicianregions.FirstOrDefault(m => m.Regionid == item.Regionid && m.Physicianid == admin.Physicianid);
+                if (reg3 == null)
+                {
+                    var reg = new Physicianregion { Regionid = item.Regionid, Physicianid = admin.Physicianid };
+                    context.Physicianregions.Add(reg);
+                    context.SaveChanges();
+                }
+            }
+            //var reg2 = applicationDb.Regions.AsEnumerable().Except(notsel).ToList();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Edit", new {Id=model.Id});
+            }
+        [HttpPost]
+        public IActionResult EditShipProfile(ProviderViewModel model)
+        {
+            var admin =context.Physicians.FirstOrDefault(a => a.Physicianid == model.Id);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            admin.Address1 = model.Address1; admin.Address2 = model.Address2; admin.City = model.City; admin.Altphone = model.AltPhone; admin.Regionid = model.regid;
+            admin.Zip = model.Pin;
+            admin.Modifieddate = DateTime.Now;
+            context.Physicians.Update(admin);
+            context.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Edit", new { Id = model.Id });
+
         }
         public IActionResult Create()
         {

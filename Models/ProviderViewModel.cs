@@ -48,7 +48,6 @@ namespace HalloDoc.Models
         public BitArray lic { get; set;}
         enum statusName
         {
-            january,
             Active,
             InActive,
             Pending,
@@ -59,5 +58,8 @@ namespace HalloDoc.Models
             return sName;
         }
         public int Id {  get; set;}
+        public List<int> selected { get; set; }
+        public List<int> notselected { get; set; }
+
     }
 }
