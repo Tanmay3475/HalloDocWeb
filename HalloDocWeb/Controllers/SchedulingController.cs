@@ -57,6 +57,18 @@ namespace HelloDoc.Controllers.Scheduling
             }
 
             return RedirectToAction("RequestedShift");
+        } 
+        [HttpPost]
+        public IActionResult ReturnShift(int Id)
+        {
+            
+                var req = _context.Shiftdetails.FirstOrDefault(m => m.Shiftdetailid == Id);
+                req.Status = 1;
+                _context.Shiftdetails.Update(req);
+                _context.SaveChanges();
+            
+
+            return RedirectToAction("Scheduling");
         }
         public IActionResult ProviderOnCall(int regionid)
         {
@@ -257,23 +269,53 @@ namespace HelloDoc.Controllers.Scheduling
             }
             return RedirectToAction("tabs", "AdminStatus");
         }
-        //public IActionResult viewShiftEdit(SchedulingViewModel obj)
-        //{
-        //    var currentDate = DateTime.Parse(date);
-        //    List<Physician> physician = _context.Physicianregions.Include(u => u.Physician).Where(u => u.Regionid == regionid).Select(u => u.Physician).ToList();
-        //    if (regionid == 0)
-        //    {
-        //        physician = _context.Physicians.ToList();
-        //    }
-        //    DayWiseScheduling day = new DayWiseScheduling
-        //    {
-        //        date = currentDate,
-        //        physicians = physician,
-        //        shiftdetails = _context.Shiftdetails.Include(u => u.Shift).ToList()
-        //    };
-        //    return PartialView("_DayWise", day);
-        //}
-     
+        public IActionResult viewShiftEdit(SchedulingViewModel model)
+        {
+            int adminid = (int)HttpContext.Session.GetInt32("Admin_Id");
+            var admin = _context.Admins.FirstOrDefault(m => m.Adminid == adminid);
+            Aspnetuser aspnetadmin = _context.Aspnetusers.FirstOrDefault(m => m.AspNetUserId == admin.Aspnetuserid);
+            var chk = Request.Form["repeatdays"].ToList();
+            var shiftid = _context.Shifts.Where(u => u.Physicianid == model.providerid).Select(u => u.Shiftid).ToList();
+            if (shiftid.Count() > 0)
+            {
+                foreach (var obj in shiftid)
+                {
+                    var shiftdetailchk = _context.Shiftdetails.Where(u => u.Shiftid == obj && u.Shiftdate == model.shiftdate).ToList();
+                    if (shiftdetailchk.Count() > 0)
+                    {
+                        foreach (var item in shiftdetailchk)
+                        {
+                            if ((model.starttime >= new DateTime(item.Shiftdate.Day, item.Shiftdate.Month, item.Shiftdate.Year, item.Starttime.Hour, item.Starttime.Minute, item.Starttime.Second) && model.starttime <= new DateTime(item.Shiftdate.Day, item.Shiftdate.Month, item.Shiftdate.Year, item.Endtime.Hour, item.Endtime.Minute, item.Endtime.Second) || (model.endtime >= new DateTime(item.Shiftdate.Day, item.Shiftdate.Month, item.Shiftdate.Year, item.Starttime.Hour, item.Starttime.Minute, item.Starttime.Second) && model.endtime <= new DateTime(item.Shiftdate.Day, item.Shiftdate.Month, item.Shiftdate.Year, item.Endtime.Hour, item.Endtime.Minute, item.Endtime.Second))))
+                            {
+                                TempData["error"] = "Shift is already assigned in this time";
+                                return RedirectToAction("Scheduling");
+                            }
+                        }
+                    }
+                }
+            }
+            Shift shift = _context.Shifts.FirstOrDefault(x => x.Shiftid == model.shiftid);
+
+            shift.Physicianid = model.providerid;
+                
+            shift.Startdate = DateOnly.FromDateTime(model.shiftdate);
+            
+            _context.Shifts.Update(shift);
+            _context.SaveChanges();
+            DateTime curdate = model.shiftdate;
+            Shiftdetail shiftdetail = _context.Shiftdetails.FirstOrDefault(m=>m.Shiftid==model.shiftid);
+            
+            shiftdetail.Shiftdate = curdate;
+            shiftdetail.Regionid = model.regionid;
+            shiftdetail.Starttime = new TimeOnly(model.starttime.Hour, model.starttime.Minute, model.starttime.Second);
+            shiftdetail.Endtime = new TimeOnly(model.endtime.Hour, model.endtime.Minute, model.endtime.Second);
+            _context.Shiftdetails.Update(shiftdetail);
+            _context.SaveChanges();
+
+            
+            return RedirectToAction("tabs", "AdminStatus");
+        }
+
         public SchedulingViewModel ViewShift(int id)
         {
             var shift = _context.Shiftdetails.Include(u => u.Shift).FirstOrDefault(m => m.Shiftdetailid == id);
@@ -282,7 +324,8 @@ namespace HelloDoc.Controllers.Scheduling
                 physicianname=_context.Physicians.FirstOrDefault(r=>r.Physicianid==shift.Shift.Physicianid).Firstname+" "+ _context.Physicians.FirstOrDefault(r => r.Physicianid == shift.Shift.Physicianid).Lastname,
                 shifttoday = new DateOnly(shift.Shiftdate.Year, shift.Shiftdate.Month, shift.Shiftdate.Day), 
                 starttime = new DateTime(shift.Shiftdate.Year, shift.Shiftdate.Month, shift.Shiftdate.Day, shift.Starttime.Hour, shift.Starttime.Minute, shift.Starttime.Second), 
-                endtime = new DateTime(shift.Shiftdate.Year, shift.Shiftdate.Month, shift.Shiftdate.Day, shift.Endtime.Hour, shift.Endtime.Minute, shift.Endtime.Second) 
+                endtime = new DateTime(shift.Shiftdate.Year, shift.Shiftdate.Month, shift.Shiftdate.Day, shift.Endtime.Hour, shift.Endtime.Minute, shift.Endtime.Second) ,
+                shiftid = id
             };
             return x;
         }

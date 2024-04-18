@@ -182,10 +182,10 @@
     <div class="row"><div class="col-12 pc-head">Provider Profile</div></div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control adbuss" id="Business" placeholder="Password" value="@Model.BusinessName" disabled>
+            <input type="text" class="form-control adbuss" id="adname" placeholder="Password" value="@Model.BusinessName" disabled>
             <label for="floatinglastname">Business Name</label>
         </div><div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control adbuss" id="Business" placeholder="Password" value="@Model.BusinessWebsite" disabled>
+            <input type="text" class="form-control adbuss" id="adweb" placeholder="Password" value="@Model.BusinessWebsite" disabled>
             <label for="floatinglastname">Business Website</label>
         </div>
 
@@ -194,13 +194,13 @@
     <div class="row">
         <div class="col-6 form-floating pc-text">
             <div class="input-group mb-3">
-                <input type="file" class="form-control adbuss" id="adphoto" title="CHoose Photo" disabled>
+                <input type="file" class="form-control adbuss photos" id="adphoto" title="CHoose Photo" disabled>
                 <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Photo</label>
             </div>
         </div><div class="col-6 form-floating pc-text">
             <div class="input-group mb-3">
-                <input type="file" class="form-control adbuss" id="adsign" disabled accept="image/png">
-                <input type="text" id="adsign1" hidden/>
+                <input type="file" class="form-control adbuss signs" id="adsign" disabled accept="image/png">
+                <input type="text" id="adsign1" hidden />
                 <label class="input-group-text" for="inputGroupFile02"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload Signature</label>
                 <button type="button" class="btn btn-info ms-2 adbuss" disabled data-bs-toggle="modal" data-bs-target="#adSignature"><img src="~/images/icons8-edit-25.png" class="me-1" />Create</button>
                 <div class="modal fade" id="adSignature" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
@@ -243,7 +243,7 @@
         <div class="col-6 pc-text">
             <img src="/Onboarding/@Model.Id/Photo.jpg" style="width:250px;height:250px" />
         </div><div class="col-6  pc-text">
-            <img src="/Onboarding/@Model.Id/Signature.jpg" style="width:250px;height:250px" />
+            <img src="@Model.signature" style="width:250px;height:250px" />
 
         </div>
 
@@ -253,7 +253,7 @@
     <div class="row">
 
         <div class="col-12 form-floating">
-            <textarea class="form-control adbuss" placeholder="Leave a comment here" id="floatingTextarea" style="height:100px" disabled asp-for="AdminNotes"></textarea>
+            <textarea class="form-control adbuss" placeholder="Leave a comment here" id="adnote" style="height:100px" disabled asp-for="AdminNotes"></textarea>
             <label for="floatingTextarea">Admin Notes</label>
         </div>
 
@@ -266,7 +266,7 @@
     <div class="clearfix" style="border-bottom:1px solid black"></div>
     <div class="row"><div class="col-12 pc-head">Onboarding</div></div>
     <div class="form-check mb-2">
-        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.ind[0] == true)
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox0" @if (Model.ind[0] == true)
         {
             @:checked
         }
@@ -274,83 +274,99 @@
         <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
             Independent Contractor Agreement
         </label>
-        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">
+        <input type="file" class="fileInput0" id="actual-file-input0" hidden>
+            <label for="actual-file-input0"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label>
+        </button>
 
         @if (Model.ind[0] == true)
         {
-            <button type="button" class="btn btn-info ms-2">View</button>
+            <a href="/Onboarding/@Model.Id/Independent.jpg"type="button" class="btn btn-info ms-2 text-decoration-none">View</a>
 
         }
     </div>
     <div class="form-check mb-2">
-        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.hip[0] == true)
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox1" @if (Model.hip[0] == true)
         {
             @:checked
         }disabled />
         <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
             HIPAA Compliance
         </label>
-        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput1" id="actual-file-input1" hidden>
+            <label for="actual-file-input1"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label>
+        </button>
         @if (Model.hip[0] == true)
         {
-            <button type="button" class="btn btn-info ms-2">View</button>
+            <a href="/Onboarding/@Model.Id/HIPAA.jpg" type="button" class="btn btn-info ms-2 text-decoration-none">View</a>
 
         }
 
     </div>
     <div class="form-check mb-2">
-        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.back[0] == true)
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox2" @if (Model.back[0] == true)
         {
             @:checked
         } disabled>
         <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
             Background Check
         </label>
-        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput2" id="actual-file-input2" hidden>
+            <label for="actual-file-input2"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label>
+        </button>
         @if (Model.back[0] == true)
         {
-            <button type="button" class="btn btn-info ms-2">View</button>
+            <a href="/Onboarding/@Model.Id/Background.jpg" type="button" class="btn btn-info ms-2 text-decoration-none">View</a>
 
         }
     </div>
     <div class="form-check mb-2">
-        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.non_dis[0] == true)
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox3" @if (Model.non_dis[0] == true)
         {
             @:checked
         } disabled>
         <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
             Non-disclosure Agreement
         </label>
-        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput3" id="actual-file-input3" hidden>
+            <label for="actual-file-input3"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label>
+        </button>
 
         @if (Model.non_dis[0] == true)
         {
-            <button type="button" class="btn btn-info ms-2">View</button>
+            <a href="/Onboarding/@Model.Id/Non_Disclosure.jpg" type="button" class="btn btn-info ms-2 text-decoration-none">View</a>
 
         }
     </div>
     <div class="form-check mb-2" style="border-bottom:1px solid black;padding-bottom:12px">
-        <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault" @if (Model.lic[0] == true)
+        <input class="form-check-input mt-2" type="checkbox" value="" id="checkbox4" @if (Model.lic[0] == true)
         {
             @:checked
         } disabled>
         <label class="form-check-label ms-2" for="flexCheckDefault" style="width:400px">
             License Document
         </label>
-        <button type="button" class="btn btn-info ms-2">Upload</button>
+        <button type="button" class="btn btn-info ms-2">
+            <input type="file" class="fileInput4" id="actual-file-input4" hidden>
+            <label for="actual-file-input4"><img src="~/images/icons8-upload-to-cloud-25.png" class="me-1" />Upload</label>
+        </button>
 
         @if (Model.lic[0] == true)
         {
-            <button type="button" class="btn btn-info ms-2">View</button>
+            <a href="/Onboarding/@Model.Id/License.jpg" type="button" class="btn btn-info ms-2 text-decoration-none">View</a>
 
         }
     </div>
-    <button type="button" class="btn btn-danger float-end me-1 mb-2 mt-2">Delete Account</button>
-    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2">Save</button>
+    <button type="button" class="btn btn-danger float-end me-1 mb-2 mt-2" id="deletePro">Delete Account</button>
+    <button type="button" class="btn btn-info float-end me-1 mb-2 mt-2" id="saveonboard">Save</button>
     <div class="clearfix"></div>
 </div>
 
 <script>
+    var prosign;
     $('.pback').on('click', function (e) {
         $.ajax({
             url: '/Provider/Information',
@@ -392,6 +408,95 @@
         $(this).addClass('d-none');
         $(".adbuss").prop("disabled", false);
         $('#savebuss').removeClass('d-none')
+    });
+    $('#deletePro').on('click', function (e) {
+        var id = @Model.Id;
+        $.ajax({
+            url: '/Provider/DeleteProfile',
+            type: 'POST',
+            data: {ID:id},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#saveonboard').on('click', function (e) {
+        var formData = new FormData();
+        $('.fileInput0').each(function () {
+            formData.append('Independent', $(this)[0].files[0]);
+        });
+        $('.fileInput1').each(function () {
+            formData.append('hipaa', $(this)[0].files[0]);
+        });
+        $('.fileInput2').each(function () {
+            formData.append('background', $(this)[0].files[0]);
+        });
+        $('.fileInput3').each(function () {
+            formData.append('Non_disclosure', $(this)[0].files[0]);
+        });
+        $('.fileInput4').each(function () {
+            formData.append('License', $(this)[0].files[0]);
+        });
+        var id = @Model.Id;
+        formData.append('Id', id);
+        $.ajax({
+            url: '/Provider/EditOnboardProfile',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#savebuss').on('click', function (e) {
+        var addon = $('#adname').val();
+        var addon1 = $('#adweb').val();
+        var addon2 = $('#adnote').val();
+        var addon3 = $('#adsign1').val();
+        var formData = new FormData();
+        $('.photos').each(function () {
+            formData.append('Photo', $(this)[0].files[0]);
+        });
+        var id = @Model.Id;
+        formData.append('BusinessName', addon);
+        formData.append('BusinessWebsite', addon1);
+        formData.append('AdminNotes', addon2);
+        formData.append('Id', id);
+        if (!addon3) {
+            console.log("HELLO");
+            formData.append('signature', prosign);
+        }
+        else {
+            console.log("world");
+
+            formData.append('signature', addon3);
+
+        }
+        console.log(addon);
+        console.log(addon1);
+        console.log(addon2);
+
+        $.ajax({
+            url: '/Provider/EditBussProfile',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
     $('#saveship').on('click', function (e) {
         var addon = $('#adadd1').val();
@@ -470,7 +575,8 @@
                 console.error(error);
             }
         });
-    }); $('#resetpass').on('click', function (e) {
+    });
+    $('#resetpass').on('click', function (e) {
         var addon = $('#adpass').val();
         var id = @Model.Id;
         $.ajax({
@@ -485,17 +591,17 @@
             }
         });
     });
-    const canvas = document.getElementById('signatureCanvas');
-    console.log(canvas);
-    const ctx = canvas.getContext('2d');
+    var canvas1 = document.getElementById('signatureCanvas');
+    console.log(canvas1);
+    var ctx = canvas1.getContext('2d');
 
     // Set line style properties
     ctx.strokeStyle = "#000"; // Black color
     ctx.lineWidth = 2; // Line thickness
 
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
+    var isDrawing = false;
+    var lastX = 0;
+    var lastY = 0;
 
     function draw(e) {
         if (!isDrawing) return;
@@ -510,36 +616,98 @@
         ctx.stroke();
     }
 
-    canvas.addEventListener('mousedown', (e) => {
+    canvas1.addEventListener('mousedown', (e) => {
         isDrawing = true;
         lastX = e.offsetX;
         lastY = e.offsetY;
     });
 
-    canvas.addEventListener('mouseup', () => {
+    canvas1.addEventListener('mouseup', () => {
         isDrawing = false;
     });
 
-    canvas.addEventListener('mouseout', () => {
+    canvas1.addEventListener('mouseout', () => {
         isDrawing = false;
     });
 
     // Clear button functionality (optional)
-    const clearBtn = document.getElementById('clearBtn');
+    var clearBtn = document.getElementById('clearBtn');
     clearBtn.addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     });
 
     // Add event listeners for drawing
-    canvas.addEventListener('mousemove', draw);
-    const saveButton = document.getElementById('saveButton');
-    const Sign = document.getElementById('adsign1');
+    canvas1.addEventListener('mousemove', draw);
+    var saveButton = document.getElementById('saveButton');
+    var Sign = document.getElementById('adsign1');
 
     saveButton.addEventListener('click', () => {
-        const imageData = canvas.toDataURL('image/png'); // Convert canvas to PNG data URL
+        var imageData = canvas1.toDataURL('image/png'); // Convert canvas to PNG data URL
         $(Sign).val(imageData);
         var sac = $(Sign).val();
         console.log(sac);
         // Alternative: Set file input value (requires browser support)
+    });
+    $('#adsign').on('change', function () {
+        
+        var fileInput = document.querySelector('#adsign');
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        
+        reader.onloadend = function () {
+            prosign = reader.result;
+            
+        };
+        reader.readAsDataURL(file);
+    });
+    $('.fileInput0').change(function () {
+        console.log("0");
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox0").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox0").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput1').change(function () {
+        console.log("1");
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox1").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox1").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput2').change(function () {
+        console.log("2");
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox2").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox2").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput3').change(function () {
+        console.log("3");
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox3").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox3").prop("checked", false); // Uncheck the checkbox
+        }
+    });
+    $('.fileInput4').change(function () {
+        console.log("4");
+        if (this.files.length > 0) {
+            // File has been selected
+            $("#checkbox4").prop("checked", true); // Check the checkbox
+        } else {
+            // No file selected
+            $("#checkbox4").prop("checked", false); // Uncheck the checkbox
+        }
     });
 </script>

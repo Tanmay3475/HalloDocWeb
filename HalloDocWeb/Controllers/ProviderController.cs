@@ -15,7 +15,7 @@ namespace HalloDocWeb.Controllers
         }
         public IActionResult Information()
         {
-            var req = (from pro in context.Physicians join not in context.Physiciannotifications on pro.Physicianid equals not.Physicianid select new ProviderInfoViewModel { ProviderName = pro.Firstname + ',' + pro.Lastname, Status = (int)pro.Status, BitArray = not.Isnotificationstopped, id = pro.Physicianid, regions = context.Regions.ToList(), regid = (int)pro.Regionid }).ToList();
+            var req = (from pro in context.Physicians join not in context.Physiciannotifications on pro.Physicianid equals not.Physicianid  select new ProviderInfoViewModel { ProviderName = pro.Firstname + ',' + pro.Lastname, Status = (int)pro.Status, BitArray = not.Isnotificationstopped, id = pro.Physicianid, regions = context.Regions.ToList(), regid = (int)pro.Regionid, IsActive = pro.Isdeleted[0] }).ToList();
             return View(req);
         }
         public IActionResult Edit(int Id)
@@ -54,8 +54,8 @@ namespace HalloDocWeb.Controllers
                 lic = req.Islicensedoc,
                 AdminNotes = req.Adminnotes,
                 Id=req.Physicianid,
-                roles=context.Roles.AsEnumerable().Where(m=>m.Accounttype==2).ToList()
-
+                roles=context.Roles.AsEnumerable().Where(m=>m.Accounttype==2).ToList(),
+                signature=req.Signature
             };
             return View(pro);
         }
@@ -153,6 +153,69 @@ namespace HalloDocWeb.Controllers
             //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
             return RedirectToAction("Edit", new { Id = model.Id });
 
+        } 
+        [HttpPost]
+        public IActionResult EditBussProfile(ProviderViewModel model)
+        {
+            var admin =context.Physicians.FirstOrDefault(a => a.Physicianid == model.Id);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            admin.Businessname = model.BusinessName; admin.Businesswebsite = model.BusinessWebsite;  admin.Adminnotes = model.AdminNotes;
+
+            admin.Signature = model.signature;
+            if (model.Photo!=null)
+            {
+
+            admin.Photo = model.Photo[0].FileName;
+            uploadFile(model.Photo[0], admin.Physicianid, "Photo");
+            }
+            admin.Modifieddate = DateTime.Now;
+            context.Physicians.Update(admin);
+            context.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Edit", new { Id = model.Id });
+
+        }
+        [HttpPost]
+        public IActionResult EditOnboardProfile(ProviderViewModel model)
+        {
+            var bit = new BitArray(1);
+            bit[0] = true;
+            var physician =context.Physicians.FirstOrDefault(a => a.Physicianid == model.Id);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            uploadFile(model.Independent[0], physician.Physicianid, "Independent");
+            uploadFile(model.background[0], physician.Physicianid, "Background");
+            uploadFile(model.License[0], physician.Physicianid, "License");
+            uploadFile(model.hipaa[0], physician.Physicianid, "HIPAA");
+            uploadFile(model.Non_disclosure[0], physician.Physicianid, "Non_Disclosure");
+            physician.Isagreementdoc = bit;
+            physician.Isbackgrounddoc = bit;
+            physician.Islicensedoc = bit;
+            physician.Isnondisclosuredoc = bit;
+            physician.Iscredentialdoc = bit;
+            physician.Modifieddate = DateTime.Now;
+            context.Physicians.Update(physician);
+            context.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Edit", new { Id = model.Id });
+
+        } 
+        [HttpPost]
+        public IActionResult DeleteProfile(int ID)
+        {
+            var physician =context.Physicians.FirstOrDefault(a => a.Physicianid == ID);
+            //var aspnet = applicationDb.Aspnetusers.FirstOrDefault(a => a.AspNetUserId == admin.Aspnetuserid);
+            //aspnet.Passwordhash = pass;
+            //applicationDb.Aspnetusers.Update(aspnet);
+            physician.Isdeleted[0]=true;
+            context.Physicians.Update(physician);
+            context.SaveChanges();
+            //var region = from reg in applicationDb.Adminregions where reg.Adminid == id select reg.Regio
+            return RedirectToAction("Information");
+
         }
         public IActionResult Create()
         {
@@ -170,7 +233,9 @@ namespace HalloDocWeb.Controllers
             context.SaveChanges();
             var bit = new BitArray(1);
             bit[0] = true;
-            var physician = new Physician { Status = 1, City = model.City, Address1 = model.Address1, Address2 = model.Address2, Adminnotes = model.AdminNotes, Createdby = aspuser.AspNetUserId, Npinumber = model.NPI_number, Businessname = model.BusinessName, Businesswebsite = model.BusinessWebsite, Aspnetuserid = aspuser.AspNetUserId, Altphone = model.AltPhone, Medicallicense = model.medicalLicense, Email = model.email, Firstname = model.first_name, Lastname = model.last_name, Photo = model.Photo[0].FileName, Isagreementdoc = bit, Isbackgrounddoc = bit, Islicensedoc = bit, Isnondisclosuredoc = bit, Iscredentialdoc = bit, Roleid = model.role_id, Createddate = DateTime.Now, Zip = model.Pin, Mobile = model.phone };
+            var del = new BitArray(1);
+            del[0] = false;
+            var physician = new Physician { Status = 1, City = model.City, Address1 = model.Address1, Address2 = model.Address2, Adminnotes = model.AdminNotes, Createdby = aspuser.AspNetUserId, Npinumber = model.NPI_number, Businessname = model.BusinessName, Businesswebsite = model.BusinessWebsite, Aspnetuserid = aspuser.AspNetUserId, Altphone = model.AltPhone, Medicallicense = model.medicalLicense, Email = model.email, Firstname = model.first_name, Lastname = model.last_name, Photo = model.Photo[0].FileName, Isagreementdoc = bit, Isbackgrounddoc = bit, Islicensedoc = bit, Isnondisclosuredoc = bit, Iscredentialdoc = bit, Roleid = model.role_id, Createddate = DateTime.Now, Zip = model.Pin, Mobile = model.phone, Isdeleted=del };
             context.Physicians.Add(physician);
             context.SaveChanges();
             var phyno = new Physiciannotification { Physicianid = physician.Physicianid, Isnotificationstopped = bit };

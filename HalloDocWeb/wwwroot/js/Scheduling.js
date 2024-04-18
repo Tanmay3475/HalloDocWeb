@@ -1,6 +1,6 @@
 ﻿
 
-var regionid;
+var regionid = 0;
 var filterDate = new Date($('#currentDateValue').text());
 var currentPartial = "";
 
@@ -113,11 +113,7 @@ $(document).ready(function () {
     });
 });
 
-$('#editbtnviewshiftmodel').click(function () {
-    console.log("jdsbhjdbshj")
-    $(this).addClass('d-none');
-    $('#savebtnviewshiftmodel').removeClass('d-none')
-});
+
 //$('#savebtnviewshiftmodel').on('click', function () {
 //    console.log("fbhdshfgb");
 //    event.preventDefault();

@@ -45,15 +45,17 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr style="background-color:white !important;color:black !important">
-                    <td class="d-none">@item.regid</td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input noticheck" type="checkbox" value="@item.id" @if (item.BitArray[0])
-                            {
-                                @: checked
-                            }
-                                   id="flexCheckDefault">
+                if (item.IsActive == false)
+                {
+                    <tr style="background-color:white !important;color:black !important">
+                        <td class="d-none">@item.regid</td>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input noticheck" type="checkbox" value="@item.id" @if (item.BitArray[0])
+                                {
+                                    @: checked
+                                }
+                                id="flexCheckDefault">
 
                         </div>
                     </td>
@@ -115,7 +117,7 @@
                         </div>
                         <button type="button" class="btn btn-outline-info me-1 mt-1 edit" value="@item.id">Edit</button>
                     </td>
-                </tr>
+                </tr>}
             }
         </tbody>
     </table>

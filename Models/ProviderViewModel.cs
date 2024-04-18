@@ -31,6 +31,7 @@ namespace HalloDoc.Models
         public string BusinessName { get;set;}
         public string BusinessWebsite { get; set;}
         public List<IFormFile> Photo { get; set;}
+        public List<IFormFile> Sign { get; set;}
         public string AdminNotes{ get; set;}
         public List<IFormFile> Independent { get; set;}
         public List<IFormFile> hipaa { get; set;}
@@ -60,6 +61,7 @@ namespace HalloDoc.Models
         public int Id {  get; set;}
         public List<int> selected { get; set; }
         public List<int> notselected { get; set; }
+        public string signature {  get; set; }
 
     }
 }

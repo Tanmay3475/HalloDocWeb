@@ -12,7 +12,9 @@ namespace HalloDoc.Models
         public BitArray BitArray { get; set; }
         public string ProviderName { get; set; }
         public int Status { get; set; }
-
+        public bool
+            IsActive
+        { get; set; }
         enum statusName
         {
            
