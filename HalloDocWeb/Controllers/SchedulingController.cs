@@ -70,6 +70,18 @@ namespace HelloDoc.Controllers.Scheduling
 
             return RedirectToAction("Scheduling");
         }
+        [HttpPost]
+        public IActionResult DeletedShift(int Id)
+        {
+
+            var req = _context.Shiftdetails.FirstOrDefault(m => m.Shiftdetailid == Id);
+            req.Isdeleted[0] = true;
+            _context.Shiftdetails.Update(req);
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Scheduling");
+        }
         public IActionResult ProviderOnCall(int regionid)
         {
             SchedulingViewModel modal = new SchedulingViewModel();
@@ -274,7 +286,6 @@ namespace HelloDoc.Controllers.Scheduling
             int adminid = (int)HttpContext.Session.GetInt32("Admin_Id");
             var admin = _context.Admins.FirstOrDefault(m => m.Adminid == adminid);
             Aspnetuser aspnetadmin = _context.Aspnetusers.FirstOrDefault(m => m.AspNetUserId == admin.Aspnetuserid);
-            var chk = Request.Form["repeatdays"].ToList();
             var shiftid = _context.Shifts.Where(u => u.Physicianid == model.providerid).Select(u => u.Shiftid).ToList();
             if (shiftid.Count() > 0)
             {
@@ -296,7 +307,6 @@ namespace HelloDoc.Controllers.Scheduling
             }
             Shift shift = _context.Shifts.FirstOrDefault(x => x.Shiftid == model.shiftid);
 
-            shift.Physicianid = model.providerid;
                 
             shift.Startdate = DateOnly.FromDateTime(model.shiftdate);
             
@@ -306,7 +316,6 @@ namespace HelloDoc.Controllers.Scheduling
             Shiftdetail shiftdetail = _context.Shiftdetails.FirstOrDefault(m=>m.Shiftid==model.shiftid);
             
             shiftdetail.Shiftdate = curdate;
-            shiftdetail.Regionid = model.regionid;
             shiftdetail.Starttime = new TimeOnly(model.starttime.Hour, model.starttime.Minute, model.starttime.Second);
             shiftdetail.Endtime = new TimeOnly(model.endtime.Hour, model.endtime.Minute, model.endtime.Second);
             _context.Shiftdetails.Update(shiftdetail);

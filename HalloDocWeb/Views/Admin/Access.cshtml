@@ -38,7 +38,7 @@
                     
                 <td>@item.Name</td>
                 <td>@Model.findAccount(item.Accounttype)</td>
-                <td><button type="button" class="btn btn-outline-info me-1 mt-1">Edit</button>
+                <td><button type="button" class="btn btn-outline-info me-1 mt-1 edit-role" value="@item.Roleid" data-acctype="@item.Accounttype">Edit</button>
                     <button type="button" class="btn btn-outline-info me-1 mt-1 del-role" value="@item.Roleid">Delete</button></td>
             </tr>
             }
@@ -64,6 +64,22 @@
             url: '/Admin/DeleteRole',
             type:'POST',
              data: {Id:id},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('.edit-role').on('click', function (e) {
+        var id = $(this).attr('value');
+        var acctype = $(this).data('acctype');
+        var type=
+         $.ajax({
+            url: '/Admin/EditRole',
+            type:'POST',
+             data: {Id:id,Acctype:acctype},
             success: function (response) {
                 $('#nav-home').html(response);
             },

@@ -1,10 +1,12 @@
-﻿using HalloDoc.Models;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using HalloDoc.Models;
 using HalloDoc.Models.DataContext;
 using HalloDoc.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace HalloDocWeb.Controllers
 {
@@ -52,6 +54,27 @@ namespace HalloDocWeb.Controllers
             var req=applicationDb.Menus.ToList();
             return View(new CreateRoleViewModel {menus=req});
         }
+        [HttpPost]
+        public IActionResult EditRole(int Id,int Acctype)
+        {
+            
+            
+            var req1 = applicationDb.Roles.FirstOrDefault(m => m.Roleid == Id);
+            var req2=applicationDb.Rolemenus.AsEnumerable().Where(M=>M.Roleid == Id).ToList();
+
+            if (Acctype == 0)
+            {
+                var req = applicationDb.Menus.ToList();
+                return View(new CreateRoleViewModel { menus = req, name = req1.Name, accounttype = Acctype, rolemenus = req2, role_id = Id });
+
+            }
+            else
+            {
+                var req = applicationDb.Menus.AsEnumerable().Where(m => m.Accounttype == Acctype).ToList();
+                return View(new CreateRoleViewModel { menus = req, name = req1.Name, accounttype = Acctype, rolemenus = req2, role_id = Id });
+
+            }
+        }
         
         [HttpPost]
         public IActionResult SaveRole(CreateRoleViewModel model)
@@ -63,6 +86,45 @@ namespace HalloDocWeb.Controllers
             {
                 var rolemenu = new Rolemenu { Menuid = item, Roleid = req.Roleid };
                 applicationDb.Rolemenus.Add(rolemenu);
+            }
+            applicationDb.SaveChanges();
+            return RedirectToAction("Access");
+        }
+        [HttpPost]
+        public IActionResult SaveEdit(CreateRoleViewModel model)
+        {
+            var req = applicationDb.Roles.FirstOrDefault(m => m.Roleid == model.role_id);
+            req.Accounttype = (short)model.accounttype;req.Name = model.name;req.Modifiedby = "Tanmay";req.Modifieddate = DateTime.Now;
+            applicationDb.Roles.Update(req);
+            applicationDb.SaveChanges();
+            var req1=applicationDb.Rolemenus.AsEnumerable().Where(m=>m.Roleid==req.Roleid).ToList();
+            var men = new List<int>();
+            foreach (var item in model.menuid)
+            {
+                if (req1.Any(m => m.Menuid == item))
+                {
+                    men.Add(item);
+                }
+                else
+                {
+                    var rolemenu = new Rolemenu { Menuid = item, Roleid = req.Roleid };
+                    applicationDb.Rolemenus.Add(rolemenu);
+                }
+            }
+
+            applicationDb.SaveChanges();
+            foreach (var item in req1.Select(m=>m.Menuid))
+            {
+                if(men.Contains(item))
+                {
+
+                }
+                else
+                {
+
+                    var res = applicationDb.Rolemenus.FirstOrDefault(M => M.Menuid == item && M.Roleid == model.role_id);
+                    applicationDb.Rolemenus.Remove(res);
+                }
             }
             applicationDb.SaveChanges();
             return RedirectToAction("Access");

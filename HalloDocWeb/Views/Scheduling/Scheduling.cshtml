@@ -97,7 +97,7 @@
                     <input id="shiftidviewmodel" type="number" asp-for="shiftid" hidden/>
 
                     <div class="form-floating">
-                        <select asp-for="regionid" class="form-select physiciandata adshift" id="viewshiftregion" aria-label="Floating label select example" disabled>
+                        <select asp-for="regionid" class="form-select physiciandata" id="viewshiftregion" aria-label="Floating label select example" disabled>
                             <option value="" selected>Select Region</option>
                             @if (Model.regions != null)
                             {
@@ -112,7 +112,7 @@
                         </label>
                     </div>
                     <div class="form-floating">
-                    <select asp-for="providerid" class="form-select mt-4 adshift" id="viewshiftphysicianname" aria-label="Floating label select example" style="height:58px" disabled>
+                    <select asp-for="providerid" class="form-select mt-4" id="viewshiftphysicianname" aria-label="Floating label select example" style="height:58px" disabled>
                         <option value="" selected>Select Physician</option>
                         @foreach(var item in Model.physicians)
                         {
@@ -146,7 +146,7 @@
                         <button type="button" class="btn btn-info text-white" id="returnShift" data-bs-dismiss="modal">Return</button>
                         <button type="submit" class="btn btn-info text-white d-none" id="savebtnviewshiftmodel">Save</button>
                         <button type="button" class="btn btn-info text-white" id="editbtnviewshiftmodel">Edit</button>
-                        <button type="button" class="btn btn-danger text-white" value="@Model.shiftid">Delete</button>
+                        <button type="button" class="btn btn-danger text-white" id="DeleteShift" data-bs-dismiss="modal">Delete</button>
                     </div>
                 </div>
             </form>
@@ -290,6 +290,21 @@
         
         $.ajax({
             url: '/Scheduling/ReturnShift',
+            type:'POST',
+            data: { Id:id },
+            success: function (response) {
+                $("#nav-home").html(response);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    });
+    $('#DeleteShift').on('click', function () {
+        id = $(this).attr('value');
+        console.log(id);
+        $.ajax({
+            url: '/Scheduling/DeletedShift',
             type:'POST',
             data: { Id:id },
             success: function (response) {

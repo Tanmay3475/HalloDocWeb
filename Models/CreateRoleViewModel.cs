@@ -18,5 +18,7 @@ namespace HalloDoc.Models
         {
             return ((account)id).ToString();
         }
+        public List<Rolemenu> rolemenus { get; set; }
+        public int role_id { get; set; }
     }
 }

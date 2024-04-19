@@ -13,11 +13,13 @@ namespace HalloDocWeb.Controllers
         }
         public IActionResult Vendor()
         {
+            
             return View();
         }
         public IActionResult AddBusiness()
         {
-            return View();
+            var phy = _context.Healthprofessionaltypes.ToList();
+            return View(new PartnerViewModel { Healthprofessionaltypes=phy});
         }
         [HttpPost]
         public IActionResult AddBusiness(PartnerViewModel model)
