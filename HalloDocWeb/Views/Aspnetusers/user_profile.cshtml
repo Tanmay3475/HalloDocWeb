@@ -123,14 +123,20 @@
                                         <option value="3">Three</option>
                                     </select>
                                 </div>
-                                <div class="col-8">
+                                @* <div class="col-8">
                                     <label for="disabledTextInput" class="form-label mt-3"></label><select class="form-select" aria-label="Disabled select example" >
                                         <option selected>@Model.Mobile</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
                                     </select>
+                                </div> *@
+                                <div class="col-8">                                <div class="mb-3">
+                                    <label for="floatingInput">Mobile No.</label>
+                                    <input type="text" class="form-control mt-2" id="floatingInput" placeholder="@Model.Mobile">
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

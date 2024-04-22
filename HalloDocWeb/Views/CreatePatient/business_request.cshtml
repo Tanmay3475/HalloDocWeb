@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <button class="btn btn-outline-primary pc-button"><  Back</button>
+    <a class="btn btn-outline-primary pc-button" asp-controller="Home" asp-action="Submit_request"><  Back</a>
     <div class="container br-container">
         <form asp-controller="CreatePatient" asp-action="business_request">
         <div class="row"><div class="col-12 pc-head">Business Information</div></div>
@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <div class="row"><div class="col-8"></div><div class="col-2 pc-text"><button type="submit" class="btn btn-outline-primary">Submit</button></div><div class="col-2 pc-text"><button type="button" class="btn btn-outline-primary" asp-controller="Home" asp-action="Submit_request">Cancel</button></div></div>
+        <div class="row"><div class="col-8"></div><div class="col-2 pc-text"><button type="submit" class="btn btn-outline-primary">Submit</button></div><div class="col-2 pc-text"><a type="button" class="btn btn-outline-primary" asp-controller="Home" asp-action="Submit_request">Cancel</a></div></div>
         </form>
     </div>
 

@@ -103,7 +103,7 @@ namespace HalloDocWeb.Controllers
             }
             return RedirectToAction("Submit_request","Home");
         }
-        public IActionResult Concierge_request()
+        public IActionResult concierge_request()
         {
             return View();
         }

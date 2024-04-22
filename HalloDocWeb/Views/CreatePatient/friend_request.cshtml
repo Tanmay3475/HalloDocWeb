@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <button class="btn btn-outline-primary pc-button"><  Back</button>
+    <a class="btn btn-outline-primary pc-button" asp-controller="Home" asp-action="Submit_request"><  Back</a>
     <div class="container ff-container">
         <form asp-action="friend_request" asp-controller="CreatePatient">
         <div class="row"><div class="col-12 pc-head">Family/Friend Information</div></div>
@@ -121,7 +121,7 @@
                     <span asp-validation-for="Filepath" class="text-danger"></span> <label class="input-group-text" for="inputGroupFile02" asp-for="Filepath"><img src="/images/cloud-arrow-up.svg" alt="" class="u-icon">Upload</label>
             </div>
         </div>
-        <div class="row"><div class="col-8"></div><div class="col-2 pc-text"><button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Submit</button></div><div class="col-2 pc-text"><button type="button" class="btn btn-outline-primary" asp-controller="Home" asp-action="Submit_request">Cancel</button></div></div>
+        <div class="row"><div class="col-8"></div><div class="col-2 pc-text"><button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Submit</button></div><div class="col-2 pc-text"><a type="button" class="btn btn-outline-primary" asp-controller="Home" asp-action="Submit_request">Cancel</a></div></div>
     </form></div>
     <div class="modal" id="myModal">
         <div class="modal-dialog modal-dialog-centered">
