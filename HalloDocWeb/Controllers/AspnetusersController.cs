@@ -167,7 +167,7 @@ namespace HalloDocWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Dashboard([Bind("Id,Username,Passwordhash,Email,Phonenumber,Createddate,Ip")] Aspnetuser asp)
         {
-           
+
             var aspnetuser = _context.Aspnetusers
            .FirstOrDefault(m => (m.Username == asp.Username) && (m.Passwordhash == asp.Passwordhash));
             if (aspnetuser == null)
@@ -177,11 +177,11 @@ namespace HalloDocWeb.Controllers
 
             Dashboard.User = user;
             int id = user.Userid;
-            
+
             Dashboard.Requests = (from m in _context.Requests
                                   where m.Userid == id
                                   select m).ToList();
-            
+
             Dashboard.requestwisefiles = _context.Requestwisefiles.ToList();
             //DateTime date = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate));
             //                                                                                //Dashboard.birthdate = date;
@@ -200,7 +200,7 @@ namespace HalloDocWeb.Controllers
             var user = _context.Users.FirstOrDefault(m => m.Userid == id);
             model.User = user;
 
-            
+
             // var aspnetuser = await _context.Aspnetusers
             //.FirstOrDefaultAsync(m => (m.Username == asp.Username) && (m.Passwordhash == asp.Passwordhash));
             // if (aspnetuser == null)
@@ -212,8 +212,8 @@ namespace HalloDocWeb.Controllers
             //Dashboard.User = user;
             //int id = user.Userid;
             model.Requests = (from m in _context.Requests
-                                  where m.Userid == id
-                                  select m).ToList();
+                              where m.Userid == id
+                              select m).ToList();
 
             model.requestwisefiles = _context.Requestwisefiles.ToList();
             //DateTime date = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate));
@@ -226,34 +226,54 @@ namespace HalloDocWeb.Controllers
             return View(model);
 
         }
-        
+
         public IActionResult user_profile(int id)
         {
             var user = _context.Users.FirstOrDefault(m => m.Userid == id);
-            return View(user);
+            return View(new UserViewModel { city=user.City,state=user.State,dob= new DateTime(Convert.ToInt32(user.Intyear), Convert.ToInt32(user.Strmonth), Convert.ToInt32(user.Intdate)),Name=user.Firstname,last=user.Lastname,mobile=user.Mobile,Email=user.Email,street=user.Street,zip=user.Zipcode,Id=user.Userid});
+        }
+        [HttpPost]
+        public IActionResult Submit_Profile(UserViewModel user)
+        {
+            var user1 = _context.Users.FirstOrDefault(m => m.Userid == user.Id);
+            user1.Firstname = user.Name;
+            user1.Lastname = user.last;
+            user1.Email = user.Email;
+            user1.City = user.city;
+            user1.Street = user.street;
+            user1.Mobile = user.mobile;
+            user1.State = user.state;
+            user1.Zipcode = user.zip;
+
+            user1.Intdate = user.dob.Day;
+            user1.Strmonth = user.dob.Month.ToString();
+            user1.Intyear = user.dob.Year;
+            _context.Users.Update(user1);
+            _context.SaveChanges();
+            return RedirectToAction("user_profile",new {id=user1.Userid});
         }
         public IActionResult view_documents(int id)
         {
-            var request =  _context.Requests.FirstOrDefault(m => m.Requestid == id);
+            var request = _context.Requests.FirstOrDefault(m => m.Requestid == id);
             var user = _context.Users.FirstOrDefault(m => m.Userid == request.Userid);
-            var aspuser= _context.Aspnetusers.FirstOrDefault(m => m.AspNetUserId == user.Aspnetuserid);
+            var aspuser = _context.Aspnetusers.FirstOrDefault(m => m.AspNetUserId == user.Aspnetuserid);
             var files = (from m in _context.Requestwisefiles
                          where m.Requestid == id
                          select m).ToList();
-            DashboardViewModel ds = new DashboardViewModel { Aspuser=aspuser.AspNetUserId,User=user,requestwisefiles=files,requestid=id,Confirmation=request.Confirmationnumber}; 
+            DashboardViewModel ds = new DashboardViewModel { Aspuser = aspuser.AspNetUserId, User = user, requestwisefiles = files, requestid = id, Confirmation = request.Confirmationnumber };
             return View(ds);
         }
 
         public IActionResult Download(int id)
         {
-            var path = ( _context.Requestwisefiles.FirstOrDefault(x => x.Requestwisefileid == id)).Filename;
+            var path = (_context.Requestwisefiles.FirstOrDefault(x => x.Requestwisefileid == id)).Filename;
             //var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "document", filename);
             var provider = new FileExtensionContentTypeProvider();
             if (!provider.TryGetContentType(path, out var contentType))
             {
                 contentType = "application/octet-stream";
             }
-            var bytes =  System.IO.File.ReadAllBytes(path);
+            var bytes = System.IO.File.ReadAllBytes(path);
             return File(bytes, contentType, Path.GetFileName(path));
         }
         [HttpPost]
@@ -286,7 +306,7 @@ namespace HalloDocWeb.Controllers
         [HttpPost]
         public IActionResult view_documents(DashboardViewModel s)
         {
-             
+
             var r = _context.Requests.FirstOrDefault(m => m.Requestid == s.requestid);
             foreach (var item in s.Filepath)
             {
@@ -336,7 +356,7 @@ namespace HalloDocWeb.Controllers
         [ValidateAntiForgeryTokenAttribute]
         public IActionResult submit()
         {
-            if (Request.Form["options"] =="me")
+            if (Request.Form["options"] == "me")
             {
                 return RedirectToAction("submit_me");
             }
@@ -344,7 +364,7 @@ namespace HalloDocWeb.Controllers
         }
         public IActionResult submit_me()
         {
-            var id=(int)HttpContext.Session.GetInt32("UserId");
+            var id = (int)HttpContext.Session.GetInt32("UserId");
             DashboardViewModel model = new DashboardViewModel();
             var user = _context.Users.FirstOrDefault(m => m.Userid == id);
             model.User = user;
@@ -356,7 +376,7 @@ namespace HalloDocWeb.Controllers
         public IActionResult submit_me(DashboardViewModel model)
         {
             var id = (int)HttpContext.Session.GetInt32("UserId");
-            Request r = new Request { Userid=id, Requesttypeid = 1, Status = 1, Firstname = model.FirstName, Lastname = model.LastName, Createddate = DateTime.Now, Isurgentemailsent = new BitArray(1) , Confirmationnumber = model.FirstName +  DateTime.Now };
+            Request r = new Request { Userid = id, Requesttypeid = 1, Status = 1, Firstname = model.FirstName, Lastname = model.LastName, Createddate = DateTime.Now, Isurgentemailsent = new BitArray(1), Confirmationnumber = model.FirstName + DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = model.FirstName, Lastname = model.LastName, Phonenumber = model.PhoneNumber, Address = model.Room, Notes = model.Symptoms, Email = model.Email, City = model.City, Zipcode = model.ZipCode, State = model.State, Intyear = model.DateOfBirth.Year, Strmonth = Convert.ToString(model.DateOfBirth.Month), Intdate = model.DateOfBirth.Day };
@@ -391,7 +411,7 @@ namespace HalloDocWeb.Controllers
             var id = (int)HttpContext.Session.GetInt32("UserId");
             DashboardViewModel model = new DashboardViewModel();
             var user = _context.Users.FirstOrDefault(m => m.Userid == id);
-            Request r = new Request {Userid=id, Requesttypeid = 2, Status = 1, Firstname = user.Firstname, Lastname = user.Lastname, Createddate = DateTime.Now, Relationname = s.Relationname, Email = user.Email, Phonenumber = user.Mobile, Isurgentemailsent = new BitArray(1), Confirmationnumber = s.FirstName+DateTime.Now };
+            Request r = new Request { Userid = id, Requesttypeid = 2, Status = 1, Firstname = user.Firstname, Lastname = user.Lastname, Createddate = DateTime.Now, Relationname = s.Relationname, Email = user.Email, Phonenumber = user.Mobile, Isurgentemailsent = new BitArray(1), Confirmationnumber = s.FirstName + DateTime.Now };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };

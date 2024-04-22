@@ -1,9 +1,7 @@
 ﻿@using System.Globalization
-@model User
+@model HalloDoc.Models.UserViewModel
 <!DOCTYPE html>
-@{
-    DateTime date = new DateTime(Convert.ToInt32(Model.Intyear),Convert.ToInt32(Model.Strmonth), Convert.ToInt32(Model.Intdate));
-  }                                                                                         
+                                                                                         
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +44,7 @@
                 <img src="/images/Screenshot (2).png" alt="" width="50%">
             </a>
             <div class="mt-1 me-2">Welcome</div>
-            <h3 class="ms-2 me-3">@Model.Firstname</h3>
+            <h3 class="ms-2 me-3">@Model.Name</h3>
             <button class="btno "><img src="/images/moon.svg" alt=""></button>
             <ul class="nav">
                 <li class="nav-item"><a asp-controller="Home" asp-action="request_screen" class=" btn btn-outline-primary " style="margin-right: 100px;">Logout</a></li>
@@ -57,7 +55,7 @@
     <nav class="py-2 m-0 bg-white">
         <div class="xl-container d-flex flex-wrap">
             <ul class="nav me-auto">
-                <li class="nav-item"><a asp-controller="Aspnetusers" asp-action="dashboard" asp-route-id="@Model.Userid" class="nav-link  px-2 dash-nav">DashBoard</a></li>
+                <li class="nav-item"><a asp-controller="Aspnetusers" asp-action="dashboard" asp-route-id="@Model.Id" class="nav-link  px-2 dash-nav">DashBoard</a></li>
                 <li class="nav-item "><a href="#" class="nav-link active  dash-nav">Profiles</a></li>
             </ul>
         </div>
@@ -65,13 +63,13 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;">
             <h2 class="mt-2 float-start ">User Profile</h2>
-            <a asp-controller="Aspnetusers" asp-action="Dashboard" asp-route-id="@Model.Userid" class="btn btn-outline-primary float-end mt-2 me-5 ">
+            <a asp-controller="Aspnetusers" asp-action="Dashboard" asp-route-id="@Model.Id" class="btn btn-outline-primary float-end mt-2 me-5 ">
                 < Back
             </a>
 
         </div>
         <div class="container themed-container ms-0 bg-white">
-            <p class="h3 p-2">General Information</p>
+          <form asp-action="Submit_Profile">  <p class="h3 p-2">General Information</p>
             <fieldset id="usedit" disabled>
                 <!-- <div class="row mb-3">
                     <div class="col-6 themed-grid-col"><div class="mb-3">
@@ -88,13 +86,14 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">First Name</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Firstname">
+                            <input type="text" id="disabledTextInput" class="form-control" asp-for="Name">
+                            <input type="hidden" asp-for="Id" />
                         </div>
                     </div>
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Last Name</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Lastname">
+                            <input type="text" id="disabledTextInput" class="form-control" asp-for="last">
                         </div>
                     </div>
                 </div>
@@ -102,7 +101,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Date Of Birth</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@date">
+                            <input type="date" id="disabledTextInput" class="form-control" asp-for="dob">
                         </div>
                     </div>
                     <div class="col">
@@ -133,7 +132,7 @@
                                 </div> *@
                                 <div class="col-8">                                <div class="mb-3">
                                     <label for="floatingInput">Mobile No.</label>
-                                    <input type="text" class="form-control mt-2" id="floatingInput" placeholder="@Model.Mobile">
+                                    <input type="text" class="form-control" id="floatingInput" asp-for="mobile">
                                     </div>
                                 </div>
 
@@ -143,7 +142,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Email</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Email">
+                            <input type="text" id="disabledTextInput" class="form-control"  asp-for="Email">
                         </div>
                     </div>
                 </div>
@@ -152,13 +151,13 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Street</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Street">
+                            <input type="text" id="disabledTextInput" class="form-control"  asp-for="street">
                         </div>
                     </div>
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">City</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.City">
+                            <input type="text" id="disabledTextInput" class="form-control"  asp-for="city">
                         </div>
                     </div>
                 </div>
@@ -166,7 +165,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">State</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.State">
+                            <input type="text" id="disabledTextInput" class="form-control"  asp-for="state">
                         </div>
                     </div>
                     <div class="col">
@@ -174,9 +173,9 @@
                             <div class="row">
                                 <div class="col-8">
                                     <label for="disabledTextInput" class="form-label">Zip Code</label>
-                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="@Model.Zipcode">
+                                    <input type="text" id="disabledTextInput" class="form-control"  asp-for="zip">
                                 </div> <div class="col-2">
-                                    <button type="button" class="btn btn-outline-primary mt-4"><img src="/images/geo-alt.svg" alt="" srcset="" class="pe-1">Map</button>
+                                        <a href="https://www.google.co.in/maps" class="btn btn-outline-primary mt-4"><img src="/images/geo-alt.svg" alt="" srcset="" class="pe-1">Map</a>
                                 </div>
                             </div>
 
@@ -186,8 +185,8 @@
                 </div>
             </fieldset>
             <button type="button" class="btn btn-outline-primary float-end" id="editProfile">Edit</button>
-            <button type="button" class="btn btn-outline-primary float-end d-none" id="saveProfile">Save</button>
-        </div>
+            <button type="submit" class="btn btn-outline-primary float-end d-none" id="saveProfile">Save</button>
+        </form></div>
 
        
     </main>
