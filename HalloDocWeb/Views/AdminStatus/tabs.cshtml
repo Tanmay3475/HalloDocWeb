@@ -78,7 +78,19 @@
                 </li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav partner">Partners</a></li>
                 <li class="nav-item"><a href="#" class="nav-link   dash-nav access">Access</a></li>
-                <li class="nav-item"><a href="#" class="nav-link   dash-nav">Records</a></li>
+                <li class="nav-item">
+
+                    <a href="#" class="nav-link dash-nav record" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:white">
+                        Records
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" id="srecord">Search Records</a></li>
+                        <li><a class="dropdown-item" href="#" id="elogs">Email Logs</a></li>
+                        <li><a class="dropdown-item" href="#" id="slogs">SMS Logs</a></li>
+                        <li><a class="dropdown-item" href="#" id="precord">Patient Records</a></li>
+                        <li><a class="dropdown-item" href="#" id="bhistory">Blocked History</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
@@ -275,6 +287,7 @@
         $('.access').removeClass("active");
         $('.providerlocation').removeClass("active");
         $('.partner').removeClass("active");
+        $('.record').removeClass("active");
         $('.profile').addClass("active");
         $.ajax({
             url: '/Admin/MyProfile',
@@ -295,6 +308,7 @@
         $('.access').removeClass("active");
         $('.profile').removeClass("active");
         $('.partner').removeClass("active");
+        $('.record').removeClass("active");
         $('.providerlocation').addClass("active");
         $.ajax({
             url: '/Admin/ProviderLocation',
@@ -313,6 +327,7 @@
         $('.access').removeClass("active");
         $('.profile').removeClass("active");
         $('.providerlocation').removeClass("active");
+        $('.record').removeClass("active");
         $('.partner').addClass("active");
         $.ajax({
             url: '/Partner/Vendor',
@@ -436,9 +451,28 @@
         $('.providerlocation').removeClass("active");
         $('.profile').removeClass("active");
         $('.partner').removeClass("active");
+        $('.record').removeClass("active");
         $('.provider').addClass("active");
         $.ajax({
             url: '/Provider/Information',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#precord').on('click', function (e) {
+        $('.dashboard').removeClass("active");
+        $('.access').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.profile').removeClass("active");
+        $('.partner').removeClass("active");
+        $('.provider').removeClass("active");
+        $('.record').addClass("active");
+        $.ajax({
+            url: '/Record/PatientRecord',
             success: function (response) {
                 $('#nav-home').html(response);
             },
@@ -453,6 +487,7 @@
         $('.providerlocation').removeClass("active");
         $('.profile').removeClass("active");
         $('.partner').removeClass("active");
+        $('.record').removeClass("active");
         $('.provider').addClass("active");
         $.ajax({
             url: '/Scheduling/Scheduling',
@@ -470,6 +505,7 @@
         $('.providerlocation').removeClass("active");
         $('.partner').removeClass("active");
         $('.profile').removeClass("active");
+        $('.record').removeClass("active");
         $('.access').addClass("active");
         $.ajax({
             url: '/Admin/Access',

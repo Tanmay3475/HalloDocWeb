@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute">
+    <h2 class="mt-2 float-start ">Patient History</h2>
+
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <div class="row">
+        <div class="ps-2 col-3 form-floating mb-3 mt-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">First Name</label>
+        </div> <div class="ps-2 col-3 form-floating mb-3 mt-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Last Name</label>
+        </div>
+        <div class="ps-2 col-3 form-floating mb-3 mt-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email</label>
+        </div><div class="ps-2 col-3 form-floating mb-3 mt-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Phone Number</label>
+        </div>
+
+
+    </div>
+    <button type="button" class="btn btn-info float-end me-1 mt-3 mb-2" id="addbusiness">Search</button>
+    <button type="button" class="btn btn-outline-info float-end me-1 mt-3 mb-2" id="addbusiness">Clear</button>
+
+    <div class="record-partial"></div>
+</div>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '/Record/RecordPartial',
+            success: function (response) {
+                $('.record-partial').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
