@@ -3,9 +3,14 @@
 *@
 @{
 }
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
 @model HalloDoc.Models.PartnerViewModel
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
-    <h2 class="mt-2 float-start "> Add Business</h2>
+    <h2 class="mt-2 float-start "> Update Business</h2>
     <button class="btn btn-outline-info float-end mt-2 me-5 abback">
         < Back
     </button>
@@ -14,17 +19,18 @@
 </div>
 <div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
     <div class="row"><div class="col-12 pc-head">Submit Information</div></div>
-
+    <input type="hidden" id="addid" value="@Model.id" />
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="addname" placeholder="Password">
+            <input type="text" class="form-control" asp-for="Name" id="addname" placeholder="Password">
             <label for="floatinglastname">Business Name</label>
         </div>
         <div class="col-6">
-            <select class="form-select profession" id="addpro" aria-label="Default select example" style="height:55px;margin-top:10px">
+            <select class="form-select profession" id="addpro" asp-for="Pro" aria-label="Default select example" style="height:55px;margin-top:10px">
                 <option selected>Select Profession</option>
-                @foreach(var item in Model.Healthprofessionaltypes){
-                    
+                @foreach (var item in Model.Healthprofessionaltypes)
+                {
+
                     <option value="@item.Healthprofessionalid">@item.Professionname</option>
                 }
             </select>
@@ -35,7 +41,7 @@
     <div class="row">
         <div class="col-6 form-floating pc-text">
 
-            <input type="text" class="form-control" id="addfax" placeholder="Password">
+            <input type="text" class="form-control" id="addfax" placeholder="Password" asp-for="FaxNum">
             <span class="text-danger"></span><label for="floatingrelation">Fax Number</label>
         </div>
         <div class="col-6 form-floating pc-text">
@@ -48,17 +54,17 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
-                <input type="text" class="form-control" id="addphone" aria-label="Text input with dropdown button" placeholder="(02612652666)">
+                <input type="text" class="form-control" id="addphone" aria-label="Text input with dropdown button" placeholder="(02612652666)" asp-for="Num">
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="email" class="form-control" id="addemail" placeholder="Password">
+            <input type="email" class="form-control" id="addemail" placeholder="Password" asp-for="Email">
             <span class="text-danger"></span><label for="floatingemail">Email</label>
         </div>
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="addcontact" placeholder="Password">
+            <input type="text" class="form-control" id="addcontact" placeholder="Password" asp-for="BusinessCon">
             <span class="text-danger"></span><label for="floatingemail">Business Contact</label>
         </div>
 
@@ -67,21 +73,21 @@
 
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="addstreet" placeholder="Password">
+            <input type="text" class="form-control" id="addstreet" placeholder="Password" asp-for="Street">
             <label for="street">Street</label>
         </div>
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="addcity" placeholder="Password">
+            <input type="text" class="form-control" id="addcity" placeholder="Password" asp-for="City">
             <label for="floatingcity">City</label>
         </div>
     </div>
     <div class="row">
         <div class="col-6 form-floating pc-text">
-            <input type="text" class="form-control" id="addcountry" placeholder="Password">
+            <input type="text" class="form-control" id="addcountry" placeholder="Password" asp-for="State">
             <label for="country">State</label>
         </div>
         <div class="col-6 form-floating pc-text">
-            <input type="number" class="form-control" id="addzip" placeholder="Password">
+            <input type="number" class="form-control" id="addzip" placeholder="Password" asp-for="Pin">
             <label for="floatingzip">Zip/Postal</label>
         </div>
     </div>
@@ -114,10 +120,11 @@
         var addon7 = $('#addcity').val();
         var addon8 = $('#addcountry').val();
         var addon9 = $('#addzip').val();
+        var addon10 = $('#addid').val();
         $.ajax({
-            url: '/Partner/AddBusiness',
-            type:'POST',
-            data: {Name:addon,Pro:addon1,FaxNum:addon2,Num:addon3,Email:addon4,BusinessCon:addon5,Street:addon6,City:addon7,State:addon8,Pin:addon9},
+            url: '/Partner/EditBusiness',
+            type: 'POST',
+            data: {id:addon10, Name: addon, Pro: addon1, FaxNum: addon2, Num: addon3, Email: addon4, BusinessCon: addon5, Street: addon6, City: addon7, State: addon8, Pin: addon9 },
             success: function (response) {
                 $('#nav-home').html(response);
             },

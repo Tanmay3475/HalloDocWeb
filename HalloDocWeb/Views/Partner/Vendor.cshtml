@@ -3,6 +3,7 @@
 *@
 @{
 }
+@model HalloDoc.Models.PartnerViewModel
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
     <h2 class="mt-2 float-start "> Vendor(s)</h2>
    
@@ -14,10 +15,11 @@
         <div class="col-2 mt-3"><input type="search" placeholder="Search Patients" class="search" /><img src="/images/icons8-search-25.png" style="position:relative;left:21px;bottom:39px" /></div>
         <div class="col-2 mt-3">
             <select class="form-select search" aria-label="Default select example" id="region">
-                <option selected value="All">All Regions</option>
-             
-                        <option value="Regionid">Name</option>
-                                    
+                <option selected value="0">All Regions</option>
+             @foreach(var item in Model.regions)
+             {
+                        <option value="@item.Regionid">@item.Name</option>
+             }                     
             </select>
             <img src="/images/icons8-search-25.png" style="position:relative;left:10px;top:-40px;" />
         </div>
@@ -32,6 +34,7 @@
             <tr>
 
                 <th>Profession </th>
+                <th class="d-none">Region Id </th>
                 <th>Business Name </th>
                 <th>Email </th>
                 <th>Fax Number </th>
@@ -41,28 +44,40 @@
             </tr>
         </thead>
         <tbody>
-         
+         @foreach(var item in Model.healthprofessionals)
+         {
                     <tr style="background-color:white !important;color:black !important">
 
-
-
-                        <td>Name</td>
-                        <td>Name</td>
-                        <td>Name</td>
-                        <td>Name</td>
-                        <td>Name</td>
-                        <td>findAccount(item.Accounttype)</td>
+                        
+                        @foreach(var item1 in Model.Healthprofessionaltypes)
+                        {
+                        if (item1.Healthprofessionalid == item.Profession)
+                        {
+                            <td>@item1.Professionname</td>
+                        }
+                    }
+                    <td class="d-none">@item.Regionid</td>
+                    <td>@item.Vendorname</td>
+                        <td>@item.Email</td>
+                        <td>@item.Faxnumber</td>
+                        <td>@item.Phonenumber</td>
+                        <td>@item.Businesscontact</td>
                         <td>
-                            <button type="button" class="btn btn-outline-info me-1 mt-1">Edit</button>
-                            <button type="button" class="btn btn-outline-info me-1 mt-1 del-role" value="Roleid">Delete</button>
+                            <button type="button" class="btn btn-outline-info me-1 mt-1" id="editbuss" value="@item.Vendorid">Edit</button>
+                        <button type="button" class="btn btn-outline-info me-1 mt-1 del-role" id="delbuss" value="@item.Vendorid">Delete</button>
                         </td>
                     </tr>
                 
-            
+          }  
         </tbody>
     </table>
 </div>
 <script>
+    var table = $('#exampl2').DataTable({ dom: 'lrtip' });
+    $('input[type="search"]').on('keyup', function () {
+        table.search(this.value).draw();
+    });
+
     $('#addbusiness').on('click', function (e) {
     
         $.ajax({
@@ -74,5 +89,39 @@
                 console.error(error);
             }
         });
+    });$('#editbuss').on('click', function (e) {
+        var bus = $(this).attr('value');
+        $.ajax({
+            url: '/Partner/EditBusiness',
+            data:{id:bus},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#delbuss').on('click', function (e) {
+        var bus = $(this).attr('value');
+        $.ajax({
+            url: '/Partner/DeleteBusiness',
+            data:{id:bus},
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    $('#region').on('change', function () {
+        var value = $(this).val();
+        if (value == '0') {
+            table.columns(1).search('').draw();
+        }
+        else {
+            table.columns(1).search(value).draw(); // Replace 0 with the index of the column you want to filter
+        }
     });
 </script>

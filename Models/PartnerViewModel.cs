@@ -19,5 +19,8 @@ namespace HalloDoc.Models
         public string State { get; set; }
         public string Pin { get; set; }
         public List<Healthprofessionaltype> Healthprofessionaltypes { get; set; }
+        public List<Healthprofessional> healthprofessionals { get; set; }
+        public List<Region> regions { get; set; }
+        public int id { get; set; }
     }
 }
