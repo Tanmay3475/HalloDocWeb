@@ -319,7 +319,7 @@ namespace HalloDocWeb.Controllers
                     uploadFile(s.Filepath, r.Requestid);
                 }
             }
-            return RedirectToAction("view_documents", r.Requestid);
+            return RedirectToAction("view_documents", new {id=s.requestid});
         }
         public void uploadFile(List<IFormFile> file, int id)
         {

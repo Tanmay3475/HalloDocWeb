@@ -17,14 +17,18 @@ namespace HalloDoc.Models
 
         enum statusName
         {
-            january,
-            Unassigned,
-            Cancelled,
-            MdEnRoute,
-            MdOnSite,
-            Closed,
+            first,
+            Unassigned,         //New 
+            Accepted,           //Pending
+            Cancelled,          //To-close
+            MDEnRoute,          //Active
+            MDOnSite,           //Active
+            Conclude,           //Conclude
+            CancelledByPatient, //To-close
+            Closed,             //To-close
+            Unpaid,             //Unpaid
             Clear,
-            Unpaid
+            Block
         }
         public int requestid { get; set; }
         public string findStatus(int status)

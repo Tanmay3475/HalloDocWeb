@@ -481,6 +481,24 @@
             }
         });
     });
+    $('#srecord').on('click', function (e) {
+        $('.dashboard').removeClass("active");
+        $('.access').removeClass("active");
+        $('.providerlocation').removeClass("active");
+        $('.profile').removeClass("active");
+        $('.partner').removeClass("active");
+        $('.provider').removeClass("active");
+        $('.record').addClass("active");
+        $.ajax({
+            url: '/Record/SearchRecord',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
     $('#schedule').on('click', function (e) {
         $('.dashboard').removeClass("active");
         $('.access').removeClass("active");

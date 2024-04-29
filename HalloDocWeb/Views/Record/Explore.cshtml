@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<ExploreViewModel>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute;">
+    <h2 class="mt-2 float-start "> Patient Record</h2>
+    <button class="btn btn-outline-info float-end mt-2 me-5 back-button">
+        < Back
+    </button>
+
+
+</div>
+<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+    <table class="table mt-3" id="example">
+        <thead class="dtable-head">
+            <tr>
+
+                <th scope="col">Client/Member</th>
+                <th scope="col">Created Date <img src="/images/icons8-arrow-down-25.png" /></th>
+                <th scope="col">Confirmation</th>
+                <th scope="col">Provider Name</th>
+                <th scope="col">Concluded Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Final Report</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.Confirmation</td>
+                    <td>@item.Pro</td>
+                    <td>@item.ConcludedDate</td>
+                    <td>@item.findStatus(item.status)</td>
+                    <td>-</td>
+                    <td>
+
+                        <button class="btn btn-outline-info explore" value="Id">
+                      Actions
+                        </button>
+
+
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<script>
+    $('.back-button').on('click', function (e) {
+       $.ajax({
+            url: '/Record/PatientRecord',
+            type: 'GET',
+            success: function (response) {
+                $('#nav-home').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
