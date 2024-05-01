@@ -28,11 +28,36 @@ namespace HalloDoc.Models
             Clear,
             Block
         }
+        enum requestor
+        {
+            hello,
+            world,
+            Friend,
+            Concierge,
+            Business,
+            VIP,
+            Patient
+        }
         public string findStatus(int status)
         {
             string sName = ((statusName)status).ToString();
             return sName;
         }
+        public string findRequestor(int status)
+        {
+            string sName = ((requestor)status).ToString();
+            return sName;
+        }
         public int status {  get; set; }
-    }
+public int requestorId { get; set; }
+public DateOnly dateofService { get; set; }
+public DateOnly closeCaseDate { get; set; }
+public string email { get; set; }
+public string phone { get; set; }
+public string address { get; set; }
+public string zip { get; set; }
+public string physician_note { get; set; }
+public string cancelled { get; set; }
+public string admin_note { get; set; }
+public string patient_note { get; set; }    }
 }

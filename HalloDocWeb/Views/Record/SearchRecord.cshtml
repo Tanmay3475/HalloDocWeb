@@ -9,13 +9,13 @@
 @{
 }
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 80rem;left:300px;position:absolute">
-    <h2 class="mt-2 float-start ">Search Record</h2>
-    <button type="button" class="btn btn-info float-end me-1 mt-3 mb-2" id="search"><img src="/images/icons8-reply-all-arrow-50.png" /> Export Data to Excel</button>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 120rem;">
+    <h2 class="mt-2 float-start ms-2">Search Record</h2>
+    <button type="button" class="btn btn-info float-end me-3 mt-3 mb-2" id="search"><img src="/images/icons8-reply-all-arrow-50.png" /> Export Data to Excel</button>
 
 
 </div>
-<div class="container themed-container ms-0 bg-white" style="left:300px;position:absolute;top:300px;">
+<div class="container-fluid ms-0 bg-white" style="position:absolute;top:300px;">
     <div class="row">
         
             <div class="ps-2 col-3 form-floating mb-3 mt-3">
@@ -47,11 +47,11 @@
     </div>
     <div class="row">
         <div class="ps-2 col-3 form-floating mb-3 mt-3">
-            <input type="text" class="form-control" id="prfirst" placeholder="name@example.com">
-            <label for="floatingInput">First Name</label>
+            <input type="date" class="form-control" id="prfirst" placeholder="name@example.com">
+            <label for="floatingInput">To Date of Service</label>
         </div> <div class="ps-2 col-3 form-floating mb-3 mt-3">
             <input type="text" class="form-control" id="prlast" placeholder="name@example.com">
-            <label for="floatingInput">Last Name</label>
+            <label for="floatingInput">Provider Name</label>
         </div>
         <div class="ps-2 col-3 form-floating mb-3 mt-3">
             <input type="email" class="form-control" id="premail" placeholder="name@example.com">
@@ -66,12 +66,13 @@
     <button type="button" class="btn btn-info float-end me-1 mt-3 mb-2" id="search">Search</button>
     <button type="button" class="btn btn-outline-info float-end me-1 mt-3 mb-2" id="clear">Clear</button>
 
-    <div class="record-partial"></div>
+    
+<div class="record-partial"></div>
 </div>
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: '/Record/RecordPartial',
+            url: '/Record/SearchPartial',
             success: function (response) {
                 $('.record-partial').html(response);
             },
