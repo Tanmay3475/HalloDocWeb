@@ -376,7 +376,7 @@ namespace HalloDocWeb.Controllers
         public IActionResult submit_me(DashboardViewModel model)
         {
             var id = (int)HttpContext.Session.GetInt32("UserId");
-            Request r = new Request { Userid = id, Requesttypeid = 1, Status = 1, Firstname = model.FirstName, Lastname = model.LastName, Createddate = DateTime.Now, Isurgentemailsent = new BitArray(1), Confirmationnumber = model.FirstName + DateTime.Now };
+            Request r = new Request { Userid = id, Requesttypeid = 1, Status = 6, Firstname = model.FirstName, Lastname = model.LastName, Createddate = DateTime.Now, Isurgentemailsent = new BitArray(1), Confirmationnumber =DateTime.Now.ToString() };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = model.FirstName, Lastname = model.LastName, Phonenumber = model.PhoneNumber, Address = model.Room, Notes = model.Symptoms, Email = model.Email, City = model.City, Zipcode = model.ZipCode, State = model.State, Intyear = model.DateOfBirth.Year, Strmonth = Convert.ToString(model.DateOfBirth.Month), Intdate = model.DateOfBirth.Day };

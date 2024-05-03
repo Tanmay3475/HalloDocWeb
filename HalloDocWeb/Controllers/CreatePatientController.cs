@@ -84,7 +84,7 @@ namespace HalloDocWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Friend_request(CreateFriendViewModel s)
         {
-            Request r = new Request { Requesttypeid = 2, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now,Relationname=s.Relationname,Email=s.email,Phonenumber=s.phonenumber,Isurgentemailsent=new BitArray(1), Confirmationnumber = s.firstName + DateTime.Now };
+            Request r = new Request { Requesttypeid = 2, Status = 1, Firstname = s.firstName, Lastname = s.lastName, Createddate = DateTime.Now,Relationname=s.Relationname,Email=s.email,Phonenumber=s.phonenumber,Isurgentemailsent=new BitArray(1), Confirmationnumber =DateTime.Now.ToString() };
             _context.Add(r);
             _context.SaveChanges();
             Requestclient r1 = new Requestclient { Requestid = r.Requestid, Firstname = s.FirstName, Lastname = s.LastName, Phonenumber = s.PhoneNumber, Address = s.Room, Notes = s.Symptoms, Email = s.Email, City = s.City, Zipcode = s.ZipCode, State = s.State, Intyear = s.DateOfBirth.Year, Strmonth = Convert.ToString(s.DateOfBirth.Month), Intdate = s.DateOfBirth.Day };

@@ -270,10 +270,26 @@ namespace HalloDocWeb.Controllers
                 if (aspnetuser != null)
                 {
                     var admin = _db.GetFirstOrDefault(m => m.Aspnetuserid == aspnetuser.AspNetUserId);
+                    if(admin==null)
+                    {
+                        TempData["user"] = "User does not exist.";
+                        TempData["pass"] = "Password is not valid";
+                        return View();
+                    }
                     int id = admin.Adminid;
                     HttpContext.Session.SetInt32("Admin_Id", id);
                     HttpContext.Session.SetString("Admin_User", admin.Firstname);
                     return RedirectToAction("tabs", "AdminStatus");
+                }
+                var asp = _db1.GetFirstOrDefault(m => m.Username == a.Username);
+                if (asp == null) {
+                    TempData["user"] = "User does not exist.";
+                    return View();
+                }
+                else
+                {
+                    TempData["pass"] = "Password is not valid";
+                    return View();
                 }
             }
             return NotFound();

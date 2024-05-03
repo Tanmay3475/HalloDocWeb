@@ -18,10 +18,32 @@ namespace HalloDocWeb.Controllers
             return View();
         }
         public IActionResult SearchRecord()
-        {
-            return View();
+        { 
+            
+            return View(new ExploreViewModel());
         }
         public IActionResult Explore(int Id)
+        {
+            var req = _context.Requests.AsEnumerable().Where(m => m.Userid == Id).ToList();
+            var req1 = new List<ExploreViewModel>();
+            foreach (var re in req)
+            {
+                var r = new ExploreViewModel { Name = re.Firstname, CreatedDate = new DateOnly(re.Createddate.Year, re.Createddate.Month, re.Createddate.Day), Confirmation = re.Confirmationnumber, status = re.Status };
+                var res = _context.Requeststatuslogs.AsEnumerable().FirstOrDefault(m => m.Status == 6 && m.Requestid == re.Requestid);
+                if (res != null)
+                {
+                    r.ConcludedDate = new DateOnly(res.Createddate.Year, res.Createddate.Month, res.Createddate.Day);
+                }
+                if (re.Physicianid != null)
+                {
+                    var phy = _context.Physicians.FirstOrDefault(m => m.Physicianid == re.Physicianid);
+                    r.Pro = phy.Firstname;
+                }
+                req1.Add(r);
+            }
+            return View(req1);
+        }
+        public IActionResult Delete(int Id)
         {
             var req = _context.Requests.AsEnumerable().Where(m => m.Userid == Id).ToList();
             var req1 = new List<ExploreViewModel>();
@@ -166,7 +188,8 @@ namespace HalloDocWeb.Controllers
                                     zip = req2.Zipcode,
                                     status = re.Status,
                                     physician_note = req3.Physiciannotes,
-                                    patient_note = req2.Notes
+                                    patient_note = req2.Notes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -185,7 +208,8 @@ namespace HalloDocWeb.Controllers
                                     zip = req2.Zipcode,
                                     status = re.Status,
                                     physician_note = req3.Physiciannotes,
-                                    patient_note = req2.Notes
+                                    patient_note = req2.Notes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
                             }
@@ -212,7 +236,8 @@ namespace HalloDocWeb.Controllers
                                     zip = req2.Zipcode,
                                     status = re.Status,
                                     Pro = req4.Firstname,
-                                    patient_note = req2.Notes
+                                    patient_note = req2.Notes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -231,7 +256,8 @@ namespace HalloDocWeb.Controllers
                                     phone = re.Phonenumber,
                                     zip = req2.Zipcode,
                                     status = re.Status,
-                                    patient_note = req2.Notes
+                                    patient_note = req2.Notes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
                             }
@@ -252,7 +278,8 @@ namespace HalloDocWeb.Controllers
                                     phone = re.Phonenumber,
                                     zip = req2.Zipcode,
                                     status = re.Status,
-                                    patient_note = req2.Notes
+                                    patient_note = req2.Notes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -269,7 +296,8 @@ namespace HalloDocWeb.Controllers
                                     phone = re.Phonenumber,
                                     zip = req2.Zipcode,
                                     status = re.Status,
-                                    patient_note = req2.Notes
+                                    patient_note = req2.Notes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
                             }
@@ -297,6 +325,7 @@ namespace HalloDocWeb.Controllers
                                     status = re.Status,
                                     Pro = req4.Firstname,
                                     physician_note = req3.Physiciannotes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -315,6 +344,7 @@ namespace HalloDocWeb.Controllers
                                     phone = re.Phonenumber,
                                     status = re.Status,
                                     physician_note = req3.Physiciannotes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
                             }
@@ -336,6 +366,7 @@ namespace HalloDocWeb.Controllers
                                     zip = req2.Zipcode,
                                     status = re.Status,
                                     physician_note = req3.Physiciannotes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -352,6 +383,7 @@ namespace HalloDocWeb.Controllers
                                     phone = re.Phonenumber,
                                     status = re.Status,
                                     physician_note = req3.Physiciannotes,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
                             }
@@ -376,6 +408,7 @@ namespace HalloDocWeb.Controllers
                                     phone = re.Phonenumber,
                                     status = re.Status,
                                     Pro = req4.Firstname,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -392,6 +425,7 @@ namespace HalloDocWeb.Controllers
                                     requestorId = re.Requesttypeid,
                                     phone = re.Phonenumber,
                                     status = re.Status,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
                             }
@@ -410,6 +444,7 @@ namespace HalloDocWeb.Controllers
                                     requestorId = re.Requesttypeid,
                                     phone = re.Phonenumber,
                                     status = re.Status,
+                                    Id = re.Requestid
                                 };
                                 req1.Add(r);
 
@@ -424,6 +459,7 @@ namespace HalloDocWeb.Controllers
                                     requestorId = re.Requesttypeid,
                                     phone = re.Phonenumber,
                                     status = re.Status,
+                                    Id=re.Requestid
                                 };
                                 req1.Add(r);
                             }

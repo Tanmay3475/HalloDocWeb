@@ -13,7 +13,7 @@ namespace HalloDoc.Models
         public string Confirmation { get; set; }
         public string Pro { get; set; }
         public DateOnly ConcludedDate { get; set; }
-        enum statusName
+        public enum statusName
         {
             first,
             Unassigned,         //New 
@@ -28,7 +28,7 @@ namespace HalloDoc.Models
             Clear,
             Block
         }
-        enum requestor
+        public enum requestor
         {
             hello,
             world,
@@ -48,16 +48,18 @@ namespace HalloDoc.Models
             string sName = ((requestor)status).ToString();
             return sName;
         }
-        public int status {  get; set; }
-public int requestorId { get; set; }
-public DateOnly dateofService { get; set; }
-public DateOnly closeCaseDate { get; set; }
-public string email { get; set; }
-public string phone { get; set; }
-public string address { get; set; }
-public string zip { get; set; }
-public string physician_note { get; set; }
-public string cancelled { get; set; }
-public string admin_note { get; set; }
-public string patient_note { get; set; }    }
+        public int status { get; set; }
+        public int requestorId { get; set; }
+        public DateOnly dateofService { get; set; }
+        public DateOnly closeCaseDate { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
+        public string address { get; set; }
+        public string zip { get; set; }
+        public string physician_note { get; set; }
+        public string cancelled { get; set; }
+        public string admin_note { get; set; }
+        public string patient_note { get; set; }
+        public int Id { get; set; }
+    }
 }

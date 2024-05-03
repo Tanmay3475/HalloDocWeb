@@ -8,7 +8,7 @@
 *@
 @{
 }
-
+@model ExploreViewModel
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 120rem;">
     <h2 class="mt-2 float-start ms-2">Search Record</h2>
     <button type="button" class="btn btn-info float-end me-3 mt-3 mb-2" id="search"><img src="/images/icons8-reply-all-arrow-50.png" /> Export Data to Excel</button>
@@ -19,25 +19,24 @@
     <div class="row">
         
             <div class="ps-2 col-3 form-floating mb-3 mt-3">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <select class="form-select" id="srstatus" aria-label="Floating label select example">
+                    @for(int i=1;i<12;i++)
+                    {
+                    <option value="@i">@Model.findStatus(i)</option>
+                    } </select>
                 <label for="floatingSelect">Select Request Status</label>
             </div>
         <div class="ps-2 col-3 form-floating mb-3 mt-3">
-            <input type="text" class="form-control" id="prlast" placeholder="name@example.com">
+            <input type="text" class="form-control" id="srlast" placeholder="name@example.com">
             <label for="floatingInput">Patient Name</label>
         </div>
         <div class="ps-2 col-3 form-floating mb-3 mt-3">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+            <select class="form-select" id="srtype" aria-label="Floating label select example">
+                @for(int i=2;i<7;i++)
+                {
+                <option value="@i">@Model.findRequestor(i)</option>
+                }   
+                </select>
             <label for="floatingSelect">Select Request Type</label>
         </div>
         <div class="ps-2 col-3 form-floating mb-3 mt-3">

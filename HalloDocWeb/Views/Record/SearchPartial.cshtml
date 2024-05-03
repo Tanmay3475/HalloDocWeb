@@ -52,7 +52,7 @@
              
                 <td>
 
-                    <button class="btn btn-outline-info explore" value="item.Id">
+                    <button class="btn btn-outline-info explore" value="@i.Id">
                         Delete
                     </button>
 
@@ -67,7 +67,7 @@
     $('.explore').on('click', function (e) {
         var addon = $(this).attr('value');
         $.ajax({
-            url: '/Record/Explore',
+            url: '/Record/Delete',
             type: 'GET',
             data: { Id: addon },
             success: function (response) {
